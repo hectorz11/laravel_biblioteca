@@ -20,6 +20,8 @@ Route::get('libro/update/{id}', array('as' => 'libro_update', 'uses' => 'LibroCo
 Route::post('libro/update/{id}', array('as' => 'libro_update_post', 'uses' => 'LibroController@postLibroUpdate'));
 Route::get('libro/delete/{id}', array('as' => 'libro_delete', 'uses' => 'LibroController@getLibroDelete'));
 Route::post('libro/delete/{id}', array('as' => 'libro_delete_post', 'uses' => 'LibroController@postLibroDelete'));
+Route::get('libro/search', array('as' => 'libro_search', 'uses' => 'LibroController@getLibroSearch'));
+Route::post('libro/views', array('as' => 'libro_search_post', 'uses' => 'LibroController@postLibroSearch'));
 
 Route::get('hemeroteca', array('as' => 'hemeroteca', 'uses' => 'PeriodicoController@getHemeroteca'));
 Route::get('periodico/create', array('as' => 'periodico_create', 'uses' => 'PeriodicoController@getPeriodicoCreate'));
@@ -28,3 +30,5 @@ Route::get('periodico/update/{id}', array('as' => 'periodico_update', 'uses' => 
 Route::post('periodico/update/{id}', array('as' => 'periodico_update_post', 'uses' => 'PeriodicoController@postPeriodicoUpdate'));
 Route::get('periodico/delete/{id}', array('as' => 'periodico_delete', 'uses' => 'PeriodicoController@getPeriodicoDelete'));
 Route::post('periodico/delete/{id}', array('as' => 'periodico_delete_post', 'uses' => 'PeriodicoController@postPeriodicoDelete'));
+Route::get('periodico/search', array('as' => 'periodico_search', 'uses' => 'PeriodicoController@getPeriodicoSearch'));
+Route::post('periodico/views', array('as' => 'periodico_search_post', 'uses' => 'PeriodicoController@postPeriodicoSearch'));

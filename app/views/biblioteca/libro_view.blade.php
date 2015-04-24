@@ -44,9 +44,6 @@
     </tr>
     @endforeach
 </table>
-<div class="pagination">
-    {{ $libros->links() }}
-</div>
 <script>$("tr:odd").css("background-color", "#bbbbff");</script>
 
 <div class="form-actions" align="center">

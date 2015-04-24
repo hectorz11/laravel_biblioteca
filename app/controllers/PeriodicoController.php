@@ -64,6 +64,40 @@ class PeriodicoController extends BaseController {
 			return Redirect::route('periodico_update', $periodico->id)
 			->with('mensaje', $respuesta['mensaje']);
 		}
-	} 
+	}
+
+	public function getPeriodicoSearch()
+	{
+		return View::make('hemeroteca.periodico_search');
+	}
+
+	public function postPeriodicoSearch()
+	{
+		$opcion = Input::get('opcion');
+		$buscar = Input::get('buscar');
+
+		if(empty($buscar)) {
+			return Redirect::route('hemeroteca');
+		} else {
+			switch($opcion) {
+				case 1:
+					if(is_string($buscar)) {
+						$periodicos = Periodico::where('volumen','like','%'.$buscar.'%')->get();
+						return View::make('hemeroteca.periodico_view')->with('periodicos', $periodicos);
+					} else {
+						return View::make('hemeroteca.periodico_view');
+					}
+				break;
+				case 2:
+					if($buscar) {
+						$periodicos = Periodico::where('nombre','like','%'.$buscar.'%')->get();
+						return View::make('hemeroteca.periodico_view')->with('periodicos', $periodicos);
+					} else {
+						return View::make('hemeroteca.periodico_view');
+					}
+				break;
+			}
+		}
+	}
 
 }

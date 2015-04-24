@@ -16,7 +16,7 @@
 	      		<div align="center">
 					<a class="btn btn-success btn-large" href="{{ URL::route('libro_create') }}"><i class="icon-pencil icon-white"></i> Ingresar Libro</a>
 					<a class="btn btn-primary btn-large" href="{{ URL::route('biblioteca') }}"><i class="icon-search icon-white"></i> Consultar Libros</a>
-					<a class="btn btn-inverse btn-large" href="#"><i class="icon-search icon-white"></i> Buscar Libros</a>
+					<a class="btn btn-inverse btn-large" href="{{ URL::route('libro_search') }}"><i class="icon-search icon-white"></i> Buscar Libros</a>
 					<a class="btn btn-danger btn-large" href="#"><i class="icon-search icon-white"></i> Reporte Completo de Libros</a>
 				</div>
 	    	</div>
@@ -39,9 +39,9 @@
 					  	</div>
 					</div><br><br>
 	      			<!--AQUI TERMINA LA PRESENTACION-->
-					<a class="btn btn-success btn-large" href="#"><i class="icon-pencil icon-white"></i> Ingresar Periódico</a>
+					<a class="btn btn-success btn-large" href="{{ URL::route('periodico_create') }}"><i class="icon-pencil icon-white"></i> Ingresar Periódico</a>
 					<a class="btn btn-primary btn-large" href="{{ URL::route('hemeroteca') }}"><i class="icon-search icon-white"></i> Consultar Periódicos</a>
-					<a class="btn btn-inverse btn-large" href="#"><i class="icon-search icon-white"></i> Buscar Periódicos</a>
+					<a class="btn btn-inverse btn-large" href="{{ URL::route('periodico_search') }}"><i class="icon-search icon-white"></i> Buscar Periódicos</a>
 					<a class="btn btn-danger btn-large" href="#"><i class="icon-search icon-white"></i> Reporte Completo de Periódicos</a>
 				</div>
 	    	</div>

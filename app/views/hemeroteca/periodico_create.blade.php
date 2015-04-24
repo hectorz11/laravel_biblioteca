@@ -54,7 +54,7 @@
       <td><label class="control-label"> Tipo:</label></td>
       <td>
         <select id="tipo_id">
-          <option>-- Tipo --</option>
+          <option>-- Tipos --</option>
           @if(isset($tipo))
             @foreach($tipo as $t)
             <option value="{{ $t->id }}">{{ $t->nombre }}</option>

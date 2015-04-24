@@ -62,4 +62,46 @@ class LibroController extends BaseController {
 		}
 	} 
 
+	public function getLibroSearch()
+	{
+		return View::make('biblioteca.libro_search');
+	}
+
+	public function postLibroSearch()
+	{
+		$opcion = Input::get('opcion');
+		$buscar = Input::get('buscar');
+
+		if(empty($buscar)) {
+			return Redirect::route('biblioteca');
+		} else {
+			switch($opcion) {
+				case 1:
+					if(is_string($buscar)) {
+						$libros = Libro::where('codigo','like','%'.$buscar.'%')->get();
+						return View::make('biblioteca.libro_view')->with('libros', $libros);
+					} else {
+						return View::make('biblioteca.libro_view');
+					}
+				break;
+				case 2:
+					if(is_string($buscar)) {
+						$libros = Libro::where('autores','like','%'.$buscar.'%')->get();
+						return View::make('biblioteca.libro_view')->with('libros', $libros);
+					} else {
+						return View::make('biblioteca.libro_view');
+					}
+				break;
+				case 3:
+					if(is_string($buscar)) {
+						$libros = Libro::where('titulo','like','%'.$buscar.'%')->get();
+						return View::make('biblioteca.libro_view')->with('libros', $libros);
+					} else {
+						return View::make('biblioteca.libro_view');
+					}
+				break;
+			}
+		}
+	}
+
 }
