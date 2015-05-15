@@ -20,18 +20,21 @@ class CreateLibrosTable extends Migration {
 			$table->string('titulo')->nullable();
 			$table->string('edicion')->nullable();
 			$table->string('anio')->nullable();
-			$table->string('contenido')->nullable();
+			$table->text('contenido')->nullable();
 			$table->string('foto')->nullable();
 			$table->integer('ubicacion_id')->unsigned();
 			$table->integer('estado_id')->unsigned();
 			$table->integer('clasificacion_id')->unsigned();
-			$table->string('descripcion')->nullable();
-			$table->string('observaciones')->nullable();
+			$table->text('descripcion')->nullable();
+			$table->text('observaciones')->nullable();
 			$table->timestamps();
 
-			$table->foreign('ubicacion_id')->references('id')->on('ubicaciones');
-			$table->foreign('estado_id')->references('id')->on('estados');
-			$table->foreign('clasificacion_id')->references('id')->on('clasificaciones');
+			$table->foreign('ubicacion_id')->references('id')->on('ubicaciones')
+				->onDelete('cascade')->onUpdate('cascade');
+			$table->foreign('estado_id')->references('id')->on('estados')
+				->onDelete('cascade')->onUpdate('cascade');
+			$table->foreign('clasificacion_id')->references('id')->on('clasificaciones')
+				->onDelete('cascade')->onUpdate('cascade');
 		});
 	}
 
