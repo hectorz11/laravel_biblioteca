@@ -1,6 +1,7 @@
 @extends('base')
 
 @section('contenido')
+<br><br><br><br>
 <div class="hero-unit">
 <h1><center>¿Qué desea buscar?</center></h1><br><br>
     <center>

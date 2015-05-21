@@ -15,7 +15,6 @@ class UserTableSeeder extends Seeder {
 			'activated' => true
 		));
 		$sentry->addGroup($adminGroup);
-		$sentry->GetActivationCode();
 
 		$adminGroup = Sentry::findGroupByName('user');
 		$sentry = Sentry::getUserProvider()->create(array(
@@ -26,6 +25,5 @@ class UserTableSeeder extends Seeder {
 			'activated' => true
 		));
 		$sentry->addGroup($adminGroup);
-		$sentry->GetActivationCode();
 	}
 }

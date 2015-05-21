@@ -1,26 +1,38 @@
 <?php
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
+class User extends Cartalyst\Sentry\Users\Eloquent\User
+{
+	public static $login_rules = array(
+		'email' => 'required|email',
+		'password' => 'required'
+	);
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+	public static $register_rules = array(
+		'first_name' => 'required|min:2',
+		'email' => 'required',
+		'password' => 'required|min:6',
+	);
 
-	use UserTrait, RemindableTrait;
+	public static function registers($input)
+	{
+		$respuesta = array();
+		$validacion = Validator::make($input, User::$login_rules);
+		if($validacion->fails()) {
+			$respuesta['mensaje'] = $validacion;
+			$respuesta['error'] = true;
+		} else {
+			$userGroup = Sentry::findGroupByName(Input::get('tipo'));
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+			$sentry = Sentry::getUserProvider()->create(array(
+				'email' => Input::get('email'),
+				'first_name' => Input::get('first_name'),
+				'password' => Input::get('password'),
+				'activated' => true 
+			));
+			$sentry->addGroup($userGroup);
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = array('password', 'remember_token');
-
+			$respuesta['mensaje'] = 'el registro fue un exito! Bienvenido...';
+			$respuesta['error'] = false;
+		}
+	}
 }

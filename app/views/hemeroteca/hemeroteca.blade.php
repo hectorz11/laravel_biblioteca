@@ -27,8 +27,10 @@
         <td><b>Fecha de Inicio</b></td>
         <td><b>Fecha de Termino</b></td>
         <td><b>Estado</b></td>
+        @if(Sentry::check())
         <td><b>Editar</b></td>
         <td><b>Borrar</b></td>
+        @endif
     </tr>    
     @foreach($periodicos as $periodico)
     <tr>
@@ -38,8 +40,10 @@
         <td>{{ $periodico->fecha_inicio }}</td>
         <td>{{ $periodico->fecha_final }}</td>
         <td>{{ $periodico->estados->nombre }}</td>
+        @if(Sentry::check())
         <td><a href="{{ URL::route('periodico_update', $periodico->id) }}" class='btn btn-mini tn btn-warning'><i class='icon-edit icon-white'></i> Editar</a></td>
         <td><a href="#" class='btn btn-mini tn btn-danger'><i class='icon-remove icon-white'></i> Eliminar</a></td>
+        @endif
     </tr>
     @endforeach
 </table>

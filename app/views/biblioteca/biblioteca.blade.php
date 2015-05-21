@@ -1,6 +1,7 @@
 @extends('base')
 
 @section('contenido')
+<br><br><br><br>
 <center>
     <div class="input-prepend input-append" align="center">
         <div class="busqueda">
@@ -28,8 +29,10 @@
         <th>Titulo del Libro</th>
         <th>Edicion</th>
         <th>Estado</th>
+        @if(Sentry::check())
         <th>Editar</th>
         <th>Borrar</th>
+        @endif
     </tr>
     </thead>
     @foreach($libros as $libro)
@@ -40,17 +43,19 @@
         <td>{{ $libro->titulo }}</td>
         <td>{{ $libro->edicion }}</td>
         <td>{{ $libro->estados->nombre }}</td>
+        @if(Sentry::check())
         <td><a href="{{ URL::route('libro_update', $libro->id) }}" class='btn btn-sm btn-warning'><i class='icon-edit icon-white'></i> Editar</a></td>
         <td><a href="#" class='btn btn-sm btn-danger'><i class='icon-remove icon-white'></i> Eliminar</a></td>
+        @endif
     </tr>
     @endforeach
 </table>
 <div class="pagination">
     {{ $libros->links() }}
 </div>
-<div class="form-actions" align="center">
-    <a href="{{ URL::route('libro_create') }}" class="btn btn-lg btn-primary" name="ingresar"></i> Ingresar Nuevo Registro</a> 
-    <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="icon-home icon-white"></i> Regresar al Menu Principal</a>
-</div>
+    <div class="form-actions" align="center">
+        <a href="{{ URL::route('libro_create') }}" class="btn btn-lg btn-primary" name="ingresar"></i> Ingresar Nuevo Registro</a> 
+        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="icon-home icon-white"></i> Regresar al Menu Principal</a>
+    </div>
 </div>
 @stop

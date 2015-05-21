@@ -1,7 +1,6 @@
 @extends('base')
 
 @section('contenido')
-
 <!-- Carousel
     ================================================== -->
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -57,64 +56,55 @@
     <!-- Three columns of text below the carousel -->
     <div class="row">
         <div class="col-lg-4">
-	        <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+	        <img class="img-circle" src="/imagenes/imagen1.jpg" alt="Generic placeholder image" width="140" height="140">
 	        <h2>Heading</h2>
 	        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
 	        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          	<img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+          	<img class="img-circle" src="/imagenes/imagen2.jpg" alt="Generic placeholder image" width="140" height="140">
           	<h2>Heading</h2>
           	<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
           	<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          	<img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+          	<img class="img-circle" src="/imagenes/imagen3.jpg" alt="Generic placeholder image" width="140" height="140">
           	<h2>Heading</h2>
           	<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
           	<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 </div>
-
+@if(!Sentry::check())
 <div class="jumbotron">
 	<div class="container">
 		<div class="col-md-8">
 	    	<h1 >Archivo Regional Tacna, Catálogo de Material Bibliográfico </h1>
 		</div>
 		<div class="col-md-4">
-			<form>
-				{{ Form::text('username', Input::old('username'), ['class' => 'form-control']) }}
+			{{ Form::open(array('route' => 'register_post')) }}
+        <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				  {{ Form::text('username', Input::old('username'), ['class' => 'form-control', 'placeholder' => 'Username']) }}
+        </div>
 				<br>
-				{{ Form::email('email', Input::old('email'), ['class' => 'form-control']) }}
+        <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+				  {{ Form::email('email', Input::old('email'), ['class' => 'form-control', 'placeholder' => 'example@example.com']) }}
+        </div>
 				<br>
-				<input type="password" name="password" class="form-control" placeholder="Create a password">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+				  <input type="password" name="password" class="form-control" placeholder="Create a password">
+        </div>
+        {{ Form::hidden('tipo', 'user') }}
+        <br>
+        <button class="btn btn-success btn-lg" type="submit">Registrate</button>
+      {{ Form::close() }}
 			</form>
-	 		<p><a class="btn btn-primary btn-lg" href="https://www.facebook.com/pages/Archivo-Regional-de-Tacna/275688885934938?fref=ts" role="button">Siguenos &raquo;</a></p>
+	 		<p><a class="btn btn-primary btn-sm" href="https://www.facebook.com/pages/Archivo-Regional-de-Tacna/275688885934938?fref=ts" role="button">Siguenos &raquo;</a></p>
 	 	</div>
     </div>
 </div>
-<div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        <div class="col-md-4">
-	        <h2>Heading</h2>
-	        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-	        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-	        <h2>Heading</h2>
-	        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-	        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-	        <h2>Heading</h2>
-	        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-	        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-    </div>
-    <footer>
-        <p>&copy; Company 2014</p>
-    </footer>
-</div> <!-- /container -->
+@endif
 @stop

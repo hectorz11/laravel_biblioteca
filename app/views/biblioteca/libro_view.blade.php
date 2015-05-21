@@ -1,6 +1,7 @@
 @extends('base')
 
 @section('contenido')
+<br><br><br><br>
 <center>
     <div class="input-prepend input-append" align="center">
         <div class="busqueda">

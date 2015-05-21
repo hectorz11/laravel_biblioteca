@@ -67,7 +67,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	if (Sentry::check()) return Redirect::to('/');
 });
 
 /*
@@ -86,5 +86,39 @@ Route::filter('csrf', function()
 	if (Session::token() != Input::get('_token'))
 	{
 		throw new Illuminate\Session\TokenMismatchException;
+	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| Filtros: Administrador Usuario
+|--------------------------------------------------------------------------
+*/
+
+Route::filter('admin', function($route,$request)
+{
+	if(Sentry::check()) {
+		$sentry = Sentry::getUser();
+		$admin = Sentry::findGroupByName('admin');
+
+		if(!$sentry->inGroup($admin)) {
+			return Redirect::route('/');
+		}
+	} else {
+		return Redirect::route('/');
+	}
+});
+
+Route::filter('user', function($route,$request)
+{
+	if(Sentry::check()) {
+		$sentry = Sentry::getUser();
+		$teacher = Sentry::findGroupByName('user');
+
+		if(!$sentry->inGroup($teacher)) {
+			return Redirect::route('/');
+		}
+	} else {
+		return Redirect::route('/');
 	}
 });
