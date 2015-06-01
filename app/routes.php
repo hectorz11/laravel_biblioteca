@@ -1,16 +1,9 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the Closure to execute when that URI is requested.
-|
 */
-
 Route::get('/', array('as' => '/', 'uses' => 'PageController@getIndex'));
 /*------------------------------------------------------------------------------------------------
 /*
@@ -18,6 +11,9 @@ Route::get('/', array('as' => '/', 'uses' => 'PageController@getIndex'));
 */
 Route::get('/biblioteca', array(
 	'as' => 'biblioteca', 'uses' => 'LibroController@getBiblioteca'));
+/* Busqueda de Libros (GET) */
+Route::get('/datalibros', array(
+	'as' => 'datalibros', 'uses' => 'LibroController@getDataTable'));
 /* Busqueda de Libros (GET) */
 Route::get('/libro/search', array(
 	'as' => 'libro_search', 'uses' => 'LibroController@getLibroSearch'));

@@ -11,15 +11,23 @@ class PeriodicoController extends BaseController {
 
 	public function getPeriodicoCreate()
 	{
-		$clasificacion 	= Clasificacion::all();
-		$estado 		= Estado::all();
-		$ubicacion 		= Ubicacion::all();
-		$tipo 			= Tipo::all();
-		return View::make('hemeroteca.periodico_create')
-		->with('clasificacion' ,$clasificacion)
-		->with('estado', $estado)
-		->with('ubicacion', $ubicacion)
-		->with('tipo', $tipo);
+		if(Sentry::check()) {
+			$user = Sentry::getUser();
+			$clasificacion 	= Clasificacion::all();
+			$estado = Estado::all();
+			$ubicacion = Ubicacion::all();
+			$tipo = Tipo::all();
+			$periodicos = Periodico::orderBy('id','DESC')->take(10)->get();
+			return View::make('hemeroteca.periodico_create')
+			->with('user', $user)->with('periodicos', $periodicos)
+			->with('clasificacion' ,$clasificacion)
+			->with('estado', $estado)
+			->with('ubicacion', $ubicacion)
+			->with('tipo', $tipo);
+		} else {
+			return Redirect::route('/')
+			->with(array('mensaje'=>'ahorita no joven', 'class'=>'danger'));
+		}
 	}
 
 	public function postPeriodicoCreate()
@@ -38,17 +46,24 @@ class PeriodicoController extends BaseController {
 
 	public function getPeriodicoUpdate($id)
 	{
-		$clasificacion 	= Clasificacion::all();
-		$estado 		= Estado::all();
-		$ubicacion 		= Ubicacion::all();
-		$tipo 			= Tipo::all();
-		$periodico 		= Periodico::find($id);
-		return View::make('hemeroteca.periodico_update')
-		->with('periodico', $periodico)
-		->with('clasificacion', $clasificacion)
-		->with('estado', $estado)
-		->with('ubicacion', $ubicacion)
-		->with('tipo', $tipo);
+		if(Sentry::check()) {
+			$user = Sentry::getUser();
+			$clasificacion = Clasificacion::all();
+			$estado = Estado::all();
+			$ubicacion = Ubicacion::all();
+			$tipo = Tipo::all();
+			$periodico = Periodico::find($id);
+			$periodicos = Periodico::orderBy('id','DESC')->take(10)->get();
+			return View::make('hemeroteca.periodico_update')
+			->with('user', $user)->with('periodicos', $periodicos)
+			->with('periodico', $periodico)
+			->with('clasificacion', $clasificacion)
+			->with('estado', $estado)
+			->with('ubicacion', $ubicacion)
+			->with('tipo', $tipo);
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function postPeriodicoUpdate($id)

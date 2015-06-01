@@ -27,9 +27,9 @@ class AccountController extends BaseController {
 					return Redirect::route('/')->withInput();
 				}
 			} catch (Cartalyst\Sentry\Users\WrongPasswordException $e) {
-		     	return Redirect::route('login')->withInput();
+		     	return Redirect::route('/')->withInput();
 		    } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-		    	return Redirect::route('login')->withInput();
+		    	return Redirect::route('/')->withInput();
 		    }
 		}
 	}
