@@ -1,25 +1,52 @@
 @extends('base')
 
 @section('contenido')
-<div class="hero-unit">
-<h1><center>¿Qué desea buscar?</center></h1><br><br>
-    <center>
-        <div class="input-prepend input-append" align="center">
-            <div class="busqueda">
-            {{ Form::open(array('route' => 'periodico_search_post', 'method' => 'POST',
-                                'accept-charset' => 'UTF-8', 'enctype' => 'multipart/form-data')) }}
-                <select name="opcion">
-                    <option value="1">Volumen</option>
-                    <option value="2">Nombre de Ejemplar</option>
-                </select>
-                {{ Form::text('buscar', Input::old('buscar'), ['class' => 'form-control']) }}
-                <div class="btn-group">
-                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                </div>
-            {{ Form::close() }}
-            </div>
-        </div><br><br>
-        <a href="{{ URL::route('/') }}" class="btn btn-large tn btn-danger"><i class="icon-home icon-white"></i> Regresar al Menu Principal</a>
-    </center> 
+<br>
+<div class="container">
+<link href="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
+<div class="col-md-12">
+    <table class="table table-striped table-bordered table-hover" id="tablaPeriodicos">
+        <thead>
+            <th>ID</th>
+            <th>Volumen</th>
+            <th>Nombre del Ejemplar</th>
+            <th>Fecha de Inicio</th>
+            <th>Fecha de Termino</th>
+            <th>Estado</th>
+        </thead> 
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-actions" align="center">
+        <a href="{{ URL::route('periodico_create') }}" class="btn btn-lg btn-primary" name="ingresar"></i> Ingresar Nuevo Registro</a> 
+        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-home"></i> Regresar al Menu Principal</a>
+    </div>
 </div>
+</div>
+
+<script src="{{ URL::asset('/assets/js/jquery-1.11.0.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/plugins/dataTables/jquery.dataTables.js') }}"></script>
+<script src="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+
+   <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        event.preventDefault()
+        $('#tablaPeriodicos').dataTable({
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [ 5 ]},{ "bVisible": false, "aTargets": [0] }],
+            "displayLength":10,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": '/datatable/periodicos',
+        });
+    });
+</script>
 @stop

@@ -10,7 +10,7 @@ class LibroTableSeeder extends Seeder {
 		DB::table('libros')->delete();
 		$faker = Faker::create('en_US');
 
-		for($i = 0; $i<15; $i++) {
+		for($i = 0; $i<10; $i++) {
 
 			$libro = new Libro;
 			$libro->codigo = $faker->unique()->randomNumber($nbDigits = 8);
@@ -25,6 +25,7 @@ class LibroTableSeeder extends Seeder {
 			$libro->clasificacion_id = $faker->randomElement($array = array('1','2'));
 			$libro->descripcion = implode($faker->paragraphs(3));
 			$libro->observaciones = implode($faker->paragraphs(2));
+			$libro->status = 1;
 			$libro->save();
 		}
 	}

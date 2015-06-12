@@ -15,7 +15,8 @@ class CreateClasificacionesTable extends Migration {
 		Schema::create('clasificaciones', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('nombre');
+			$table->string('nombre')->nullable();
+			$table->integer('status')->unsigned();
 			$table->timestamps();
 		});
 	}

@@ -8,10 +8,12 @@ class ClasificacionTableSeeder extends Seeder {
 
 		Clasificacion::create(array(
 			'nombre' => 'Original',
+			'status' => 1
 		));
 
 		Clasificacion::create(array(
 			'nombre' => 'Fotocopia',
+			'status' => 1
 		));
 	}
 }

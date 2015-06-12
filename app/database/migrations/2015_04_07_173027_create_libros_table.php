@@ -27,6 +27,7 @@ class CreateLibrosTable extends Migration {
 			$table->integer('clasificacion_id')->unsigned();
 			$table->text('descripcion')->nullable();
 			$table->text('observaciones')->nullable();
+			$table->integer('status')->unsigned();
 			$table->timestamps();
 
 			$table->foreign('ubicacion_id')->references('id')->on('ubicaciones')

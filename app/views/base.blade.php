@@ -11,7 +11,8 @@
     <link href="{{ URL::asset('/assets/css/font-awesome.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ URL::asset('/bootstrap/css/bootstrap.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ URL::asset('/bootstrap/css/bootstrap.min.css') }}" type="text/css">
-    <link rel="stylesheet" href="{{ URL::asset('/bootstrap/css/carousel.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ URL::asset('/bootstrap/css/jumbotron.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ URL::asset('/bootstrap/css/carousel.css')}}" type="text/css">
     <script type="text/javascript" src="{{ URL::asset('/assets/js/jquery-2.1.0.min.js') }}"></script>
 </head>
 <body class="page-homepage-carousel">
@@ -19,8 +20,8 @@
 	<header class="site-header">
 		@include('page.header')
 	</header>
-	<div id="page-content">
-			@yield('contenido')
+	<div>
+		@yield('contenido')
 	</div>
 	<footer align="center">
 		<p><br>Archivo Regional de Tacna - Calle Zela Nro 716 Tacna - Peru. Todos los derechos reservados.<br></p>

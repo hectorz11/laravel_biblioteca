@@ -2,6 +2,7 @@
 
 @section('contenido')
 <br>
+<div class="container">
 <link href="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
 <div class="col-md-12">
     <table class="table table-striped table-bordered table-hover" id="tablaLibros">
@@ -29,30 +30,25 @@
         </tbody>
     </table>
     <div class="form-actions" align="center">
-        <a href="{{ URL::route('libro_create') }}" class="btn btn-lg btn-primary" name="ingresar">
-            <i class="glyphicon glyphicon-plus-sign"></i> Ingresar Nuevo Registro
-        </a> 
-        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger">
-            <i class="glyphicon glyphicon-home"></i> Regresar al Menu Principal
-        </a>
+        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-home"></i> Regresar al Menu Principal</a>
     </div>
 </div>
-<div class="modal fade" id="Eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="Recuperar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">
-                <i class="glyphicon glyphicon-share"></i> Eliminar Libro<br>
+                <i class="glyphicon glyphicon-share"></i> Recuperar Libro<br>
                 <span id="load"><center><img src="{{ asset('img/loading1.gif')}}"> Cargando...</center></span></h4>
             </div>
             <div class="modal-body">
                 <!-- Formulario -->
-                <form role="form" action="{{ URL::route('libro_delete_post')}}" method="post" id="formEdit">
+                <form role="form" action="{{ URL::route('libro_recuperar_post')}}" method="post" id="formEdit">
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="row">
                         <div class="col-md-12">
-                            <label>Titulo del Libro a eliminar</label>
+                            <label>Titulo del Libro a recuperar</label>
                             {{ Form::text('titulo', Input::old('titulo'), ['class' => 'form-control']) }}
                         </div>
                     </div><br>
@@ -62,7 +58,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="glyphicon glyphicon-check"></i> Eliminar</button>
+                            <i class="glyphicon glyphicon-check"></i> Recuperar</button>
                     </div>
                 </form>
             </div>
@@ -70,13 +66,14 @@
         </div>
     </div>
 </div>
+</div>
 
 <script src="{{ URL::asset('/assets/js/jquery-1.11.0.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/plugins/dataTables/jquery.dataTables.js') }}"></script>
 <script src="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
 
    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
+<script>
     $(document).ready(function() {
         event.preventDefault()
         $('#tablaLibros').dataTable({
@@ -84,9 +81,8 @@
             "displayLength":10,
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": '/admin/datatable/libros',
+            "sAjaxSource": '/admin/datatable/libros/no',
         });
-
         $("#tablaLibros").on("click", ".edit", function(e){
             $('[name=libro]').val($(this).attr ('id'));
             var faction = "<?php echo URL::to('/data/libro'); ?>";

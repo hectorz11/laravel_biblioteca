@@ -1,59 +1,106 @@
 @extends('base')
 
 @section('contenido')
-<center>
-    <div class="input-prepend input-append" align="center">
-        <div class="busqueda">
-            {{ Form::open(array('route' => 'periodico_search_post', 'method' => 'POST',
-                                'accept-charset' => 'UTF-8', 'enctype' => 'multipart/form-data')) }}
-                <select name="opcion">
-                    <option value="1">Volumen</option>
-                    <option value="2">Nombre de Ejemplar</option>
-                </select>
-                {{ Form::text('buscar', Input::old('buscar'), ['class' => 'form-control']) }}
-                <div class="btn-group">
-                    <button class="btn btn-primary" type="submit"><i class="icon-white icon-search"></i></button>
-                </div>
-            {{ Form::close() }}
+<br>
+<link href="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
+<div class="col-md-12">
+    <table class="table table-striped table-bordered table-hover" id="tablaPeriodicos">
+        <thead>
+            <th>ID</th>
+            <th>Volumen</th>
+            <th>Nombre del Ejemplar</th>
+            <th>Fecha de Inicio</th>
+            <th>Fecha de Termino</th>
+            <th>Estado</th>
+            <th>Operaciones</th>
+        </thead> 
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-actions" align="center">
+        <a href="{{ URL::route('periodico_create') }}" class="btn btn-lg btn-primary" name="ingresar">
+            <i class="glyphicon glyphicon-plus-sign"></i> Ingresar Nuevo Registro
+        </a> 
+        <a href="{{ URL::route('/') }}" class="btn btn-lg tn btn-danger">
+            <i class="glyphicon glyphicon-home"></i> Regresar al Menu Principal
+        </a>
+    </div>
+</div>
+<div class="modal fade" id="Eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">
+                <i class="glyphicon glyphicon-share"></i> Eliminar Periodico<br>
+                <span id="load"><center><img src="{{ asset('img/loading1.gif')}}"> Cargando...</center></span></h4>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario -->
+                <form role="form" action="{{ URL::route('periodico_delete_post')}}" method="post" id="formEdit">
+                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Titulo del Periodico a eliminar</label>
+                            {{ Form::text('nombre', Input::old('nombre'), ['class' => 'form-control']) }}
+                        </div>
+                    </div><br>
+                    <input type="hidden" name="idPeriodico">
+                    <input id="val" type="hidden" name="periodico" class="input-block-level" value="">
+                    <div class="">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="glyphicon glyphicon-check"></i> Eliminar</button>
+                    </div>
+                </form>
+            </div>
+            <!--  -->
         </div>
     </div>
-</center>
-
-<table class="table" border="1" align="center">
-    <tr>
-        <td><b>ID. Reg.</b></td>
-        <td><b>Volumen</b></td>
-        <td><b>Nombre del Ejemplar</b></td>
-        <td><b>Fecha de Inicio</b></td>
-        <td><b>Fecha de Termino</b></td>
-        <td><b>Estado</b></td>
-        @if(Sentry::check())
-        <td><b>Editar</b></td>
-        <td><b>Borrar</b></td>
-        @endif
-    </tr>    
-    @foreach($periodicos as $periodico)
-    <tr>
-        <td>{{ $periodico->id }}</td>
-        <td>{{ $periodico->volumen }}</td>
-        <td>{{ $periodico->nombre }}</td>
-        <td>{{ $periodico->fecha_inicio }}</td>
-        <td>{{ $periodico->fecha_final }}</td>
-        <td>{{ $periodico->estados->nombre }}</td>
-        @if(Sentry::check())
-        <td><a href="{{ URL::route('periodico_update', $periodico->id) }}" class='btn btn-mini tn btn-warning'><i class='icon-edit icon-white'></i> Editar</a></td>
-        <td><a href="#" class='btn btn-mini tn btn-danger'><i class='icon-remove icon-white'></i> Eliminar</a></td>
-        @endif
-    </tr>
-    @endforeach
-</table>
-<div class="pagination">
-    {{ $periodicos->links() }}
 </div>
-<script>$("tr:odd").css("background-color", "#bbbbff");</script>
 
-<div class="form-actions" align="center">
-    <a href="{{ URL::route('periodico_create') }}" class="btn btn-large btn-primary" name="ingresar"></i> Ingresar Nuevo Registro</a> 
-    <a href="{{ URL::route('/') }}" class="btn btn-large tn btn-danger"><i class="icon-home icon-white"></i> Regresar al Menu Principal</a>
-</div>
+<script src="{{ URL::asset('/assets/js/jquery-1.11.0.min.js') }}"></script>
+<script src="{{ URL::asset('/assets/plugins/dataTables/jquery.dataTables.js') }}"></script>
+<script src="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
+
+   <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        event.preventDefault()
+        $('#tablaPeriodicos').dataTable({
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [ 5 ]},{ "bVisible": false, "aTargets": [0] }],
+            "displayLength":10,
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": '/admin/datatable/periodicos',
+        });
+
+        $("#tablaPeriodicos").on("click", ".edit", function(e){
+            $('[name=periodico]').val($(this).attr ('id'));
+            var faction = "<?php echo URL::to('/data/periodico'); ?>";
+            var fdata = $('#val').serialize();
+            $('#load').show();
+            $.get(faction, fdata, function(json) {
+                if (json.success) {
+                    $('#formEdit input[name="idPeriodico"]').val(json.idPeriodico);
+                    $('#formEdit input[name="nombre"]').val(json.nombre);
+                    $('#load').hide();
+                } else {
+                    $('#errorMessage').html(json.message);
+                    $('#errorMessage').show();
+                }
+            });
+        });
+    });
+</script>
 @stop

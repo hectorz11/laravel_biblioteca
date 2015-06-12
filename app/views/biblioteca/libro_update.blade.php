@@ -1,46 +1,61 @@
 @extends('base')
 
 @section('contenido')
-<br><br><br><br>
 <div class="container">
   <div class="col-md-8">
-    <div class="widget sidebar-widget popular-agent">
-      <h3 class="widgettitle">Modifique el Libro</h3>
+    @if(Session::has('mensaje'))
+      <div class="alert alert-{{ Session::get('class') }}">
+        <strong>{{ Session::get('mensaje') }}</strong>
+        <button type="button" class="close" data-dismiss="alert">×</button>
+      </div>
+    @endif
+      <h3>Modifique el Libro</h3>
     {{ Form::open(array('route' => array('libro_update_post', $libro->id), 'files' => true)) }}
-      @if(Session::get('mensaje'))
-      <div class="alert alert-success">{{Session::get('mensaje')}}</div>
-      @endif
     	<div class="row">
-    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Codigo:</label></div>
-    		<div class="col-md-6 col-xs-9 col-sm-6">{{ Form::text('codigo', $libro->codigo, ['class' => 'form-control']) }}</div>
-    	</div><br>
+    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-barcode"></i> Codigo:</label></div>
+    		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('codigo', $libro->codigo, ['class' => 'form-control']) }}</div>
+    	</div>
+      @if( $errors->has('codigo') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('codigo') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
     	<div class="row">
-    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Autores:</label></div>
+    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-user"></i> Autores:</label></div>
     		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('autores', $libro->autores, ['class' => 'form-control']) }}</div>
-    	</div><br>
+    	</div>
+      @if( $errors->has('autores') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('autores') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Titulo:</label></div>
-        <div class="col-md-8 col-xs-12 col-sm-8">{{ Form::text('titulo', $libro->titulo, ['class' => 'form-control']) }}</div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-bookmark"></i> Titulo:</label></div>
+        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('titulo', $libro->titulo, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Edicion:</label></div>
-        <div class="col-md-6 col-xs-9 col-sm-6">{{ Form::text('edicion', $libro->edicion, ['class' => 'form-control']) }}</div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-font"></i> Edicion:</label></div>
+        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('edicion', $libro->edicion, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Anio:</label></div>
-        <div class="col-md-4 col-xs-6 col-sm-4">{{ Form::text('anio', $libro->anio, ['class' => 'form-control']) }}</div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-calendar"></i> Anio:</label></div>
+        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('anio', $libro->anio, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Contenido:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-comment"></i> Contenido:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('contenido', $libro->contenido, ['class' => 'form-control']) }}</div>
       </div><br>
     	<div class="row">
-    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Foto:</label></div>
-    		<div class="col-md-8 col-xs-12 col-sm-8">{{ Form::file('foto') }}</div>
+    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-picture"></i> Foto:</label></div>
+    		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::file('foto') }}</div>
     	</div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Ubicacion:</label></div>
-        <div class="col-md-6 col-xs-9 col-sm-6">
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-map-marker"></i> Ubicacion:</label></div>
+        <div class="col-md-10 col-xs-15 col-sm-10">
           <select name="ubicacion_id" class="form-control">
             <option value="{{ $libro->ubicaciones->id }}">{{ $libro->ubicaciones->nombre }}</option>
             <option>------------------------------</option>
@@ -51,11 +66,18 @@
             @endif
           </select>
         </div>
-      </div><br>
+      </div>
+      @if( $errors->has('ubicacion_id') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('ubicacion_id') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Estado:</label></div>
-          <div class="col-md-6 col-xs-9 col-sm-6">
-          <select name="estado_id" class="form-control">
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-stats"></i> Estado:</label></div>
+          <div class="col-md-10 col-xs-15 col-sm-10">
+          <select id="estado_id" class="form-control">
             <option value="{{ $libro->estados->id }}">{{ $libro->estados->nombre }}</option>
             <option>------------------------------</option>
             @if(isset($estado))
@@ -65,10 +87,17 @@
             @endif
           </select>
         </div>
-      </div><br>
+      </div>
+      @if( $errors->has('estado_id') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('estado_id') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Clasificacion:</label></div>
-        <div class="col-md-6 col-xs-9 col-sm-6">
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-th-list"></i> Clasificacion:</label></div>
+        <div class="col-md-10 col-xs-15 col-sm-10">
           <select name="clasificacion_id" class="form-control">
             <option value="{{ $libro->clasificaciones->id }}">{{ $libro->clasificaciones->nombre }}</option>
             <option>------------------------------</option>
@@ -79,29 +108,34 @@
             @endif
           </select>
         </div>
-      </div><br>
+      </div>
+      @if( $errors->has('clasificacion_id') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('clasificacion_id') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Descripcion:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-list-alt"></i> Descripcion:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('descripcion', $libro->descripcion, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Observaciones:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-eye-open"></i> Observaciones:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('observaciones', $libro->observaciones, ['class' => 'form-control']) }}</div>
       </div><br>
-      <input class="btn btn-lg btn-primary" type="submit" value="Confirmar" />
-      <a href="{{ URL::route('biblioteca') }}" class="btn btn-lg btn-danger">Cancelar</a>
+      <div class="form-actions" align="center">
+        <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>
+        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
+      </div>
     {{ Form::close() }}
-    </div>
   </div>
   <!-- Start Sidebar -->
   <div class="col-md-4">
-    <div class="widget sidebar-widget popular-agent">
-      <h3 class="widgettitle">Bienvenido</h3>
+      <h3>Bienvenido</h3>
         {{ $user->first_name}} {{ $user->last_name }}
       <br>
-    </div>
-    <div class="widget sidebar-widget latest-testimonials">
-      <h3 class="widgettitle">Archivo Regional Tacna</h3>
+      <h3>Archivo Regional Tacna</h3>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -118,7 +152,6 @@
         @endforeach
         </tbody>
       </table>
-    </div>
   </div>
 </div>
 @stop

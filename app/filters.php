@@ -97,11 +97,15 @@ Route::filter('csrf', function()
 
 Route::filter('admin', function($route,$request)
 {
-	if(Sentry::check()) {
+	if (Sentry::check()) {
 		$sentry = Sentry::getUser();
 		$admin = Sentry::findGroupByName('admin');
+		$helper = Sentry::findGroupByName('helper');
+		$helper_libro = Sentry::findGroupByName('helper_libro');
+		$helper_periodico = Sentry::findGroupByName('helper_periodico');
 
-		if(!$sentry->inGroup($admin)) {
+		if (!($sentry->inGroup($admin) || $sentry->inGroup($helper) 
+			|| $sentry->inGroup($helper_libro) || $sentry->inGroup($helper_periodico))) {
 			return Redirect::route('/');
 		}
 	} else {
@@ -111,11 +115,11 @@ Route::filter('admin', function($route,$request)
 
 Route::filter('user', function($route,$request)
 {
-	if(Sentry::check()) {
+	if (Sentry::check()) {
 		$sentry = Sentry::getUser();
-		$teacher = Sentry::findGroupByName('user');
+		$user = Sentry::findGroupByName('user');
 
-		if(!$sentry->inGroup($teacher)) {
+		if (!$sentry->inGroup($user)) {
 			return Redirect::route('/');
 		}
 	} else {

@@ -25,6 +25,7 @@ class CreatePeriodicosTable extends Migration {
 			$table->integer('ubicacion_id')->unsigned();
 			$table->string('descripcion')->nullable();
 			$table->string('observaciones')->nullable();
+			$table->integer('status')->unsigned();
 			$table->timestamps();
 
 			$table->foreign('estado_id')->references('id')->on('estados')

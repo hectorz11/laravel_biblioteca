@@ -1,46 +1,60 @@
 @extends('base')
 
 @section('contenido')
-<br><br><br><br>
 <div class="container">
   <div class="col-md-8">
-    <div class="widget sidebar-widget popular-agent">
-      <h3 class="widgettitle">Ingrese el Libro</h3>
+    @if(Session::has('mensaje'))
+      <div class="alert alert-{{ Session::get('class') }}">
+        <strong>{{ Session::get('mensaje') }}</strong>
+        <button type="button" class="close" data-dismiss="alert">×</button>
+      </div>
+    @endif
+      <h3>Ingrese el Libro</h3>
     {{ Form::open(array('route' => 'libro_create_post', 'files' => true)) }}
-      @if(Session::get('mensaje'))
-      <div class="alert alert-{{ Session::get('class') }}">{{Session::get('mensaje')}}</div>
-      @endif
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Codigo:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('codigo', Input::old('codigo'), ['class' => 'form-control']) }}</div>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
+          {{ Form::text('codigo', Input::old('codigo'), ['class' => 'form-control', 'placeholder' => 'Codigo']) }}
       </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Autores:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('autores', Input::old('autores'), ['class' => 'form-control']) }}</div>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          {{ Form::text('autores', Input::old('autores'), ['class' => 'form-control', 'placeholder' => 'Autores']) }}
+      </div>
+      @if( $errors->has('autores') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('autores') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-bookmark"></i></span>
+          {{ Form::text('titulo', Input::old('titulo'), ['class' => 'form-control', 'placeholder' => 'Titulo']) }}
+      </div>
+      @if( $errors->has('titulo') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('titulo') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-font"></i></span>
+          {{ Form::text('edicion', Input::old('edicion'), ['class' => 'form-control', 'placeholder' => 'Edicion']) }}
       </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Titulo:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('titulo', Input::old('titulo'), ['class' => 'form-control']) }}</div>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+          {{ Form::text('anio', Input::old('anio'), ['class' => 'form-control', 'placeholder' => 'Año']) }}
       </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Edicion:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('edicion', Input::old('edicion'), ['class' => 'form-control']) }}</div>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
+          {{ Form::text('contenido', Input::old('contenido'), ['class' => 'form-control', 'placeholder' => 'Contenido']) }}
       </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Anio:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('anio', Input::old('anio'), ['class' => 'form-control']) }}</div>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+          {{ Form::file('foto', ['class' => 'form-control']) }}
       </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Contenido:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('contenido', Input::old('contenido'), ['class' => 'form-control']) }}</div>
-      </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Foto:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::file('foto', ['class' => 'form-control']) }}</div>
-      </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Ubicacion:</label></div>
-        <div class="col-md-6 col-xs-9 col-sm-6">
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
           <select id="ubicacion_id" class="form-control">
             <option>-- Ubicaciones --</option>
             @if(isset($ubicacion))
@@ -49,12 +63,17 @@
               @endforeach
             @endif
           </select>
+      </div>
+      @if( $errors->has('ubicacion_id') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('ubicacion_id') as $error)
+            * {{$error}}</br>
+          @endforeach
         </div>
-      </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Estado:</label></div>
-        <div class="col-md-6 col-xs-9 col-sm-6">
-          <select name="estado_id" class="form-control">
+      @endif<br>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-stats"></i></span>
+          <select id="estado_id" class="form-control">
             <option>-- Estados --</option>
             @if(isset($estado))
               @foreach($estado as $e)
@@ -62,11 +81,16 @@
               @endforeach
             @endif
           </select>
+      </div>
+      @if( $errors->has('estado_id') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('estado_id') as $error)
+            * {{$error}}</br>
+          @endforeach
         </div>
-      </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Clasificacion:</label></div>
-        <div class="col-md-6 col-xs-9 col-sm-6">
+      @endif<br>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
           <select id="clasificacion_id" class="form-control">
             <option>-- Clasificaciones --</option>
             @if(isset($clasificacion))
@@ -75,31 +99,35 @@
               @endforeach
             @endif
           </select>
+      </div>
+      @if( $errors->has('clasificacion_id') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('clasificacion_id') as $error)
+            * {{$error}}</br>
+          @endforeach
         </div>
+      @endif<br>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
+          {{ Form::text('descripcion', Input::old('descripcion'), ['class' => 'form-control', 'placeholder' => 'Descripcion']) }}
       </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Descripcion:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('descripcion', Input::old('descripcion'), ['class' => 'form-control']) }}</div>
-      </div><br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Observaciones:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('observaciones', Input::old('observaciones'), ['class' => 'form-control']) }}</div>
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+          {{ Form::text('observaciones', Input::old('observaciones'), ['class' => 'form-control', 'placeholder' => 'Observaciones']) }}
       </div>
       <br>
-      <input class="btn btn-lg btn-primary" type="submit" value="Confirmar" />
-      <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger">Cancelar</a>
+      <div class="form-actions" align="center">
+        <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>
+        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
+      </div>
     {{ Form::close() }}
-    </div>
   </div>
   <!-- Start Sidebar -->
   <div class="col-md-4">
-    <div class="widget sidebar-widget popular-agent">
-      <h3 class="widgettitle">Bienvenido</h3>
+      <h3>Bienvenido</h3>
         {{ $user->first_name}} {{ $user->last_name }}
       <br>
-    </div>
-    <div class="widget sidebar-widget latest-testimonials">
-      <h3 class="widgettitle">Archivo Regional Tacna</h3>
+      <h3>Archivo Regional Tacna</h3>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -116,7 +144,6 @@
         @endforeach
         </tbody>
       </table>
-    </div>
   </div>
 </div>
 @stop
