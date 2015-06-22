@@ -4,7 +4,7 @@ class Estado extends Eloquent {
 
 	protected $table = 'estados';
 
-	protected $fillable = array('nombre');
+	protected $fillable = ['nombre','status'];
 
 	public function libros()
 	{
@@ -16,22 +16,37 @@ class Estado extends Eloquent {
 		return $this->hasMany('Periodico','estados_id');
 	}
 
+	public function valor($id)
+	{
+		$estado = Estado::find($id);
+		if ($estado->status == 1) return true;
+		else return false;
+	}
+
 	public static function createEstado($input)
 	{
 		$respuesta = array();
-		$rules = array('nombre' => 'required');
-		$validacion = Validator::make($input, $rules);
-		if($validacion->fails()) {
-			$respuesta['mensaje'] = $validacion;
-			$respuesta['error'] = true;
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro','helper_periodico'])) {
+			$reglas = array('nombre' => 'required');
+			$validacion = Validator::make($input, $reglas);
+			if ($validacion->fails()) {
+				$respuesta['mensaje'] = $validacion;
+				$respuesta['error'] = true;
+			} else {
+				$estado = new Estado;
+				$estado->nombre = Input::get('nombre');
+				$estado->status = 1;
+				if ($estado->save()) {
+					$respuesta['mensaje'] = 'creado con exito!';
+					$respuesta['error'] = false;
+				} else {
+					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['error'] = false;
+				}
+			}
 		} else {
-			$estado = new Estado;
-			$estado->nombre = Input::get('nombre');
-			$estado->status = 1;
-			$estado->save();
-
-			$respuesta['mensaje'] = 'creado con exito';
-			$respuesta['error'] = false;
+			$respuesta['mensaje'] = 'Error, sorry do not have access';
+			$respuesta['error'] = true;
 		}
 		return $respuesta;
 	}
@@ -39,19 +54,27 @@ class Estado extends Eloquent {
 	public static function updateEstado($input, $id)
 	{
 		$respuesta = array();
-		$rules = array('nombre' => 'required');
-		$validacion = Validator::make($input, $rules);
-		if($validacion->fails()) {
-			$respuesta['mensaje'] = $validacion;
-			$respuesta['error'] = true;
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro','helper_periodico'])) {
+			$reglas = array('nombre' => 'required');
+			$validacion = Validator::make($input, $reglas);
+			if ($validacion->fails()) {
+				$respuesta['mensaje'] = $validacion;
+				$respuesta['error'] = true;
+			} else {
+				$estado = Estado::find($id);
+				$estado->nombre = Input::get('nombre');
+				$estado->status = Input::get('status');
+				if ($estado->save()) {
+					$respuesta['mensaje'] = 'editado con exito!';
+					$respuesta['error'] = false;
+				} else {
+					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['error'] = false;
+				}
+			}
 		} else {
-			$estado = Estado::find($id);
-			$estado->nombre = Input::get('nombre');
-			$estado->status = Input::get('status');
-			$estado->save();
-
-			$respuesta['mensaje'] = 'editado con exito';
-			$respuesta['error'] = false;
+			$respuesta['mensaje'] = 'Error, sorry do not have access';
+			$respuesta['error'] = true;
 		}
 		return $respuesta;
 	}

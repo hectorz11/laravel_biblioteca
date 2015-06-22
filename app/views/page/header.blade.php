@@ -14,7 +14,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 		    </button>
-          	<a class="navbar-brand" href="#">Archivo Regional Tacna</a>
+          	<a class="navbar-brand" href="#ART">Archivo Regional Tacna</a>
         </div>
 	  	<div id="navbar" class="navbar-collapse collapse">
 	        <ul class="nav navbar-nav">
@@ -38,13 +38,11 @@
 				@if(Sentry::check())
 			        @if($user->inGroup($groupAdmin) || $user->inGroup($groupHelper) || $user->inGroup($groupHelperLibro))
 			           	<li class="divider"></li>
-			            <li class="dropdown-header">User</li>
+			            <li class="dropdown-header">Archivo Regional Tacna</li>
 			            <li><a href="{{ URL::route('libro_create') }}"><i class="glyphicon glyphicon-plus-sign"></i> Ingresar Libro</a></li>
 			            <li><a href="{{ URL::route('biblioteca') }}"><i class="glyphicon glyphicon-ok-sign"></i> Consultar Libro</a></li>
-			            
 			            <li><a href="{{ URL::route('biblioteca_no') }}"><i class="glyphicon glyphicon-remove-sign"></i> Recuperar Libro</a></li>
-			            <li><a href="#"><i class="glyphicon glyphicon-info-sign"></i> Reporte Completo de Libros</a></li>
-			            
+			            <li><a href="#"><i class="glyphicon glyphicon-info-sign"></i> Reporte Completo de Libros</a></li> 
 			        @endif
 				@endif
 			        </ul>
@@ -58,49 +56,63 @@
 				@if(Sentry::check())
 					@if($user->inGroup($groupAdmin) || $user->inGroup($groupHelper) || $user->inGroup($groupHelperPeriodico))
 			           	<li class="divider"></li>
-			            <li class="dropdown-header">User</li>
+			            <li class="dropdown-header">Archivo Regional Tacna</li>
 			            <li><a href="{{ URL::route('periodico_create') }}"><i class="glyphicon glyphicon-plus-sign"></i> Ingresar Periodico</a></li>
 			            <li><a href="{{ URL::route('hemeroteca') }}"><i class="glyphicon glyphicon-ok-sign"></i> Consultar Periodico</a></li>
-						@if($user->inGroup($groupAdmin))
 			            <li><a href="{{ URL::route('hemeroteca_no') }}"><i class="glyphicon glyphicon-remove-sign"></i> Recuperar Periodico</a></li>
 			            <li><a href="#"><i class="glyphicon glyphicon-info-sign"></i> Reporte Completo de Periodicos</a></li>
-			            @endif
 			    	@endif
 				@endif
 			        </ul>
 		        </li>
 		    @if(Sentry::check())
-			    @if($user->inGroup($groupAdmin))
+			    @if($user->inGroup($groupAdmin) || $user->inGroup($groupHelper) || $user->inGroup($groupHelperLibro) || $user->inGroup($groupHelperPeriodico))
 		        <li class="dropdown">
 			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-			        	<i class="glyphicon glyphicon-file"></i> Panel <span class="caret"></span>
+			        	<i class="glyphicon glyphicon-th-large"></i> Panel <span class="caret"></span>
 			        </a>
 			        <ul class="dropdown-menu" role="menu">
 			            <li class="dropdown-header">Clasificacion</li>
-			            <li><a href="{{ URL::route('admin_clasificaciones') }}"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
+			            <li><a href="{{ URL::route('admin_clasificaciones') }}"><i class="glyphicon glyphicon-question-sign"></i> Consultar</a></li>
 			           	<li class="divider"></li>
 			            <li class="dropdown-header">Estados</li>
-			            <li><a href="{{ URL::route('admin_estados') }}"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
+			            <li><a href="{{ URL::route('admin_estados') }}"><i class="glyphicon glyphicon-question-sign"></i> Consultar</a></li>
 			            <li class="divider"></li>
 			            <li class="dropdown-header">Tipos</li>
-			            <li><a href="{{ URL::route('admin_tipos') }}"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
+			            <li><a href="{{ URL::route('admin_tipos') }}"><i class="glyphicon glyphicon-question-sign"></i> Consultar</a></li>
 			            <li class="divider"></li>
 			            <li class="dropdown-header">Ubicaciones</li>
-			            <li><a href="{{ URL::route('admin_ubicaciones') }}"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
+			            <li><a href="{{ URL::route('admin_ubicaciones') }}"><i class="glyphicon glyphicon-question-sign"></i> Consultar</a></li>
 			        </ul>
 		        </li>
 		    	@endif
 			@endif
 		    @if(Sentry::check())
+		    	@if($user->inGroup($groupAdmin))
+		    	<li class="dropdown">
+			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+			        	<i class="glyphicon glyphicon-th"></i> Administrador <span class="caret"></span>
+			        </a>
+			        <ul class="dropdown-menu" role="menu">
+			            <li><a href="{{ URL::route('admin_users') }}"><i class="glyphicon glyphicon-user"></i> Usuarios</a></li>
+			           	<li class="divider"></li>
+			            <li class="dropdown-header">Grupos</li>
+			            <li><a href="#"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
+			            <li class="divider"></li>
+			            <li class="dropdown-header">Comentarios</li>
+			            <li><a href="{{ URL::route('admin_comentarios') }}"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
+			        </ul>
+		        </li>
+		    	@endif
 		        @if($user->inGroup($groupUser))
-		        <li><a href="#"><i class="glyphicon glyphicon-comment"></i> Sugerencias</a></li>
+		        <li><a href="{{ URL::route('comentarios') }}"><i class="glyphicon glyphicon-comment"></i> Comentarios</a></li>
 		        @endif
 		        <li><a href="{{ URL::route('logout') }}"><i class="glyphicon glyphicon-log-out"></i> Salir</a></li>
 		    @endif
 	        </ul>
 	        <div id="navbar" class="navbar-collapse collapse">
 	        @if(Sentry::check())
-
+	        	<a class="navbar-brand navbar-right" href="#">{{ $user->first_name }} {{ $user->last_name }} --</a>
 	        @else
 	        	{{ Form::open(array('route' => 'login_post')) }}
 		        <div class="navbar-form navbar-right">

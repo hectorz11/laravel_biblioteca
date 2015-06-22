@@ -12,7 +12,7 @@
       <h3>Modifique el Libro</h3>
     {{ Form::open(array('route' => array('libro_update_post', $libro->id), 'files' => true)) }}
     	<div class="row">
-    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-barcode"></i> Codigo:</label></div>
+    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Codigo:</label></div>
     		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('codigo', $libro->codigo, ['class' => 'form-control']) }}</div>
     	</div>
       @if( $errors->has('codigo') )
@@ -23,7 +23,7 @@
         </div>
       @endif<br>
     	<div class="row">
-    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-user"></i> Autores:</label></div>
+    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Autores:</label></div>
     		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('autores', $libro->autores, ['class' => 'form-control']) }}</div>
     	</div>
       @if( $errors->has('autores') )
@@ -34,69 +34,27 @@
         </div>
       @endif<br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-bookmark"></i> Titulo:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Titulo:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('titulo', $libro->titulo, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-font"></i> Edicion:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Edicion:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('edicion', $libro->edicion, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-calendar"></i> Anio:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Anio:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('anio', $libro->anio, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-comment"></i> Contenido:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Contenido:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('contenido', $libro->contenido, ['class' => 'form-control']) }}</div>
       </div><br>
     	<div class="row">
-    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-picture"></i> Foto:</label></div>
+    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Foto:</label></div>
     		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::file('foto') }}</div>
     	</div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-map-marker"></i> Ubicacion:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">
-          <select name="ubicacion_id" class="form-control">
-            <option value="{{ $libro->ubicaciones->id }}">{{ $libro->ubicaciones->nombre }}</option>
-            <option>------------------------------</option>
-            @if(isset($ubicacion))
-              @foreach($ubicacion as $u)
-              <option value="{{ $u->id }}">{{ $u->nombre }}</option>
-              @endforeach
-            @endif
-          </select>
-        </div>
-      </div>
-      @if( $errors->has('ubicacion_id') )
-        <div class="alert alert-danger">
-          @foreach($errors->get('ubicacion_id') as $error)
-            * {{$error}}</br>
-          @endforeach
-        </div>
-      @endif<br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-stats"></i> Estado:</label></div>
-          <div class="col-md-10 col-xs-15 col-sm-10">
-          <select id="estado_id" class="form-control">
-            <option value="{{ $libro->estados->id }}">{{ $libro->estados->nombre }}</option>
-            <option>------------------------------</option>
-            @if(isset($estado))
-              @foreach($estado as $e)
-              <option value="{{ $e->id }}">{{ $e->nombre }}</option>
-              @endforeach
-            @endif
-          </select>
-        </div>
-      </div>
-      @if( $errors->has('estado_id') )
-        <div class="alert alert-danger">
-          @foreach($errors->get('estado_id') as $error)
-            * {{$error}}</br>
-          @endforeach
-        </div>
-      @endif<br>
-      <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-th-list"></i> Clasificacion:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Casificacion:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">
           <select name="clasificacion_id" class="form-control">
             <option value="{{ $libro->clasificaciones->id }}">{{ $libro->clasificaciones->nombre }}</option>
@@ -117,16 +75,58 @@
         </div>
       @endif<br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-list-alt"></i> Descripcion:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Estado:</label></div>
+          <div class="col-md-10 col-xs-15 col-sm-10">
+          <select id="estado_id" class="form-control">
+            <option value="{{ $libro->estados->id }}">{{ $libro->estados->nombre }}</option>
+            <option>------------------------------</option>
+            @if(isset($estado))
+              @foreach($estado as $e)
+              <option value="{{ $e->id }}">{{ $e->nombre }}</option>
+              @endforeach
+            @endif
+          </select>
+        </div>
+      </div>
+      @if( $errors->has('estado_id') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('estado_id') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
+      <div class="row">
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Ubicacion:</label></div>
+        <div class="col-md-10 col-xs-15 col-sm-10">
+          <select name="ubicacion_id" class="form-control">
+            <option value="{{ $libro->ubicaciones->id }}">{{ $libro->ubicaciones->nombre }}</option>
+            <option>------------------------------</option>
+            @if(isset($ubicacion))
+              @foreach($ubicacion as $u)
+              <option value="{{ $u->id }}">{{ $u->nombre }}</option>
+              @endforeach
+            @endif
+          </select>
+        </div>
+      </div>
+      @if( $errors->has('ubicacion_id') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('ubicacion_id') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
+      <div class="row">
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Descripcion:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('descripcion', $libro->descripcion, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"><i class="glyphicon glyphicon-eye-open"></i> Observaciones:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Observaciones:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('observaciones', $libro->observaciones, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="form-actions" align="center">
         <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>
-        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
+        <a href="{{ URL::route('biblioteca') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
       </div>
     {{ Form::close() }}
   </div>

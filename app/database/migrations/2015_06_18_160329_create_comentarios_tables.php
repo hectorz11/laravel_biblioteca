@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTiposTable extends Migration {
+class CreateComentariosTables extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateTiposTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('tipos', function(Blueprint $table)
+		Schema::create('comentarios', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('nombre')->nullable();
+			$table->string('descripcion')->nullable();
 			$table->integer('status')->unsigned();
+			$table->integer('user_id')->unsigned();
 			$table->timestamps();
 		});
 	}
@@ -28,7 +29,7 @@ class CreateTiposTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('tipos');
+		Schema::drop('comentarios');
 	}
 
 }

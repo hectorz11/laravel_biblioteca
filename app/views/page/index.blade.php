@@ -76,7 +76,7 @@
     <div class="col-md-4">
       {{ Form::open(array('route' => array('usuario_update_post', $user->id))) }}
         <div class="input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-pawn"></i></span>
           {{ Form::text('first_name', $user->first_name, ['class' => 'form-control', 'placeholder' => 'Nombre(s)']) }}
         </div>
         @if( $errors->has('first_name') )
@@ -87,7 +87,7 @@
           </div>
         @endif<br>
         <div class="input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-bishop"></i></span>
           {{ Form::text('last_name', $user->last_name, ['class' => 'form-control', 'placeholder' => 'Apellidos']) }}
         </div>
         @if( $errors->has('last_name') )

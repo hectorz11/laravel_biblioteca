@@ -54,19 +54,19 @@
           {{ Form::file('foto', ['class' => 'form-control']) }}
       </div><br>
       <div class="input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
-          <select id="ubicacion_id" class="form-control">
-            <option>-- Ubicaciones --</option>
-            @if(isset($ubicacion))
-              @foreach($ubicacion as $u)
-              <option value="{{ $u->id }}">{{ $u->nombre }}</option>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
+          <select id="clasificacion_id" class="form-control">
+            <option>-- Clasificaciones --</option>
+            @if(isset($clasificacion))
+              @foreach($clasificacion as $c)
+              <option value="{{ $c->id }}">{{ $c->nombre }}</option>
               @endforeach
             @endif
           </select>
       </div>
-      @if( $errors->has('ubicacion_id') )
+      @if( $errors->has('clasificacion_id') )
         <div class="alert alert-danger">
-          @foreach($errors->get('ubicacion_id') as $error)
+          @foreach($errors->get('clasificacion_id') as $error)
             * {{$error}}</br>
           @endforeach
         </div>
@@ -90,19 +90,19 @@
         </div>
       @endif<br>
       <div class="input-group">
-          <span class="input-group-addon"><i class="glyphicon glyphicon-th-list"></i></span>
-          <select id="clasificacion_id" class="form-control">
-            <option>-- Clasificaciones --</option>
-            @if(isset($clasificacion))
-              @foreach($clasificacion as $c)
-              <option value="{{ $c->id }}">{{ $c->nombre }}</option>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+          <select id="ubicacion_id" class="form-control">
+            <option>-- Ubicaciones --</option>
+            @if(isset($ubicacion))
+              @foreach($ubicacion as $u)
+              <option value="{{ $u->id }}">{{ $u->nombre }}</option>
               @endforeach
             @endif
           </select>
       </div>
-      @if( $errors->has('clasificacion_id') )
+      @if( $errors->has('ubicacion_id') )
         <div class="alert alert-danger">
-          @foreach($errors->get('clasificacion_id') as $error)
+          @foreach($errors->get('ubicacion_id') as $error)
             * {{$error}}</br>
           @endforeach
         </div>
@@ -118,7 +118,7 @@
       <br>
       <div class="form-actions" align="center">
         <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>
-        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
+        <a href="{{ URL::route('biblioteca') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
       </div>
     {{ Form::close() }}
   </div>

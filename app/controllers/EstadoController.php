@@ -31,10 +31,11 @@ class EstadoController extends BaseController
 			$respuesta = Estado::createEstado(Input::all());
 			if($respuesta['error'] == true) {
 				return Redirect::route('admin_estado_create')
-				->withErrors($respuesta['mensaje'])->withInput();
+				->withErrors($respuesta['mensaje'])->withInput()
+				->with(['mensaje' => $respuesta['mensaje'], 'class' => 'warning']);
 			} else {
 				return Redirect::route('admin_estado_create')
-				->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
+				->with(['mensaje' => $respuesta['mensaje'], 'class' => 'success']);
 			}
 		} else {
 			return Redirect::route('/');
@@ -57,11 +58,12 @@ class EstadoController extends BaseController
 		if(Sentry::check()) {
 			$respuesta = Estado::updateEstado(Input::all(), $id);
 			if($respuesta['error'] == true) {
-				return Redierct::route('admin_estado_update', $id)
-				->withErrors($respuesta['mensaje'])->withInput();
+				return Redirect::route('admin_estado_update', $id)
+				->withErrors($respuesta['mensaje'])->withInput()
+				->with(['mensaje' => $respuesta['mensaje'], 'class' => 'warning']);
 			} else {
 				return Redirect::route('admin_estado_update', $id)
-				->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
+				->with(['mensaje' => $respuesta['mensaje'], 'class' => 'success']);
 			}
 		} else {
 			return Redirect::route('/');

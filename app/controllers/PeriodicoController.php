@@ -4,7 +4,7 @@ class PeriodicoController extends BaseController {
 
 	public function getHemeroteca()
 	{
-		if(Sentry::check()) {
+		if (Sentry::check()) {
 			return View::make('hemeroteca.hemeroteca');
 		} else {
 			return Redirect::route('/')
@@ -14,7 +14,7 @@ class PeriodicoController extends BaseController {
 
 	public function getHemerotecaNo()
 	{
-		if(Sentry::check()) {
+		if (Sentry::check()) {
 			return View::make('hemeroteca.hemeroteca_no');
 		} else {
 			return Redirect::route('/')
@@ -75,21 +75,6 @@ class PeriodicoController extends BaseController {
 		})->make();
 	}
 
-	public function getDataPeriodico()
-	{
-		if(Input::has('periodico'))
-		{
-			$periodico_id = Input::get('periodico');
-	       	$periodico = Periodico::find($periodico_id);
-	        $data = array(
-	            'success' => true,// indica que se llevo la peticion acabo
-	            'idPeriodico' => $periodico->id,
-	            'nombre' => $periodico->nombre
-	        );
-	        return Response::json($data);
-		}
-	}
-
 	public function getDatatableGuest()
 	{
 		$result = DB::table('periodicos')
@@ -110,9 +95,23 @@ class PeriodicoController extends BaseController {
 		->make();
 	}
 
+	public function getDataPeriodico()
+	{
+		if (Input::has('periodico')) {
+			$periodico_id = Input::get('periodico');
+	       	$periodico = Periodico::find($periodico_id);
+	        $data = array(
+	            'success' => true,// indica que se llevo la peticion acabo
+	            'idPeriodico' => $periodico->id,
+	            'nombre' => $periodico->nombre
+	        );
+	        return Response::json($data);
+		}
+	}
+
 	public function getPeriodicoCreate()
 	{
-		if(Sentry::check()) {
+		if (Sentry::check()) {
 			$user = Sentry::getUser();
 			$clasificacion 	= Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
@@ -133,9 +132,9 @@ class PeriodicoController extends BaseController {
 
 	public function postPeriodicoCreate()
 	{
-		if(Sentry::check()) {
+		if (Sentry::check()) {
 			$respuesta = Periodico::agregarPeriodico(Input::all());
-			if($respuesta['error'] == true)	{
+			if ($respuesta['error'] == true)	{
 				return Redirect::route('periodico_create')
 				->withErrors($respuesta['mensaje'])->withInput();
 			} else {
@@ -150,7 +149,7 @@ class PeriodicoController extends BaseController {
 
 	public function getPeriodicoUpdate($id)
 	{
-		if(Sentry::check()) {
+		if (Sentry::check()) {
 			$user = Sentry::getUser();
 			$clasificacion = Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
@@ -173,8 +172,8 @@ class PeriodicoController extends BaseController {
 
 	public function postPeriodicoUpdate($id)
 	{
-		$respuesta 	= Periodico::editarPeriodico(Input::all(), $id);
-		if($respuesta['error'] == true) {
+		$respuesta = Periodico::editarPeriodico(Input::all(), $id);
+		if ($respuesta['error'] == true) {
 			return Redirect::route('periodico_update', $periodico->id)
 			->withErrors($respuesta['mensaje'])
 			->withInput();
@@ -186,7 +185,7 @@ class PeriodicoController extends BaseController {
 
 	public function getPeriodicoDelete($id)
 	{
-		if(Sentry::check()) {
+		if (Sentry::check()) {
 			$periodico = Periodico::find($id);
 			return View::make('hemeroteca.periodico_delete')
 			->with('periodico', $periodico); 

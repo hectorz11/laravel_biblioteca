@@ -11,39 +11,31 @@ class GroupTableSeeder extends Seeder {
 		Sentry::createGroup(array(
 			'name' => 'admin',
 			'permissions' => array(
-				'system' => 1,
+				'admin' => 1,
 			)
 		));
 		Sentry::createGroup(array(
 			'name' => 'helper',
 			'permissions' => array(
-				'system.libro' => 1,
-				'system.periodico' => 1,
+				'helper' => 1,
 			)
 		));
 		Sentry::createGroup(array(
 			'name' => 'helper_libro',
 			'permissions' => array(
-				'system.libro.create' => 1,
-				'system.libro.update' => 1,
-				'system.libro.delete' => 1,
-				'system.libro.search' => 1,
+				'helper_libro' => 1,
 			)
 		));
 		Sentry::createGroup(array(
 			'name' => 'helper_periodico',
 			'permissions' => array(
-				'system.periodico.create' => 1,
-				'system.periodico.update' => 1,
-				'system.periodico.delete' => 1,
-				'system.periodico.search' => 1,
+				'helper_periodico' => 1,
 			)
 		));
 		Sentry::createGroup(array(
 			'name' => 'user',
 			'permissions' => array(
-				'system.libro.search' => 1,
-				'system.periodico.search' => 1,
+				'user' => 1,
 			)
 		));
 	}

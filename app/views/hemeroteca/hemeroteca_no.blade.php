@@ -84,7 +84,7 @@
 
         $("#tablaPeriodicos").on("click", ".edit", function(e){
             $('[name=periodico]').val($(this).attr ('id'));
-            var faction = "<?php echo URL::to('/data/periodico'); ?>";
+            var faction = "<?php echo URL::to('/admin/data/periodico'); ?>";
             var fdata = $('#val').serialize();
             $('#load').show();
             $.get(faction, fdata, function(json) {

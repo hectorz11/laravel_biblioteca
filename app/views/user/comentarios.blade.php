@@ -8,28 +8,24 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Codigo</th>
-                <th>Autor(es)</th>
-                <th>Titulo del Libro</th>
-                <th>Edicion</th>
-                <th>Estado</th>
+                <th>Comentario</th>
                 <th>Operaciones</th>
             </tr>
         </thead>
         <tbody>
+        @foreach($user->comentarios as $comentario)
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ $comentario->id }}</td>
+                <td>{{ $comentario->descripcion }}</td>
+                <td>
+                    <a href="{{ URL::to('#Eliminar') }}">Eliminar</a>
+                </td>
             </tr>
+        @endforeach
         </tbody>
     </table>
     <div class="form-actions" align="center">
-        <a href="{{ URL::route('libro_create') }}" class="btn btn-lg btn-primary" name="ingresar">
+        <a href="{{ URL::route('comentario_create') }}" class="btn btn-lg btn-primary" name="ingresar">
             <i class="glyphicon glyphicon-plus-sign"></i> Ingresar Nuevo Registro
         </a> 
         <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger">
@@ -70,39 +66,4 @@
         </div>
     </div>
 </div>
-
-<script src="{{ URL::asset('/assets/js/jquery-1.11.0.min.js') }}"></script>
-<script src="{{ URL::asset('/assets/plugins/dataTables/jquery.dataTables.js') }}"></script>
-<script src="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
-
-   <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        event.preventDefault()
-        $('#tablaLibros').dataTable({
-            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [ 5 ]},{ "bVisible": false, "aTargets": [0] }],
-            "displayLength":10,
-            "bProcessing": true,
-            "bServerSide": true,
-            "sAjaxSource": '/admin/datatable/libros',
-        });
-
-        $("#tablaLibros").on("click", ".edit", function(e){
-            $('[name=libro]').val($(this).attr ('id'));
-            var faction = "<?php echo URL::to('/admin/data/libro'); ?>";
-            var fdata = $('#val').serialize();
-            $('#load').show();
-            $.get(faction, fdata, function(json) {
-                if (json.success) {
-                    $('#formEdit input[name="idLibro"]').val(json.idLibro);
-                    $('#formEdit input[name="titulo"]').val(json.titulo);
-                    $('#load').hide();
-                } else {
-                    $('#errorMessage').html(json.message);
-                    $('#errorMessage').show();
-                }
-            });
-        });
-    });
-</script>
 @stop

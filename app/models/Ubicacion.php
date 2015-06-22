@@ -4,7 +4,7 @@ class Ubicacion extends Eloquent {
 
 	protected $table = 'ubicaciones';
 
-	protected $fillable = array('nombre');
+	protected $fillable = ['nombre','status'];
 
 	public function libros()
 	{
@@ -16,22 +16,36 @@ class Ubicacion extends Eloquent {
 		return $this->hasMany('Periodico','ubicacion_id');
 	}
 
+	public function valor($id)
+	{
+		$ubicacion = Ubicacion::find($id);
+		if ($ubicacion->status == 1) return true;
+		else return false;
+	}
+
 	public static function createUbicacion($input)
 	{
 		$respuesta = array();
-		$rules = array('nombre' => 'required');
-		$validacion = Validator::make($input, $rules);
-		if($validacion->fails()) {
-			$respuesta['mensaje'] = $validacion;
-			$respuesta['error'] = true;
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro','helper_periodico'])) {
+			$reglas = array('nombre' => 'required');
+			$validacion = Validator::make($input, $reglas);
+			if ($validacion->fails()) {
+				$respuesta['mensaje'] = $validacion;
+				$respuesta['error'] = true;
+			} else {
+				$ubicacion = new Ubicacion;
+				$ubicacion->nombre = Input::get('nombre');
+				$ubicacion->status = 1;
+				if ($ubicacion->save()) {
+					$respuesta['mensaje'] = 'creado con exito!';
+					$respuesta['error'] = false;	
+				} else {
+					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['error'] = false;
+				}		
+			}
 		} else {
-			$ubicacion = new Ubicacion;
-			$ubicacion->nombre = Input::get('nombre');
-			$ubicacion->status = 1;
-			$ubicacion->save();
-
-			$respuesta['mensaje'] = 'creado con exito';
-			$respuesta['error'] = false;
+			$respuesta['mensaje'] = 'Error, sorry do not have access';
 		}
 		return $respuesta;
 	}
@@ -39,19 +53,27 @@ class Ubicacion extends Eloquent {
 	public static function updateUbicacion($input, $id)
 	{
 		$respuesta = array();
-		$rules = array('nombre' => 'required');
-		$validacion = Validator::make($input, $rules);
-		if($validacion->fails()) {
-			$respuesta['mensaje'] = $validacion;
-			$respuesta['error'] = true;
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro','helper_periodico'])) {
+			$reglas = array('nombre' => 'required');
+			$validacion = Validator::make($input, $reglas);
+			if ($validacion->fails()) {
+				$respuesta['mensaje'] = $validacion;
+				$respuesta['error'] = true;
+			} else {
+				$ubicacion = Ubicacion::find($id);
+				$ubicacion->nombre = Input::get('nombre');
+				$ubicacion->status = Input::get('status');
+				if ($ubicacion->save()) {
+					$respuesta['mensaje'] = 'editado con exito!';
+					$respuesta['error'] = false;
+				} else {
+					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['error'] = false;
+				}
+			}
 		} else {
-			$ubicacion = Ubicacion::find($id);
-			$ubicacion->nombre = Input::get('nombre');
-			$ubicacion->status = Input::get('status');
-			$ubicacion->save();
-
-			$respuesta['mensaje'] = 'editado con exito';
-			$respuesta['error'] = false;
+			$respuesta['mensaje'] = 'Error, sorry do not have access';
+			$respuesta['error'] = true;
 		}
 		return $respuesta;
 	}

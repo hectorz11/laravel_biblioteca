@@ -4,8 +4,8 @@ class Periodico extends Eloquent {
 
 	protected $table = 'periodicos';
 
-	protected $fillable = array('volumen','nombre','fecha_inicio','fecha_final','estado_id','clasificacion_id',
-		'tipo_id','ubicacion_id','descripcion','observaciones');
+	protected $fillable = ['volumen','nombre','fecha_inicio','fecha_final','estado_id','clasificacion_id',
+		'tipo_id','ubicacion_id','descripcion','observaciones'];
 
 	public function ubicaciones()
 	{
@@ -30,39 +30,43 @@ class Periodico extends Eloquent {
 	public static function agregarPeriodico($input)
 	{
 		$respuesta 	= array();
-		$reglas = array(
-			'nombre' => 'required',
-			'estado_id' => 'required',
-			'clasificacion_id' => 'required',
-			'tipo_id' => 'required',
-			'ubicacion_id' => 'required'
-		);
-		$validacion = Validator::make($input, $reglas);
-		if($validacion->fails()) {
-			$respuesta['mensaje'] = $validacion;
-			$respuesta['error'] = true;
-		} else {
-			$periodico = new Periodico();
-			$periodico->volumen = Input::get('volumen');
-			$periodico->nombre = Input::get('nombre');
-			$periodico->fecha_inicio = Input::get('fecha_inicio');
-			$periodico->fecha_final = Input::get('fecha_final');
-			$periodico->estado_id = Input::get('estado_id');
-			$periodico->clasificacion_id = Input::get('clasificacion_id');
-			$periodico->tipo_id = Input::get('tipo_id');
-			$periodico->ubicacion_id = Input::get('ubicacion_id');
-			$periodico->descripcion = Input::get('descripcion');
-			$periodico->observaciones = Input::get('observaciones');
-			$periodico->status = 1;
-
-			if($periodico->save()) {
-				$respuesta['mensaje'] = 'Periodico agregado!';
-				$respuesta['error'] = false;
-				$respuesta['data'] = $periodico;
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+			$reglas = array(
+				'nombre' => 'required',
+				'estado_id' => 'required',
+				'clasificacion_id' => 'required',
+				'tipo_id' => 'required',
+				'ubicacion_id' => 'required'
+			);
+			$validacion = Validator::make($input, $reglas);
+			if ($validacion->fails()) {
+				$respuesta['mensaje'] = $validacion;
+				$respuesta['error'] = true;
 			} else {
-				$respuesta['mensaje'] = 'error, team noob!';
-				$respuesta['error'] = false;
+				$periodico = new Periodico();
+				$periodico->volumen = Input::get('volumen');
+				$periodico->nombre = Input::get('nombre');
+				$periodico->fecha_inicio = Input::get('fecha_inicio');
+				$periodico->fecha_final = Input::get('fecha_final');
+				$periodico->estado_id = Input::get('estado_id');
+				$periodico->clasificacion_id = Input::get('clasificacion_id');
+				$periodico->tipo_id = Input::get('tipo_id');
+				$periodico->ubicacion_id = Input::get('ubicacion_id');
+				$periodico->descripcion = Input::get('descripcion');
+				$periodico->observaciones = Input::get('observaciones');
+				$periodico->status = 1;
+
+				if ($periodico->save()) {
+					$respuesta['mensaje'] = 'Periodico agregado!';
+					$respuesta['error'] = false;
+				} else {
+					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['error'] = false;
+				}
 			}
+		} else {
+			$respuesta['mensaje'] = 'Error, sorry do not have access';
+			$respuesta['error'] = true;
 		}
 		return $respuesta;
 	}
@@ -70,38 +74,42 @@ class Periodico extends Eloquent {
 	public static function editarPeriodico($input, $id)
 	{
 		$respuesta = array();
-		$periodico = Periodico::find($id);
-		$reglas = array(
-			'nombre' => 'required',
-			'estado_id' => 'required',
-			'clasificacion_id' => 'required',
-			'tipo_id' => 'required',
-			'ubicacion_id' => 'required'
-		);
-		$validacion = Validator::make($input, $reglas);
-		if($validacion->fails()) {
-			$respuesta['mensaje'] = $validacion;
-			$respuesta['error'] = true;
-		} else {
-			$periodico->volumen = Input::get('volumen');
-			$periodico->nombre = Input::get('nombre');
-			$periodico->fecha_inicio = Input::get('fecha_inicio');
-			$periodico->fecha_final = Input::get('fecha_final');
-			$periodico->estado_id = Input::get('estado_id');
-			$periodico->clasificacion_id = Input::get('clasificacion_id');
-			$periodico->tipo_id = Input::get('tipo_id');
-			$periodico->ubicacion_id = Input::get('ubicacion_id');
-			$periodico->descripcion = Input::get('descripcion');
-			$periodico->observaciones = Input::get('observaciones');
-
-			if($periodico->save()) {
-				$respuesta['mensaje'] = 'Periodico editado!';
-				$respuesta['error'] = false;
-				$respuesta['data'] = $periodico;
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+			$periodico = Periodico::find($id);
+			$reglas = array(
+				'nombre' => 'required',
+				'estado_id' => 'required',
+				'clasificacion_id' => 'required',
+				'tipo_id' => 'required',
+				'ubicacion_id' => 'required'
+			);
+			$validacion = Validator::make($input, $reglas);
+			if ($validacion->fails()) {
+				$respuesta['mensaje'] = $validacion;
+				$respuesta['error'] = true;
 			} else {
-				$respuesta['mensaje'] = 'error, team noob!';
-				$respuesta['error'] = false;
+				$periodico->volumen = Input::get('volumen');
+				$periodico->nombre = Input::get('nombre');
+				$periodico->fecha_inicio = Input::get('fecha_inicio');
+				$periodico->fecha_final = Input::get('fecha_final');
+				$periodico->estado_id = Input::get('estado_id');
+				$periodico->clasificacion_id = Input::get('clasificacion_id');
+				$periodico->tipo_id = Input::get('tipo_id');
+				$periodico->ubicacion_id = Input::get('ubicacion_id');
+				$periodico->descripcion = Input::get('descripcion');
+				$periodico->observaciones = Input::get('observaciones');
+
+				if ($periodico->save()) {
+					$respuesta['mensaje'] = 'Periodico editado!';
+					$respuesta['error'] = false;
+				} else {
+					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['error'] = false;
+				}
 			}
+		} else {
+			$respuesta['mensaje'] = 'Error, sorry do not have access';
+			$respuesta['error'] = true;
 		}
 		return $respuesta;
 	}
@@ -109,13 +117,17 @@ class Periodico extends Eloquent {
 	public static function eliminarPeriodico($id)
 	{
 		$respuesta = array();
-		$periodico = Periodico::find($id);
-		$periodico->status = 0;
-		$periodico->save();
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+			$periodico = Periodico::find($id);
+			$periodico->status = 0;
+			$periodico->save();
 
-		$respuesta['mensaje'] = 'eliminado con exito!';
-		$respuesta['error'] = false;
-
+			$respuesta['mensaje'] = 'eliminado con exito!';
+			$respuesta['error'] = false;
+		} else {
+			$respuesta['mensaje'] = 'Error, sorry do not have access';
+			$respuesta['error'] = true;
+		}
 		return $respuesta;
 	}
 

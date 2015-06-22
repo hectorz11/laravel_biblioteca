@@ -24,7 +24,9 @@
       @endif<br>
       <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Status:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('status', $estado->status, ['class' => 'form-control']) }}</div>
+        <div class="col-md-10 col-xs-15 col-sm-10">
+          {{ Form::checkbox('status', 1, $estado->valor($estado->id), ['class' => 'form-control']) }}
+        </div>
       </div><br>
       <div class="form-actions" align="center">
         <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>

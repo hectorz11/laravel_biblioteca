@@ -3,7 +3,7 @@
 @section('contenido')
 <div class="container">
     <div class="col-md-6">
-        <pre>Tipos activadas</pre>
+        <h3>Tipos - activadas</h3>
         <table class="table table-striped table-bordered table-hover" id="tablaLibros">
             <thead>
                 <tr>
@@ -16,7 +16,9 @@
             <tbody>
                 <tr>
                     <td>{{ $tipo_1->nombre }}</td>
-                    <td>{{ $tipo_1->status }}</td>
+                @if($tipo_1->status == 1)
+                    <td><button class="btn btn-xs btn-success">Activado</button></td>
+                @endif
                     <td>
                         <a href="{{ URL::route('admin_tipo_update', $tipo_1->id) }}" class="btn btn-info btn-sm">
                             <i class='glyphicon glyphicon-edit'></i> Editar
@@ -28,7 +30,7 @@
         </table>
     </div>
     <div class="col-md-6">
-        <pre>Tipos no activadas</pre>
+        <h3>Tipos - no activadas</h3>
         <table class="table table-striped table-bordered table-hover" id="tablaLibros">
             <thead>
                 <tr>
@@ -41,7 +43,9 @@
             <tbody>
                 <tr>
                     <td>{{ $tipo_0->nombre }}</td>
-                    <td>{{ $tipo_0->status }}</td>
+                @if($tipo_0->status == 0)
+                    <td><button class="btn btn-xs btn-danger">Desactivado</button></td>
+                @endif
                     <td>
                         <a href="{{ URL::route('admin_tipo_update', $tipo_0->id) }}" class="btn btn-info btn-sm">
                             <i class='glyphicon glyphicon-edit'></i> Editar

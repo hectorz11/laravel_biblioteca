@@ -50,8 +50,17 @@ class UserTableSeeder extends Seeder {
 
 		$sentry = Sentry::getUserProvider()->create(array(
 			'email' => 'wilton.condori@gmail.com',
-			'first_name' => 'wilton',
+			'first_name' => 'Wilton',
 			'last_name' => 'Condori Sahua',
+			'password' => '123456',
+			'activated' => true
+		));
+		$sentry->addGroup($groupUser);
+
+		$sentry = Sentry::getUserProvider()->create(array(
+			'email' => 'mirella.lanchipa@gmail.com',
+			'first_name' => 'Mirella',
+			'last_name' => 'Lanchipa Palza',
 			'password' => '123456',
 			'activated' => true
 		));

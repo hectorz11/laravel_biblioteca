@@ -7,6 +7,11 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User
 		'password' => 'required'
 	);
 
+	public function comentarios()
+	{
+		return $this->hasMany('Comentario','user_id');
+	}
+
 	public static function registers($input)
 	{
 		$respuesta = array();

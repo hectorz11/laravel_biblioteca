@@ -3,7 +3,7 @@
 @section('contenido')
 <br>
 <link href="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
-<div class="col-md-12">
+<div class="container">
     <table class="table table-striped table-bordered table-hover" id="tablaPeriodicos">
         <thead>
             <th>ID</th>
@@ -87,7 +87,7 @@
 
         $("#tablaPeriodicos").on("click", ".edit", function(e){
             $('[name=periodico]').val($(this).attr ('id'));
-            var faction = "<?php echo URL::to('/data/periodico'); ?>";
+            var faction = "<?php echo URL::to('/admin/data/periodico'); ?>";
             var fdata = $('#val').serialize();
             $('#load').show();
             $.get(faction, fdata, function(json) {

@@ -10,7 +10,7 @@ Route::get('/', array('as' => '/', 'uses' => 'PageController@getIndex'));
 | Busqueda de Libros (GET)
 */
 /* Busqueda de Libros (GET) */
-Route::get('/libro/search', array(
+Route::get('/biblioteca', array(
 	'as' => 'libro_search', 'uses' => 'LibroController@getLibroSearch'));
 Route::get('/datatable/libros', array(
 	'as' => 'datatable-libros', 'uses' => 'LibroController@getDatatableGuest'));
@@ -18,7 +18,7 @@ Route::get('/datatable/libros', array(
 | Hemeroteca (GET)
 */
 /* Busqueda de Periodicos (GET) */
-Route::get('/periodico/search', array(
+Route::get('/hemeroteca', array(
 	'as' => 'periodico_search', 'uses' => 'PeriodicoController@getPeriodicoSearch'));
 Route::get('/datatable/periodicos', array(
 	'as' => 'datatable-periodicos', 'uses' => 'PeriodicoController@getDatatableGuest'));/*
@@ -55,73 +55,103 @@ Route::get('/logout', array(
 /*
 | Administrador
 */
-Route::group(array('before' => 'admin'), function() {
+Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
+	/*
+	| LIBRO (GET)
+	*/
+	/* Libros activados */
 	Route::get('/biblioteca', array(
 		'as' => 'biblioteca', 'uses' => 'LibroController@getBiblioteca'));
+	/* Libros no activados */
 	Route::get('/biblioteca/no', array(
 		'as' => 'biblioteca_no', 'uses' => 'LibroController@getBibliotecaNo'));
+	/* Libro: datos en json */
 	Route::get('/data/libro', array(
 		'as' => 'data-libro', 'uses' => 'LibroController@getDataLibro'));
-	/* Libro: CRUD (GET) */
+	/* Libro: crear */
 	Route::get('/libro/create', array(
 		'as' => 'libro_create', 'uses' => 'LibroController@getLibroCreate'));
+	/* Libro: editar */
 	Route::get('/libro/update/{id}', array(
 		'as' => 'libro_update', 'uses' => 'LibroController@getLibroUpdate'));
-	/* Busqueda de Libros (GET) */
-	Route::get('/admin/datatable/libros', array(
+	/* Libro: busqueda de libros activados */
+	Route::get('/datatable/libros', array(
 		'as' => 'admin-datatable-libros', 'uses' => 'LibroController@getDatatableAdmin'));
-	Route::get('/admin/datatable/libros/no', array(
+	/* Libro: busqueda de libros no activados */
+	Route::get('/datatable/libros/no', array(
 		'as' => 'admin-datatable-libros-no', 'uses' => 'LibroController@getDatatableAdminNo'));
-	
+	/*
+	| PERIODICO (GET) 
+	*/
+	/* Periodicos activados */
 	Route::get('/hemeroteca', array(
 		'as' => 'hemeroteca', 'uses' => 'PeriodicoController@getHemeroteca'));
+	/* Periodicos no activados */
 	Route::get('/hemeroteca/no', array(
 		'as' => 'hemeroteca_no', 'uses' => 'PeriodicoController@getHemerotecaNo'));
+	/* Periodico: datos en json */
 	Route::get('/data/periodico', array(
 		'as' => 'data-periodico', 'uses' => 'PeriodicoController@getDataPeriodico'));
-	/* Periodico: CRUD (GET) */
+	/* Periodico: crear */
 	Route::get('/periodico/create', array(
 		'as' => 'periodico_create', 'uses' => 'PeriodicoController@getPeriodicoCreate'));
+	/* Periodicos: editar */
 	Route::get('/periodico/update/{id}', array(
 		'as' => 'periodico_update', 'uses' => 'PeriodicoController@getPeriodicoUpdate'));
-	/* Busqueda de Periodicos (GET) */
-	Route::get('/admin/datatable/periodicos', array(
+	/* Periodico: busqueda de periodicos activados */
+	Route::get('/datatable/periodicos', array(
 		'as' => 'admin-datatable-periodicos', 'uses' => 'PeriodicoController@getDatatableAdmin'));
-	Route::get('/admin/datatable/periodicos/no', array(
+	/* Periodico: busqueda de periodicos no activados */
+	Route::get('/datatable/periodicos/no', array(
 		'as' => 'admin-datatable-periodicos-no', 'uses' => 'PeriodicoController@getDatatableAdminNo'));
+
 	/* Clasificacion CRUD (GET) */
-	Route::get('/admin/clasificaciones', array(
+	Route::get('/clasificaciones', array(
 		'as' => 'admin_clasificaciones', 'uses' => 'ClasificacionController@getClasificaciones'));
-	Route::get('/admin/clasificacion/create', array(
+	Route::get('/clasificacion/create', array(
 		'as' => 'admin_clasificacion_create', 'uses' => 'ClasificacionController@getClasificacionCreate'));
-	Route::get('/admin/clasificacion/update/{id}', array(
+	Route::get('/clasificacion/update/{id}', array(
 		'as' => 'admin_clasificacion_update', 'uses' => 'ClasificacionController@getClasificacionUpdate'));
 	/* Estado CRUD (GET) */
-	Route::get('/admin/estados', array(
+	Route::get('/estados', array(
 		'as' => 'admin_estados', 'uses' => 'EstadoController@getEstados'));
-	Route::get('/admin/estado/create', array(
+	Route::get('/estado/create', array(
 		'as' => 'admin_estado_create', 'uses' => 'EstadoController@getEstadoCreate'));
-	Route::get('/admin/estado/update/{id}', array(
+	Route::get('/estado/update/{id}', array(
 		'as' => 'admin_estado_update', 'uses' => 'EstadoController@getEstadoUpdate'));
 	/* Tipo CRUD (GET) */
-	Route::get('/admin/tipos', array(
+	Route::get('/tipos', array(
 		'as' => 'admin_tipos', 'uses' => 'TipoController@getTipos'));
-	Route::get('/admin/tipo/create', array(
+	Route::get('/tipo/create', array(
 		'as' => 'admin_tipo_create', 'uses' => 'TipoController@getTipoCreate'));
-	Route::get('/admin/tipo/update/{id}', array(
+	Route::get('/tipo/update/{id}', array(
 		'as' => 'admin_tipo_update', 'uses' => 'TipoController@getTipoUpdate'));
 	/* Ubicacion CRUD (GET) */
-	Route::get('/admin/ubicaciones', array(
+	Route::get('/ubicaciones', array(
 		'as' => 'admin_ubicaciones', 'uses' => 'UbicacionController@getUbicaciones'));
-	Route::get('/admin/ubicacion/create', array(
+	Route::get('/ubicacion/create', array(
 		'as' => 'admin_ubicacion_create', 'uses' => 'UbicacionController@getUbicacionCreate'));
-	Route::get('/admin/ubicacion/update/{id}', array(
+	Route::get('/ubicacion/update/{id}', array(
 		'as' => 'admin_ubicacion_update', 'uses' => 'UbicacionController@getUbicacionUpdate'));
+	/* Comentario CRUD (GET) */
+	Route::get('/comentarios', array(
+		'as' => 'admin_comentarios', 'uses' => 'ComentarioController@getComentariosAdmin'));
+	Route::get('/datatable/comentarios', array(
+		'as' => 'admin-datatable-comentarios', 'uses' => 'ComentarioController@getDatatableAdmin'));
+	Route::get('/data/comentario', array(
+		'as' => 'data-comentario', 'uses' => 'ComentarioController@getDataComentario'));
+	/* User (GET) */
+	Route::get('/users', array(
+		'as' => 'admin_users', 'uses' => 'UserController@getUsers'));
+	Route::get('/datatable/users', array(
+		'as' => 'admin-datatable-users', 'uses' => 'UserController@getDatatableUser'));
 	/*
 	| Grupo CSRF
 	*/
 	Route::group(array('before' => 'csrf'), function() {
-		/* Libro: CRUD (POST) */
+		/*
+		| Libro: CRUD (POST)
+		*/
 		Route::post('/libro/create', array(
 			'as' => 'libro_create_post', 'uses' => 'LibroController@postLibroCreate'));
 		Route::post('/libro/update/{id}', array(
@@ -130,7 +160,9 @@ Route::group(array('before' => 'admin'), function() {
 			'as' => 'libro_delete_post', 'uses' => 'LibroController@postLibroDelete'));
 		Route::post('/libro/recuperar', array(
 			'as' => 'libro_recuperar_post', 'uses' => 'LibroController@postLibroRecuperar'));
-		/* Periodico: CRUD (POST) */
+		/*
+		| Periodico: CRUD (POST)
+		*/
 		Route::post('/periodico/create', array(
 			'as' => 'periodico_create_post', 'uses' => 'PeriodicoController@postPeriodicoCreate'));
 		Route::post('/periodico/update/{id}', array(
@@ -139,25 +171,26 @@ Route::group(array('before' => 'admin'), function() {
 			'as' => 'periodico_delete_post', 'uses' => 'PeriodicoController@postPeriodicoDelete'));
 		Route::post('/periodico/recuperar', array(
 			'as' => 'periodico_recuperar_post', 'uses' => 'PeriodicoController@postPeriodicoRecuperar'));
+
 		/* Clasificacion CRUD (POST) */
-		Route::post('/admin/clasificacion/create', array(
+		Route::post('/clasificacion/create', array(
 			'as' => 'admin_clasificacion_create_post', 'uses' => 'ClasificacionController@postClasificacionCreate'));
-		Route::post('/admin/clasificacion/update/{id}', array(
+		Route::post('/clasificacion/update/{id}', array(
 			'as' => 'admin_clasificacion_update_post', 'uses' => 'ClasificacionController@postClasificacionUpdate'));
 		/* Estado CRUD (POST) */
-		Route::post('/admin/estado/create', array(
+		Route::post('/estado/create', array(
 			'as' => 'admin_estado_create_post', 'uses' => 'EstadoController@postEstadoCreate'));
-		Route::post('/admin/estado/update/{id}', array(
+		Route::post('/estado/update/{id}', array(
 			'as' => 'admin_estado_update_post', 'uses' => 'EstadoController@postEstadoUpdate'));
 		/* Tipo CRUD (POST) */
-		Route::post('/admin/tipo/create', array(
+		Route::post('/tipo/create', array(
 			'as' => 'admin_tipo_create_post', 'uses' => 'TipoController@postTipoCreate'));
-		Route::post('/admin/tipo/update/{id}', array(
+		Route::post('/tipo/update/{id}', array(
 			'as' => 'admin_tipo_update_post', 'uses' => 'TipoController@postTipoUpdate'));
 		/* Ubicacion CRUD (POST) */
-		Route::post('/admin/ubicacion/create', array(
+		Route::post('/ubicacion/create', array(
 			'as' => 'admin_ubicacion_create_post', 'uses' => 'UbicacionController@postUbicacionCreate'));
-		Route::post('/admin/ubicacion/update/{id}', array(
+		Route::post('/ubicacion/update/{id}', array(
 			'as' => 'admin_ubicacion_update_post', 'uses' => 'UbicacionController@postUbicacionUpdate'));
 	});
 });
@@ -165,18 +198,22 @@ Route::group(array('before' => 'admin'), function() {
 /*
 | Usuario
 */
-Route::group(array('before' => 'user'), function() {
+Route::group(array('prefix' => '/user', 'before' => 'user'), function() {
 	Route::get('/libro/view', array(
 		'as' => 'libro_view', 'uses' => 'LibroController@getLibroView'));
 	Route::get('/periodico/views', array(
 		'as' => 'periodico_view', 'uses' => 'PeriodicoController@getPeriodicoView'));
-	Route::get('/subscribirse', array(
-		'as' => 'subscribirse', 'uses' => 'PageController@getSubscribirse'));
+	Route::get('/comentarios', array(
+		'as' => 'comentarios', 'uses' => 'ComentarioController@getComentarios'));
+	Route::get('/comentario/create', array(
+		'as' => 'comentario_create', 'uses' => 'ComentarioController@getComentarioCreate'));
 	/*
 	| Grupo CSRF
 	*/
 	Route::group(array('before' => 'csrf'), function() {
-		Route::post('/subscribirse', array(
+		Route::post('/comentario/create', array(
+			'as' => 'comentario_create_post', 'uses' => 'ComentarioController@postComentarioCreate'));
+		Route::post('/user/subscribirse', array(
 			'as' => 'subscribirse_post', 'uses' => 'PageController@postSubscribirse'));
 	});
 });

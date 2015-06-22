@@ -35,27 +35,6 @@
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('fecha_fin', $periodico->fecha_fin, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Estado:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">
-          <select id="estado_id" class="form-control">
-            <option value="{{ $periodico->estados->id }}">{{ $periodico->estados->nombre }}</option>
-            <option>------------------------------</option>
-            @if(isset($estado))
-              @foreach($estado as $e)
-              <option value="{{ $e->id }}">{{ $e->nombre }}</option>
-              @endforeach
-            @endif
-          </select>
-        </div>
-      </div>
-      @if( $errors->has('estado_id') )
-        <div class="alert alert-danger">
-          @foreach($errors->get('estado_id') as $error)
-            * {{$error}}</br>
-          @endforeach
-        </div>
-      @endif<br>
-      <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Clasificacion:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">
           <select id="clasificacion_id" class="form-control">
@@ -72,6 +51,27 @@
       @if( $errors->has('clasificacion_id') )
         <div class="alert alert-danger">
           @foreach($errors->get('clasificacion_id') as $error)
+            * {{$error}}</br>
+          @endforeach
+        </div>
+      @endif<br>
+      <div class="row">
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Estado:</label></div>
+        <div class="col-md-10 col-xs-15 col-sm-10">
+          <select id="estado_id" class="form-control">
+            <option value="{{ $periodico->estados->id }}">{{ $periodico->estados->nombre }}</option>
+            <option>------------------------------</option>
+            @if(isset($estado))
+              @foreach($estado as $e)
+              <option value="{{ $e->id }}">{{ $e->nombre }}</option>
+              @endforeach
+            @endif
+          </select>
+        </div>
+      </div>
+      @if( $errors->has('estado_id') )
+        <div class="alert alert-danger">
+          @foreach($errors->get('estado_id') as $error)
             * {{$error}}</br>
           @endforeach
         </div>
@@ -128,7 +128,7 @@
       </div><br>
       <div class="form-actions" align="center">
         <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>
-        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
+        <a href="{{ URL::route('hemeroteca') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
       </div>
     {{ Form::close() }}
   </div>
