@@ -4,6 +4,12 @@
 <br>
 <link href="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
 <div class="container">
+    @if(Session::has('mensaje'))
+      <div class="alert alert-{{ Session::get('class') }}">
+        <strong>{{ Session::get('mensaje') }}</strong>
+        <button type="button" class="close" data-dismiss="alert">×</button>
+      </div>
+    @endif
     <table class="table table-striped table-bordered table-hover" id="tablaComentarios">
         <thead>
             <tr>
@@ -45,12 +51,14 @@
             </div>
             <div class="modal-body">
                 <!-- Formulario -->
-                <form role="form" action="#" method="post" id="formEdit">
+                <form role="form" action="{{ URL::route('admin_comentario_answer_post') }}" method="post" id="formEdit">
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="row">
                         <div class="col-md-12">
                             <label>Correo Electrónico del usuario: </label>
                             {{ Form::text('email', Input::old('email'), ['class' => 'form-control']) }}
+                            <br>
+                            {{ Form::text('respuesta', Input::old('respuesta'), ['class' => 'form-control']) }}
                         </div>
                     </div><br>
                     <input type="hidden" name="idUser">
@@ -59,7 +67,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="glyphicon glyphicon-check"></i> Eliminar</button>
+                            <i class="glyphicon glyphicon-envelope"></i> Enviar</button>
                     </div>
                 </form>
             </div>
@@ -83,7 +91,7 @@
             "sAjaxSource": '/admin/datatable/comentarios',
         });
 
-        $("#tablaLibros").on("click", ".edit", function(e){
+        $("#tablaComentarios").on("click", ".edit", function(e){
             $('[name=user]').val($(this).attr ('id'));
             var faction = "<?php echo URL::to('/admin/data/comentario'); ?>";
             var fdata = $('#val').serialize();

@@ -10,7 +10,7 @@ class ComentarioTableSeeder extends Seeder {
 		DB::table('comentarios')->delete();
 		$faker = Faker::create('en_US');
 
-		for($i = 0; $i<15; $i++) {
+		for($i = 0; $i<10; $i++) {
 
 			$comentario = new Comentario;
 			$comentario->descripcion = implode($faker->paragraphs(7));

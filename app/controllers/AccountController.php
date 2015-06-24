@@ -22,15 +22,20 @@ class AccountController extends BaseController {
 					$groupUser = Sentry::findGroupByName('user');
 
 					if($sentry->inGroup($groupAdmin)) {
-						return Redirect::route('/')->with('mensaje', 'bienvenido administrador')->with('class', 'info');
+						return Redirect::route('/')
+						->with(['mensaje' => 'bienvenido administrador', 'class' => 'info']);
 					} else if($sentry->inGroup($groupHelper)) {
-						return Redirect::route('/')->with('mensaje', 'bienvenido colaborador')->with('class', 'info');
+						return Redirect::route('/')
+						->with(['mensaje' => 'bienvenido colaborador', 'class' => 'info']);
 					} else if($sentry->inGroup($groupHelperLibro)) {
-						return Redirect::route('/')->with('mensaje', 'bienvenido colaborador de libro')->with('class', 'info');
+						return Redirect::route('/')
+						->with(['mensaje' => 'bienvenido colaborador de libro', 'class' => 'info']);
 					} else if($sentry->inGroup($groupHelperPeriodico)) {
-						return Redirect::route('/')->with('mensaje', 'bienvenido colaborador de periodico')->with('class', 'info');
+						return Redirect::route('/')
+						->with(['mensaje', 'bienvenido colaborador de periodico', 'class' => 'info']);
 					} else if($sentry->inGroup($groupUser)) {
-						return Redirect::route('/')->with('mensaje', 'bienvenido usuario')->with('class', 'info');
+						return Redirect::route('/')
+						->with(['mensaje' => 'bienvenido usuario', 'class' => 'info']);
 					}
 				} else {
 					return Redirect::route('/')->withInput();
@@ -53,23 +58,21 @@ class AccountController extends BaseController {
 	{
 		$respuesta = User::registers(Input::all());
 		if($respuesta['error'] == true) {
-			return Redirect::route('/')->withErrors($respuesta['mensaje'])->withInput();
+			return Redirect::route('/')
+			->withErrors($respuesta['mensaje'])->withInput();
 		} else {
-			$credenciales = array(
-				'email' => Input::get('email'),
-				'password' => Input::get('password')
-			);
-			$login = Sentry::authenticate($credenciales, false);
-			if(Sentry::check()) {
-				$user = Sentry::findGroupByName('user');
-				if($login->inGroup($user)) {
-					return Redirect::route('/')->with('mensaje', $respuesta['mensaje'])->with('class', 'success');
-				} else {
-					return Redirect::route('/')->with('mensaje', 'no existe el grupo user')->with('class', 'danger');
-				}
-			} else {
-				return Redirect::route('/')->with('mensaje', 'no se pudo autenticar')->with('class', 'warning');
-			}
+			$user = $respuesta['data'];
+			$data['activationCode'] = $user->GetActivationCode();
+			$data['email'] = Input::get('email');
+			$data['userId'] = $user->getId();
+			$data['password'] = Input::get('password');
+
+			Mail::send('emails.auth.registro_confirmado', $data, function($m) use ($data) {
+				$m->to($data['email'])->subject('Gracias por registrarse - Support Team ART');
+			});
+
+			return Redirect::route('/')
+			->with(['mensaje' => $respuesta['mensaje'], 'class' => 'success']);
 		}
 	}
 
@@ -80,13 +83,27 @@ class AccountController extends BaseController {
 			if($respuesta['error'] == true) {
 				return Redirect::route('/')->withErrors($respuesta['mensaje'])->withInput();
 			} else {
-				return Redirect::route('/')->with('mensaje', $respuesta['mensaje'])->with('class', 'success');
+				return Redirect::route('/')
+				->with(['mensaje' => $respuesta['mensaje'], 'class' => 'success']);
 			}
 		} else {
 			return Rdirect::route('/')
-			->with(array('mensaje' => 'ingrese como usuario', 'class' => 'danger'));
+			->with(['mensaje' => 'ingrese como usuario', 'class' => 'danger']);
 		}
 	}
 
+	public function getRegistroActivated($userId, $activationCode)
+	{
+		$user = Sentry::findUserById($userId);
+		if($user->attemptActivation($activationCode)) {
+			return Redirect::route('/')
+			->with('mensaje', 'La activación de usuario fue un éxito, porfavor ingresa arriba.')
+			->with('class', 'success');
+		} else {
+			return Redirect::route('/')
+			->with('mensaje', 'No se puede activar el usuario inténtalo de nuevo más tarde o póngase en contacto con equipo de apoyo.')
+			->with('class', 'danger');
+		}
+	}
 
 }

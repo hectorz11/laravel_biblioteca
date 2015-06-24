@@ -32,12 +32,13 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User
 				'first_name' => Input::get('first_name'),
 				'last_name' => Input::get('last_name'),
 				'password' => Input::get('password'),
-				'activated' => true
+				'activated' => false
 			));
 			$sentry->addGroup($userGroup);
 
-			$respuesta['mensaje'] = 'el registro fue un exito! Bienvenido...';
+			$respuesta['mensaje'] = 'el registro fue un exito! Ingrese a su correo electrónico para activar su cuenta!';
 			$respuesta['error'] = false;
+			$respuesta['data'] = $sentry;
 		}
 		return $respuesta;
 	}

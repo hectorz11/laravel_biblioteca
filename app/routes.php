@@ -40,6 +40,9 @@ Route::group(array('before' => 'csrf'), function(){
 | Guest
 */
 Route::group(array('before' => 'guest'), function() {
+
+	Route::get('/registro/{userId}/activacion/{activationCode}', array(
+		'as' => 'registro_activated', 'uses' => 'AccountController@getRegistroActivated'));
 	
 	Route::group(array('before' => 'csrf'), function() {
 		Route::post('/login', array(
@@ -192,6 +195,9 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 			'as' => 'admin_ubicacion_create_post', 'uses' => 'UbicacionController@postUbicacionCreate'));
 		Route::post('/ubicacion/update/{id}', array(
 			'as' => 'admin_ubicacion_update_post', 'uses' => 'UbicacionController@postUbicacionUpdate'));
+
+		Route::post('/comentario/answer', array(
+			'as' => 'admin_comentario_answer_post', 'uses' => 'ComentarioController@postComentarioAnswer'));
 	});
 });
 /*------------------------------------------------------------------------------------------------*/

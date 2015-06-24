@@ -86,4 +86,20 @@ class ComentarioController extends BaseController {
 	        return Response::json($data);
 		}
 	}
+
+	public function postComentarioAnswer()
+	{
+		$data['email'] = Input::get('email');
+		$data['respuesta'] = Input::get('respuesta');
+		$email = Input::get('email');
+		$user = Sentry::findUserByLogin($email);
+
+		Mail::send('emails.admin.comentario_respuesta', $data, function($m) use ($data) {
+			$m->to($data['email'])->subject('Gracias por comentar - Support Team');
+		});
+
+		return Redirect::route('admin_comentarios')
+		->with('mensaje', 'Ha sido enviado la respuesta al usuario '.$user->first_name.' '.$user->last_name)
+		->with('class', 'success');
+	}
 }
