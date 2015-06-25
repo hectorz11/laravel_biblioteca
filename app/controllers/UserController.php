@@ -4,11 +4,7 @@ class UserController extends BaseController {
 
 	public function getUsers()
 	{
-		if (Sentry::check()) {
-			return View::make('admin.user.users');
-		} else {
-			return Redirect::route('/');
-		}
+		return View::make('admin.user.users');
 	}
 
 	public function getDatatableUser()

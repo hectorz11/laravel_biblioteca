@@ -4,60 +4,44 @@ class ComentarioController extends BaseController {
 
 	public function getComentarios()
 	{
-		if (Sentry::check()) {
-			$sentry = Sentry::getUser();
-			$user = User::find($sentry->id);
-			return View::make('user.comentarios')->with('user', $user);
-		} else {
-			return Redirect::route('/');
-		}
+		$sentry = Sentry::getUser();
+		$user = User::find($sentry->id);
+		return View::make('user.comentarios')->with('user', $user);
 	}
 
 	public function getComentarioCreate()
 	{
-		if (Sentry::check()) {
-			return View::make('user.comentario_create');
-		} else {
-			return Redirect::route('/');
-		}
+		return View::make('user.comentario_create');
 	}
 
 	public function postComentarioCreate()
 	{
-		if (Sentry::check()) {
-			$respuesta = Comentario::createComentario(Input::all());
-			if ($respuesta['error'] == true) {
-				return Redirect::route('comentario_create')
-				->withErrors($respuesta['mensaje'])->withInput()
-				->with(['mensaje' => $respuesta['mensaje'], 'class' => 'warning']);
-			} else {
-				return Redirect::route('comentario_create')
-				->with(['mensaje' => $respuesta['mensaje'], 'class' => 'success']);
-			}
+		$respuesta = Comentario::createComentario(Input::all());
+		if ($respuesta['error'] == true) {
+			return Redirect::route('comentario_create')
+			->withErrors($respuesta['mensaje'])->withInput()
+			->with(['mensaje' => $respuesta['mensaje'], 'class' => 'warning']);
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('comentario_create')
+			->with(['mensaje' => $respuesta['mensaje'], 'class' => 'success']);
 		}
 	}
 
 	public function getComentariosAdmin()
 	{
-		if (Sentry::check()) {
-			return View::make('admin.comentario.comentarios');
-		} else {
-			return Redirect::route('/');
-		}
+		return View::make('admin.comentario.comentarios');
 	}
 
 	public function getDatatableAdmin()
 	{
-		$result = DB::table('users')
+		$result = DB::table('comentarios')
 		->select(array(
-			'users.id',
+			'comentarios.id',
 			'comentarios.descripcion as descripcion',
 			'users.last_name as last_name',
 			'users.first_name as first_name',
 			'comentarios.created_at as date'))
-		->join('comentarios', 'comentarios.user_id','=','users.id')
+		->join('users', 'comentarios.user_id','=','users.id')
 		->where('comentarios.status','=',1);
 
 		return Datatable::query($result)
@@ -74,14 +58,18 @@ class ComentarioController extends BaseController {
 
 	public function getDataComentario()
 	{
-		if (Input::has('user'))
+		if (Input::has('comentario'))
 		{
-			$user_id = Input::get('user');
-	       	$user = User::find($user_id);
+			$comentario_id = Input::get('comentario');
+	       	$comentario = Comentario::find($comentario_id);
+	       	$user = $comentario->users;
 	        $data = array(
 	            'success' => true,// indica que se llevo la peticion acabo
-	            'idUser' => $user->id,
-	            'email' => $user->email
+	            'idComentario' => $comentario->id,
+	            'email' => $user->email,
+	            'first_name' => $user->first_name,
+	            'last_name' => $user->last_name,
+	            'comentario' => $comentario->descripcion,
 	        );
 	        return Response::json($data);
 		}
@@ -90,9 +78,14 @@ class ComentarioController extends BaseController {
 	public function postComentarioAnswer()
 	{
 		$data['email'] = Input::get('email');
+		$data['comentario'] = Input::get('comentario');
 		$data['respuesta'] = Input::get('respuesta');
 		$email = Input::get('email');
 		$user = Sentry::findUserByLogin($email);
+
+		$comentario = Comentario::find(Input::get('idComentario'));
+		$comentario->status = 0;
+		$comentario->save();
 
 		Mail::send('emails.admin.comentario_respuesta', $data, function($m) use ($data) {
 			$m->to($data['email'])->subject('Gracias por comentar - Support Team');

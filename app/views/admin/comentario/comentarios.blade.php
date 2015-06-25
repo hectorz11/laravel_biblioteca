@@ -55,14 +55,25 @@
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="row">
                         <div class="col-md-12">
-                            <label>Correo Electrónico del usuario: </label>
-                            {{ Form::text('email', Input::old('email'), ['class' => 'form-control']) }}
+                            <div class="rows"><label>Usuario</label></div>
+                            <div class="rows">
+                                <div class="col-md-6">
+                                    {{ Form::text('first_name', Input::old('first_name'), ['class' => 'form-control']) }}
+                                </div>
+                                <div class="col-md-6">
+                                    {{ Form::text('last_name', Input::old('last_name'), ['class' => 'form-control']) }}
+                                </div>
+                            </div><br>
+                            {{ Form::label('email', 'Correo Electrónico del usuario') }}
+                            {{ Form::email('email', Input::old('email'), ['class' => 'form-control']) }}
                             <br>
+                            {{ Form::label('respuesta', 'Respuesta') }}
                             {{ Form::text('respuesta', Input::old('respuesta'), ['class' => 'form-control']) }}
                         </div>
+                        {{ Form::hidden('comentario', Input::old('comentario'), ['class' => 'form-control']) }}
                     </div><br>
-                    <input type="hidden" name="idUser">
-                    <input id="val" type="hidden" name="user" class="input-block-level" value="">
+                    <input type="hidden" name="idComentario">
+                    <input id="val" type="hidden" name="comentario" class="input-block-level" value="">
                     <div class="">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>
@@ -92,14 +103,17 @@
         });
 
         $("#tablaComentarios").on("click", ".edit", function(e){
-            $('[name=user]').val($(this).attr ('id'));
+            $('[name=comentario]').val($(this).attr ('id'));
             var faction = "<?php echo URL::to('/admin/data/comentario'); ?>";
             var fdata = $('#val').serialize();
             $('#load').show();
             $.get(faction, fdata, function(json) {
                 if (json.success) {
-                    $('#formEdit input[name="idUser"]').val(json.idUser);
+                    $('#formEdit input[name="idComentario"]').val(json.idComentario);
                     $('#formEdit input[name="email"]').val(json.email);
+                    $('#formEdit input[name="first_name"]').val(json.first_name);
+                    $('#formEdit input[name="last_name"]').val(json.last_name);
+                    $('#formEdit input[name="comentario"]').val(json.comentario);
                     $('#load').hide();
                 } else {
                     $('#errorMessage').html(json.message);

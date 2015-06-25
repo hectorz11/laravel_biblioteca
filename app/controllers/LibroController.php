@@ -4,22 +4,12 @@ class LibroController extends BaseController {
 
 	public function getBiblioteca()
 	{
-		if (Sentry::check()) {
-			return View::make('biblioteca.biblioteca');
-		} else {
-			return Redirect::route('/')
-			->with(array('mensaje' => 'ahorita no joven!', 'class' => 'danger'));
-		}
+		return View::make('biblioteca.biblioteca');
 	}
 
 	public function getBibliotecaNo()
 	{
-		if (Sentry::check()) {
-			return View::make('biblioteca.biblioteca_no');
-		} else {
-			return Redirect::route('/')
-			->with(array('mensaje' => 'ahorita no joven!', 'class' => 'danger'));
-		}
+		return View::make('biblioteca.biblioteca_no');
 	}
 
 	public function getDatatableAdmin()
@@ -112,92 +102,65 @@ class LibroController extends BaseController {
 
 	public function getLibroCreate()
 	{
-		if (Sentry::check()) {
-			$user = Sentry::getUser();
-			$clasificacion 	= Clasificacion::whereStatus(1)->get();
-			$estado = Estado::whereStatus(1)->get();
-			$ubicacion = Ubicacion::whereStatus(1)->get();
-			$libros = Libro::orderBy('id', 'DESC')->take(10)->get();
-			return View::make('biblioteca.libro_create')
-			->with('user', $user)->with('libros', $libros)
-			->with('clasificacion', $clasificacion)
-			->with('estado', $estado)
-			->with('ubicacion', $ubicacion);
-		} else {
-			return Redirect::route('/')
-			->with(array('mensaje' => 'ahorita no joven!', 'class' => 'danger'));
-		}
+		$user = Sentry::getUser();
+		$clasificacion 	= Clasificacion::whereStatus(1)->get();
+		$estado = Estado::whereStatus(1)->get();
+		$ubicacion = Ubicacion::whereStatus(1)->get();
+		$libros = Libro::orderBy('id', 'DESC')->take(10)->get();
+		return View::make('biblioteca.libro_create')
+		->with('user', $user)->with('libros', $libros)
+		->with('clasificacion', $clasificacion)
+		->with('estado', $estado)
+		->with('ubicacion', $ubicacion);
 	}
 
 	public function postLibroCreate()
 	{
-		if (Sentry::check()) {
-			$respuesta = Libro::agregarLibro(Input::all());
-			if ($respuesta['error'] == true)	{
-				return Redirect::route('libro_create')
-				->withErrors($respuesta['mensaje'])
-				->withInput();
-			} else {
-				return Redirect::route('libro_create')
-				->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
-			}
+		$respuesta = Libro::agregarLibro(Input::all());
+		if ($respuesta['error'] == true)	{
+			return Redirect::route('libro_create')
+			->withErrors($respuesta['mensaje'])
+			->withInput();
 		} else {
-			return Redirect::route('/')
-			->with(array('mensaje' => 'ahorita no joven!', 'class' => 'danger'));
+			return Redirect::route('libro_create')
+			->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
 		}
 	}
 
 	public function getLibroUpdate($id)
 	{
-		if (Sentry::check()) {
-			$user = Sentry::getUser();
-			$clasificacion 	= Clasificacion::whereStatus(1)->get();
-			$estado = Estado::whereStatus(1)->get();
-			$ubicacion = Ubicacion::whereStatus(1)->get();
-			$libro = Libro::find($id);
-			$libros = Libro::orderBy('id','DESC')->take(10)->get();
-			return View::make('biblioteca.libro_update')
-			->with('user', $user)->with('libros', $libros)
-			->with('libro', $libro)
-			->with('clasificacion', $clasificacion)
-			->with('estado', $estado)
-			->with('ubicacion', $ubicacion);
-		} else {
-			return Redirect::route('/')
-			->with(array('mensaje' => 'ahorita no joven', 'class' => 'danger'));
-		}
-		
+		$user = Sentry::getUser();
+		$clasificacion 	= Clasificacion::whereStatus(1)->get();
+		$estado = Estado::whereStatus(1)->get();
+		$ubicacion = Ubicacion::whereStatus(1)->get();
+		$libro = Libro::find($id);
+		$libros = Libro::orderBy('id','DESC')->take(10)->get();
+		return View::make('biblioteca.libro_update')
+		->with('user', $user)->with('libros', $libros)
+		->with('libro', $libro)
+		->with('clasificacion', $clasificacion)
+		->with('estado', $estado)
+		->with('ubicacion', $ubicacion);
 	}
 
 	public function postLibroUpdate($id)
 	{
-		if (Sentry::check()) {
-			$respuesta = Libro::editarLibro(Input::all(), $id);
-			if ($respuesta['error'] == true) {
-				return Redirect::route('libro_update', $libro->id)
-				->withErrors($respuesta['mensaje'])
-				->withInput();
-			} else {
-				return Redirect::route('libro_update', $libro->id)
-				->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
-			}
+		$respuesta = Libro::editarLibro(Input::all(), $id);
+		if ($respuesta['error'] == true) {
+			return Redirect::route('libro_update', $libro->id)
+			->withErrors($respuesta['mensaje'])
+			->withInput();
 		} else {
-			return Redirect::route('/')
-			->with(array('mensaje' => 'ahorita no joven', 'class' => 'danger'));
+			return Redirect::route('libro_update', $libro->id)
+			->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
 		}
-		
 	}
 
 	public function getLibroDelete($id)
 	{
-		if (Sentry::check()) {
-			$libro = Libro::find($id);
-			return View::make('biblioteca.libro_delete')
-			->with('libro', $libro); 
-		} else {
-			return Redirect::route('/')
-			->with(array('mensaje' => 'ahorita no joven', 'class' => 'danger'));
-		}
+		$libro = Libro::find($id);
+		return View::make('biblioteca.libro_delete')
+		->with('libro', $libro);
 	}
 
 	public function postLibroDelete()
@@ -206,7 +169,6 @@ class LibroController extends BaseController {
 		$libro = Libro::find($libro_id);
 		$libro->status = 0;
 		$libro->save();
-
 		return Redirect::route('biblioteca');
 	}
 
@@ -221,7 +183,6 @@ class LibroController extends BaseController {
 		$libro = Libro::find($libro_id);
 		$libro->status = 1;
 		$libro->save();
-
 		return Redirect::route('biblioteca_no');
 	}
 	
