@@ -148,6 +148,8 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 		'as' => 'admin_users', 'uses' => 'UserController@getUsers'));
 	Route::get('/datatable/users', array(
 		'as' => 'admin-datatable-users', 'uses' => 'UserController@getDatatableUser'));
+	Route::get('/data/user', array(
+		'as' => 'data-user', 'uses' => 'UserController@getDataUser'));
 	/*
 	| Grupo CSRF
 	*/

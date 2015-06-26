@@ -4,6 +4,8 @@
 <br>
 <b>Cuenta:</b> {{ $email }}
 <br>
+<b>Comentario:</b> {{ $comentario }}
+<br>
 <b>Respuesta:</b> {{ $respuesta }}
 <br>
-    ~The Support Team Redaventura.
+    ~The Support Team Archivo Regional Tacna.

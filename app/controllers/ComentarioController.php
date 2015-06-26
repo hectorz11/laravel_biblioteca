@@ -88,7 +88,7 @@ class ComentarioController extends BaseController {
 		$comentario->save();
 
 		Mail::send('emails.admin.comentario_respuesta', $data, function($m) use ($data) {
-			$m->to($data['email'])->subject('Gracias por comentar - Support Team');
+			$m->to($data['email'])->subject('Gracias por comentar - Support Team ART');
 		});
 
 		return Redirect::route('admin_comentarios')

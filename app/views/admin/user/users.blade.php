@@ -37,32 +37,36 @@
         </a>
     </div>
 </div>
-<div class="modal fade" id="Eliminar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="Editar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">
-                <i class="glyphicon glyphicon-share"></i> Eliminar Libro<br>
+                <i class="glyphicon glyphicon-share"></i> EEditar Usuarios<br>
                 <span id="load"><center><img src="{{ asset('img/loading1.gif')}}"> Cargando...</center></span></h4>
             </div>
             <div class="modal-body">
                 <!-- Formulario -->
-                <form role="form" action="{{ URL::route('libro_delete_post')}}" method="post" id="formEdit">
+                <form role="form" action="{{ URL::route('/') }}" method="post" id="formEdit">
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                     <div class="row">
                         <div class="col-md-12">
-                            <label>Titulo del Libro a eliminar</label>
-                            {{ Form::text('titulo', Input::old('titulo'), ['class' => 'form-control']) }}
+                            <label>Nombre(s)</label>
+                            {{ Form::text('first_name', Input::old('first_name'), ['class' => 'form-control']) }}
+                            <label>Apellidos</label>
+                            {{ Form::text('last_name', Input::old('last_name'), ['class' => 'form-control']) }}
+                            <label>Activacion</label>
+                            {{ Form::text('activated', Input::old('activated'), ['class' => 'form-control']) }}
                         </div>
                     </div><br>
-                    <input type="hidden" name="idLibro">
-                    <input id="val" type="hidden" name="libro" class="input-block-level" value="">
+                    <input type="hidden" name="idUser">
+                    <input id="val" type="hidden" name="user" class="input-block-level" value="">
                     <div class="">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>
                         <button type="submit" class="btn btn-primary">
-                            <i class="glyphicon glyphicon-check"></i> Eliminar</button>
+                            <i class="glyphicon glyphicon-check"></i> Editar</button>
                     </div>
                 </form>
             </div>
@@ -88,14 +92,16 @@
         });
 
         $("#tablaLibros").on("click", ".edit", function(e){
-            $('[name=libro]').val($(this).attr ('id'));
-            var faction = "<?php echo URL::to('/data/libro'); ?>";
+            $('[name=user]').val($(this).attr ('id'));
+            var faction = "<?php echo URL::to('/data/user'); ?>";
             var fdata = $('#val').serialize();
             $('#load').show();
             $.get(faction, fdata, function(json) {
                 if (json.success) {
-                    $('#formEdit input[name="idLibro"]').val(json.idLibro);
-                    $('#formEdit input[name="titulo"]').val(json.titulo);
+                    $('#formEdit input[name="isUser"]').val(json.isUser);
+                    $('#formEdit input[name="first_name"]').val(json.first_name);
+                    $('#formEdit input[name="last_name"]').val(json.last_name);
+                    $('#formEdit input[name="activated"]').val(json.activated);
                     $('#load').hide();
                 } else {
                     $('#errorMessage').html(json.message);
