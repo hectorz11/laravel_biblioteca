@@ -60,7 +60,7 @@ class Periodico extends Eloquent {
 					$respuesta['mensaje'] = 'Periodico agregado!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}
@@ -103,7 +103,7 @@ class Periodico extends Eloquent {
 					$respuesta['mensaje'] = 'Periodico editado!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}
@@ -122,7 +122,7 @@ class Periodico extends Eloquent {
 			$periodico->status = 0;
 			$periodico->save();
 
-			$respuesta['mensaje'] = 'eliminado con exito!';
+			$respuesta['mensaje'] = 'Eliminado con exito!';
 			$respuesta['error'] = false;
 		} else {
 			$respuesta['mensaje'] = 'Error, sorry do not have access';

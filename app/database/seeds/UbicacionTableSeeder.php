@@ -10,7 +10,6 @@ class UbicacionTableSeeder extends Seeder {
 			'nombre' => 'Hemeroteca',
 			'status' => 1
 		));
-
 		Ubicacion::create(array(
 			'nombre' => 'Biblioteca',
 			'status' => 1

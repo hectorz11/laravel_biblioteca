@@ -67,7 +67,7 @@ class Libro extends Eloquent {
 					$respuesta['mensaje'] = 'Libro agregado!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}
@@ -123,7 +123,7 @@ class Libro extends Eloquent {
 					$respuesta['mensaje'] = 'Libro editado!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}
@@ -142,7 +142,7 @@ class Libro extends Eloquent {
 			$libro->status = 0;
 			$libro->save();
 
-			$respuesta['mensaje'] = 'eliminado con exito!';
+			$respuesta['mensaje'] = 'Eliminado con exito!';
 			$respuesta['error'] = false;
 		} else {
 			$respuesta['mensaje'] = 'Error, sorry do not have access';

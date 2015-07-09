@@ -88,13 +88,19 @@
 		    	@endif
 			@endif
 		    @if(Sentry::check())
-		    	@if($user->inGroup($groupAdmin))
+		    	@if($user->inGroup($groupAdmin) || $user->inGroup($groupHelper))
 		    	<li class="dropdown">
 			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 			        	<i class="glyphicon glyphicon-th"></i> Administrador <span class="caret"></span>
 			        </a>
 			        <ul class="dropdown-menu" role="menu">
+			        	<li class="dropdown-header">Usuarios</li>
 			            <li><a href="{{ URL::route('admin_users') }}"><i class="glyphicon glyphicon-user"></i> Usuarios</a></li>
+			           	<li><a href="{{ URL::route('admin_helpers_periodico') }}"><i class="glyphicon glyphicon-user"></i> Colaborador Periodico</a></li>
+			           	<li><a href="{{ URL::route('admin_helpers_libro') }}"><i class="glyphicon glyphicon-user"></i> Coloborador Libro</a></li>
+					@if($user->inGroup($groupAdmin))
+			           	<li><a href="{{ URL::route('admin_helpers') }}"><i class="glyphicon glyphicon-user"></i> Secretaria</a></li>
+			        @endif
 			           	<li class="divider"></li>
 			            <li class="dropdown-header">Grupos</li>
 			            <li><a href="#"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>

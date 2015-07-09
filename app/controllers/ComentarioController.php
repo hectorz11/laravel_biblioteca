@@ -5,8 +5,12 @@ class ComentarioController extends BaseController {
 	public function getComentarios()
 	{
 		$sentry = Sentry::getUser();
-		$user = User::find($sentry->id);
-		return View::make('user.comentarios')->with('user', $user);
+		if ($sentry->hasAnyAccess(['admin','helper'])) {
+			$user = User::find($sentry->id);
+			return View::make('user.comentarios')->with('user', $user);
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function getComentarioCreate()

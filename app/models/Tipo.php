@@ -32,10 +32,10 @@ class Tipo extends Eloquent {
 				$tipo->nombre = Input::get('nombre');
 				$tipo->status = 1;
 				if ($tipo->save()) {
-					$respuesta['mensaje'] = 'creado con exito!';
+					$respuesta['mensaje'] = 'Creado con exito!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}
@@ -60,10 +60,10 @@ class Tipo extends Eloquent {
 				$tipo->nombre = Input::get('nombre');
 				$tipo->status = Input::get('status');
 				if ($tipo->save()) {
-					$respuesta['mensaje'] = 'editado con exito!';
+					$respuesta['mensaje'] = 'Editado con exito!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}

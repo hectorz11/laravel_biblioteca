@@ -4,12 +4,20 @@ class LibroController extends BaseController {
 
 	public function getBiblioteca()
 	{
-		return View::make('biblioteca.biblioteca');
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro'])) {
+			return View::make('biblioteca.biblioteca');
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function getBibliotecaNo()
 	{
-		return View::make('biblioteca.biblioteca_no');
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro'])) {
+			return View::make('biblioteca.biblioteca_no');
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function getDatatableAdmin()
@@ -32,11 +40,11 @@ class LibroController extends BaseController {
 		->addColumn('Operaciones', function($model)
 		{
 			return "<a href='".URL::route('libro_update', $model->id)."' id=$model->id data-toggle='modal'>
-        				<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
-        			</a>
-        			<a class='edit' href='".URL::to('#Eliminar')."' id=$model->id data-toggle='modal'>
-        				<span class='label label-danger'><i class='glyphicon glyphicon-remove-circle'></i> Eliminar</span>
-        			</a>";
+						<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
+					</a>
+					<a class='edit' href='".URL::to('#Eliminar')."' id=$model->id data-toggle='modal'>
+						<span class='label label-danger'><i class='glyphicon glyphicon-remove-circle'></i> Eliminar</span>
+					</a>";
 		})->make();
 	}
 
@@ -60,8 +68,8 @@ class LibroController extends BaseController {
 		->addColumn('Operaciones', function($model)
 		{
 			return "<a class='edit' href='".URL::to('#Recuperar')."' id=$model->id data-toggle='modal'>
-        				<span class='label label-success'>Recuperar</span>
-        			</a>";
+						<span class='label label-success'>Recuperar</span>
+					</a>";
 		})->make();
 	}
 
@@ -103,15 +111,19 @@ class LibroController extends BaseController {
 	public function getLibroCreate()
 	{
 		$user = Sentry::getUser();
-		$clasificacion 	= Clasificacion::whereStatus(1)->get();
-		$estado = Estado::whereStatus(1)->get();
-		$ubicacion = Ubicacion::whereStatus(1)->get();
-		$libros = Libro::orderBy('id', 'DESC')->take(10)->get();
-		return View::make('biblioteca.libro_create')
-		->with('user', $user)->with('libros', $libros)
-		->with('clasificacion', $clasificacion)
-		->with('estado', $estado)
-		->with('ubicacion', $ubicacion);
+		if ($user->hasAnyAccess(['admin','helper','helper_libro'])) {
+			$clasificacion 	= Clasificacion::whereStatus(1)->get();
+			$estado = Estado::whereStatus(1)->get();
+			$ubicacion = Ubicacion::whereStatus(1)->get();
+			$libros = Libro::orderBy('id', 'DESC')->take(10)->get();
+			return View::make('biblioteca.libro_create')
+			->with('user', $user)->with('libros', $libros)
+			->with('clasificacion', $clasificacion)
+			->with('estado', $estado)
+			->with('ubicacion', $ubicacion);
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function postLibroCreate()
@@ -130,17 +142,21 @@ class LibroController extends BaseController {
 	public function getLibroUpdate($id)
 	{
 		$user = Sentry::getUser();
-		$clasificacion 	= Clasificacion::whereStatus(1)->get();
-		$estado = Estado::whereStatus(1)->get();
-		$ubicacion = Ubicacion::whereStatus(1)->get();
-		$libro = Libro::find($id);
-		$libros = Libro::orderBy('id','DESC')->take(10)->get();
-		return View::make('biblioteca.libro_update')
-		->with('user', $user)->with('libros', $libros)
-		->with('libro', $libro)
-		->with('clasificacion', $clasificacion)
-		->with('estado', $estado)
-		->with('ubicacion', $ubicacion);
+		if ($user->hasAnyAccess(['admin','helper','helper_libro'])) {
+			$clasificacion 	= Clasificacion::whereStatus(1)->get();
+			$estado = Estado::whereStatus(1)->get();
+			$ubicacion = Ubicacion::whereStatus(1)->get();
+			$libro = Libro::find($id);
+			$libros = Libro::orderBy('id','DESC')->take(10)->get();
+			return View::make('biblioteca.libro_update')
+			->with('user', $user)->with('libros', $libros)
+			->with('libro', $libro)
+			->with('clasificacion', $clasificacion)
+			->with('estado', $estado)
+			->with('ubicacion', $ubicacion);
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function postLibroUpdate($id)
@@ -158,9 +174,13 @@ class LibroController extends BaseController {
 
 	public function getLibroDelete($id)
 	{
-		$libro = Libro::find($id);
-		return View::make('biblioteca.libro_delete')
-		->with('libro', $libro);
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro'])) {
+			$libro = Libro::find($id);
+			return View::make('biblioteca.libro_delete')
+			->with('libro', $libro);
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function postLibroDelete()

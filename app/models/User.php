@@ -12,6 +12,14 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User
 		return $this->hasMany('Comentario','user_id');
 	}
 
+	public static function grupo($id_group, $id_user)
+	{
+		$user = Sentry::findUserById($id_user);
+		foreach ($user->groups as $group) {
+			if ($group->id == $id_group) return true;
+		}
+	}
+
 	public static function registers($input)
 	{
 		$respuesta = array();

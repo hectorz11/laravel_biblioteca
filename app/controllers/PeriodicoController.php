@@ -4,12 +4,20 @@ class PeriodicoController extends BaseController {
 
 	public function getHemeroteca()
 	{
-		return View::make('hemeroteca.hemeroteca');
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+			return View::make('hemeroteca.hemeroteca');
+		}else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function getHemerotecaNo()
 	{
-		return View::make('hemeroteca.hemeroteca_no');
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+			return View::make('hemeroteca.hemeroteca_no');
+		}else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function getDatatableAdmin()
@@ -32,11 +40,11 @@ class PeriodicoController extends BaseController {
 		->addColumn('Operaciones', function($model)
 		{
 			return "<a href='".URL::route('periodico_update', $model->id)."' id=$model->id data-toggle='modal'>
-        				<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
-        			</a>
-        			<a class='edit' href='".URL::to('#Eliminar')."'' id=$model->id data-toggle='modal'>
-        				<span class='label label-danger'><i class='glyphicon glyphicon-remove-circle'></i> Eliminar</span>
-        			</a>";
+						<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
+					</a>
+					<a class='edit' href='".URL::to('#Eliminar')."'' id=$model->id data-toggle='modal'>
+						<span class='label label-danger'><i class='glyphicon glyphicon-remove-circle'></i> Eliminar</span>
+					</a>";
 		})->make();
 	}
 
@@ -60,8 +68,8 @@ class PeriodicoController extends BaseController {
 		->addColumn('Operaciones', function($model)
 		{
 			return "<a class='edit' href='".URL::to('#Recuperar')."' id=$model->id data-toggle='modal'>
-        				<span class='label label-success'>Recuperar</span>
-        			</a>";
+						<span class='label label-success'>Recuperar</span>
+					</a>";
 		})->make();
 	}
 
@@ -102,17 +110,21 @@ class PeriodicoController extends BaseController {
 	public function getPeriodicoCreate()
 	{
 		$user = Sentry::getUser();
-		$clasificacion 	= Clasificacion::whereStatus(1)->get();
-		$estado = Estado::whereStatus(1)->get();
-		$ubicacion = Ubicacion::whereStatus(1)->get();
-		$tipo = Tipo::whereStatus(1)->get();
-		$periodicos = Periodico::orderBy('id','DESC')->take(10)->get();
-		return View::make('hemeroteca.periodico_create')
-		->with('user', $user)->with('periodicos', $periodicos)
-		->with('clasificacion' ,$clasificacion)
-		->with('estado', $estado)
-		->with('ubicacion', $ubicacion)
-		->with('tipo', $tipo);
+		if ($user->hasAnyAccess(['admin','helper','helper_periodico'])) {
+			$clasificacion 	= Clasificacion::whereStatus(1)->get();
+			$estado = Estado::whereStatus(1)->get();
+			$ubicacion = Ubicacion::whereStatus(1)->get();
+			$tipo = Tipo::whereStatus(1)->get();
+			$periodicos = Periodico::orderBy('id','DESC')->take(10)->get();
+			return View::make('hemeroteca.periodico_create')
+			->with('user', $user)->with('periodicos', $periodicos)
+			->with('clasificacion' ,$clasificacion)
+			->with('estado', $estado)
+			->with('ubicacion', $ubicacion)
+			->with('tipo', $tipo);
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function postPeriodicoCreate()
@@ -130,19 +142,23 @@ class PeriodicoController extends BaseController {
 	public function getPeriodicoUpdate($id)
 	{
 		$user = Sentry::getUser();
-		$clasificacion = Clasificacion::whereStatus(1)->get();
-		$estado = Estado::whereStatus(1)->get();
-		$ubicacion = Ubicacion::whereStatus(1)->get();
-		$tipo = Tipo::whereStatus(1)->get();
-		$periodico = Periodico::find($id);
-		$periodicos = Periodico::orderBy('id','DESC')->take(10)->get();
-		return View::make('hemeroteca.periodico_update')
-		->with('user', $user)->with('periodicos', $periodicos)
-		->with('periodico', $periodico)
-		->with('clasificacion', $clasificacion)
-		->with('estado', $estado)
-		->with('ubicacion', $ubicacion)
-		->with('tipo', $tipo);
+		if ($user->hasAnyAccess(['admin','helper','helper_periodico'])) {
+			$clasificacion = Clasificacion::whereStatus(1)->get();
+			$estado = Estado::whereStatus(1)->get();
+			$ubicacion = Ubicacion::whereStatus(1)->get();
+			$tipo = Tipo::whereStatus(1)->get();
+			$periodico = Periodico::find($id);
+			$periodicos = Periodico::orderBy('id','DESC')->take(10)->get();
+			return View::make('hemeroteca.periodico_update')
+			->with('user', $user)->with('periodicos', $periodicos)
+			->with('periodico', $periodico)
+			->with('clasificacion', $clasificacion)
+			->with('estado', $estado)
+			->with('ubicacion', $ubicacion)
+			->with('tipo', $tipo);
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function postPeriodicoUpdate($id)
@@ -160,9 +176,13 @@ class PeriodicoController extends BaseController {
 
 	public function getPeriodicoDelete($id)
 	{
-		$periodico = Periodico::find($id);
-		return View::make('hemeroteca.periodico_delete')
-		->with('periodico', $periodico); 
+		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+			$periodico = Periodico::find($id);
+			return View::make('hemeroteca.periodico_delete')
+			->with('periodico', $periodico);
+		} else {
+			return Redirect::route('/');
+		}
 	}
 
 	public function postPeriodicoDelete()
@@ -187,5 +207,6 @@ class PeriodicoController extends BaseController {
 		$periodico->save();
 		return Redirect::route('hemeroteca_no');
 	}
+		}
 
 }

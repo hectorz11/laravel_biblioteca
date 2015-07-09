@@ -37,10 +37,10 @@ class Clasificacion extends Eloquent {
 				$clasificacion->nombre = Input::get('nombre');
 				$clasificacion->status = 1;
 				if ($clasificacion->save()) {
-					$respuesta['mensaje'] = 'creado con exito!';
+					$respuesta['mensaje'] = 'Creado con exito!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}
@@ -65,10 +65,10 @@ class Clasificacion extends Eloquent {
 				$clasificacion->nombre = Input::get('nombre');
 				$clasificacion->status = Input::get('status');
 				if ($clasificacion->save()) {
-					$respuesta['mensaje'] = 'editado con exito!';
+					$respuesta['mensaje'] = 'Editado con exito!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}

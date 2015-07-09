@@ -146,10 +146,30 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 	/* User (GET) */
 	Route::get('/users', array(
 		'as' => 'admin_users', 'uses' => 'UserController@getUsers'));
+	Route::get('/helpers/periodico', array(
+		'as' => 'admin_helpers_periodico', 'uses' => 'UserController@getHelpersPeriodico'));
+	Route::get('/helpers/libro', array(
+		'as' => 'admin_helpers_libro', 'uses' => 'UserController@getHelpersLibro'));
+	Route::get('/helpers', array(
+		'as' => 'admin_helpers', 'uses' => 'UserController@getHelpers'));
+
 	Route::get('/datatable/users', array(
-		'as' => 'admin-datatable-users', 'uses' => 'UserController@getDatatableUser'));
+		'as' => 'admin-datatable-users', 'uses' => 'UserController@getDatatableUsers'));
+	Route::get('/datatable/helpers/periodico', array(
+		'as' => 'admin-datatable-helpers-periodico', 'uses' => 'UserController@getDatatableHelpersPeriodico'));
+	Route::get('/datatable/helpers/libro', array(
+		'as' => 'admin-datatable-helpers-libro', 'uses' => 'UserController@getDatatableHelpersLibro'));
+	Route::get('/datatable/helpers', array(
+		'as' => 'admin-datatable-helpers', 'uses' => 'UserController@getDatatableHelpers'));
+
 	Route::get('/data/user', array(
-		'as' => 'data-user', 'uses' => 'UserController@getDataUser'));
+		'as' => 'data-user', 'uses' => 'UserController@getAdminDataUser'));
+	Route::get('/data/helper/periodico', array(
+		'as' => 'data-helper-periodico', 'uses' => 'UserController@getAdminDataHelperPeriodico'));
+	Route::get('/data/helper/libro', array(
+		'as' => 'data-helper-libro', 'uses' => 'UserController@getAdminDataHelperLibro'));
+	Route::get('/data/helper', array(
+		'as' => 'data-helper', 'uses' => 'UserController@getAdminDataHelper'));
 	/*
 	| Grupo CSRF
 	*/

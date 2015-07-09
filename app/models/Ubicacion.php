@@ -37,10 +37,10 @@ class Ubicacion extends Eloquent {
 				$ubicacion->nombre = Input::get('nombre');
 				$ubicacion->status = 1;
 				if ($ubicacion->save()) {
-					$respuesta['mensaje'] = 'creado con exito!';
+					$respuesta['mensaje'] = 'Creado con exito!';
 					$respuesta['error'] = false;	
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}		
 			}
@@ -64,10 +64,10 @@ class Ubicacion extends Eloquent {
 				$ubicacion->nombre = Input::get('nombre');
 				$ubicacion->status = Input::get('status');
 				if ($ubicacion->save()) {
-					$respuesta['mensaje'] = 'editado con exito!';
+					$respuesta['mensaje'] = 'Editado con exito!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}

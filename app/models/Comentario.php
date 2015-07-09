@@ -30,10 +30,10 @@ class Comentario extends Eloquent {
 				$comentario->user_id = $user->id;
 				$comentario->status = 1;
 				if ($comentario->save()) {
-					$respuesta['mensaje'] = 'creado con exito!';
+					$respuesta['mensaje'] = 'Creado con exito!';
 					$respuesta['error'] = false;
 				} else {
-					$respuesta['mensaje'] = 'error, team noob!';
+					$respuesta['mensaje'] = 'Error, team noob!';
 					$respuesta['error'] = false;
 				}
 			}
