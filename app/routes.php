@@ -170,6 +170,9 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 		'as' => 'data-helper-libro', 'uses' => 'UserController@getAdminDataHelperLibro'));
 	Route::get('/data/helper', array(
 		'as' => 'data-helper', 'uses' => 'UserController@getAdminDataHelper'));
+
+	Route::get('/user/asignar/group/{id}', array(
+		'as' => 'admin_user_asignar_group', 'uses' => 'UserController@getAdminUserAsignarGroup'));
 	/*
 	| Grupo CSRF
 	*/
@@ -220,6 +223,11 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 
 		Route::post('/comentario/answer', array(
 			'as' => 'admin_comentario_answer_post', 'uses' => 'ComentarioController@postComentarioAnswer'));
+
+		Route::post('/user/update/', array(
+			'as' => 'admin_user_update_post', 'uses' => 'UserController@postAdminUserUpdate'));
+		Route::post('/user/asignar/group/{id}', array(
+			'as' => 'admin_user_asignar_group_post', 'uses' => 'UserController@postAdminUserAsignarGroup'));
 	});
 });
 /*------------------------------------------------------------------------------------------------*/

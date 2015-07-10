@@ -37,7 +37,7 @@ class UserController extends BaseController {
 			return "<a class='edit' href='#Edit' id=$model->id data-toggle='modal'>
 						<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
 					</a>
-					<a class='helper' href='#Helper' id=$model->id data-toggle='modal'>
+					<a href='".URL::route('admin_user_asignar_group', $model->id)."' id=$model->id data-toggle='modal'>
 						<span class='label label-success'><i class='glyphicon glyphicon-edit'></i> Colaborador</span>
 					</a>";
 		})->make();
@@ -55,8 +55,7 @@ class UserController extends BaseController {
 				'email' => $user->email,
 				'activated' => $user->activated,
 			);
-			$ez = $user->id;
-			return Response::json($data, $ez);
+			return Response::json($data);
 		}
 	}
 	/* 
@@ -177,5 +176,67 @@ class UserController extends BaseController {
 						<span class='label label-danger'><i class='glyphicon glyphicon-remove-circle'></i> Eliminar</span>
 					</a>";
 		})->make();
+	}
+	/*
+	| Asignar roles a los usuario
+	*/
+	public function postAdminUserUpdate()
+	{
+		$user = User::find(Input::get('idUser'));
+		$rules = array(
+			'email' => 'required|email|unique:users,email,'.$user->id,
+		);
+		$validation = Validator::make(Input::all(), $rules);
+		if ($validation->fails()) {
+			return Redirect::route('admin_user_asignar_group', $user->id)
+			->withErrors($validation)->withInput();
+		} else {
+			$user->first_name = Input::get('first_name');
+			$user->last_name = Input::get('last_name');
+			$user->email = Input::get('email');
+			if (Input::get('activated') == true) $user->activated = 1;
+			else $user->activated = 0;
+
+			if ($user->save()) {
+				return Redirect::route('admin_users')
+				->with(['mensaje' => 'Datos actualizados del Usuario!', 'class' => 'success']);
+			} else {
+				return Redirect::route('admin_users')
+				->with(['mensaje' => 'Error, team noob!', 'class' => 'danger']);
+			}
+		}
+	}
+
+	public function getAdminUserAsignarGroup($id)
+	{
+		$sentry = Sentry::getUser();
+		if ($sentry->hasAnyAccess(['admin','helper'])) {
+			$user = User::find($id);
+			$groups = Sentry::findAllGroups();
+
+			return View::make('admin.user.user_group')
+			->with(['user' => $user, 'groups' => $groups]);
+		} else {
+			return Redirect::route('/');
+		}
+	}
+
+	public function postAdminUserAsignarGroup($id)
+	{
+		$sentry = Sentry::findUserById($id);
+		$groups_1 = Sentry::findAllGroups();
+		$groups = Input::get('groups');
+
+		foreach ($groups_1 as $group_1) {
+			$sentry->groups()->detach($group_1);
+		}
+		if (isset($groups)) {
+			foreach ($groups as $group) {
+				$sentry->groups()->attach($group);
+			}
+		}
+
+		return Redirect::route('admin_users')
+		->with(['mensaje' => 'Fue un exito la operación!', 'class' => 'success']);
 	}
 }
