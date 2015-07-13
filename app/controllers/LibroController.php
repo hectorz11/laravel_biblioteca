@@ -4,19 +4,21 @@ class LibroController extends BaseController {
 
 	public function getBiblioteca()
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro'])) {
+		if (Sentry::getUser()->hasAnyAccess(['libro'])) {
 			return View::make('biblioteca.biblioteca');
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
 	public function getBibliotecaNo()
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro'])) {
+		if (Sentry::getUser()->hasAnyAccess(['libro'])) {
 			return View::make('biblioteca.biblioteca_no');
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -111,7 +113,7 @@ class LibroController extends BaseController {
 	public function getLibroCreate()
 	{
 		$user = Sentry::getUser();
-		if ($user->hasAnyAccess(['admin','helper','helper_libro'])) {
+		if ($user->hasAnyAccess(['libro.create'])) {
 			$clasificacion 	= Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
 			$ubicacion = Ubicacion::whereStatus(1)->get();
@@ -122,7 +124,8 @@ class LibroController extends BaseController {
 			->with('estado', $estado)
 			->with('ubicacion', $ubicacion);
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -142,7 +145,7 @@ class LibroController extends BaseController {
 	public function getLibroUpdate($id)
 	{
 		$user = Sentry::getUser();
-		if ($user->hasAnyAccess(['admin','helper','helper_libro'])) {
+		if ($user->hasAnyAccess(['libro.update'])) {
 			$clasificacion 	= Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
 			$ubicacion = Ubicacion::whereStatus(1)->get();
@@ -155,7 +158,8 @@ class LibroController extends BaseController {
 			->with('estado', $estado)
 			->with('ubicacion', $ubicacion);
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -174,12 +178,13 @@ class LibroController extends BaseController {
 
 	public function getLibroDelete($id)
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro'])) {
+		if (Sentry::getUser()->hasAnyAccess(['libro.delete'])) {
 			$libro = Libro::find($id);
 			return View::make('biblioteca.libro_delete')
 			->with('libro', $libro);
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 

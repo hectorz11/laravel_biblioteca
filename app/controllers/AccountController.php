@@ -15,27 +15,11 @@ class AccountController extends BaseController {
 				);
 				$sentry = Sentry::authenticate($credenciales, false);
 				if(Sentry::check()) {
-					$groupAdmin = Sentry::findGroupByName('admin');
-					$groupHelper = Sentry::findGroupByName('helper');
-					$groupHelperLibro = Sentry::findGroupByName('helper_libro');
-					$groupHelperPeriodico = Sentry::findGroupByName('helper_periodico');
-					$groupUser = Sentry::findGroupByName('user');
 
-					if($sentry->inGroup($groupAdmin)) {
-						return Redirect::route('/')
-						->with(['mensaje' => 'bienvenido administrador', 'class' => 'info']);
-					} else if($sentry->inGroup($groupHelper)) {
-						return Redirect::route('/')
-						->with(['mensaje' => 'bienvenido colaborador', 'class' => 'info']);
-					} else if($sentry->inGroup($groupHelperLibro)) {
-						return Redirect::route('/')
-						->with(['mensaje' => 'bienvenido colaborador de libro', 'class' => 'info']);
-					} else if($sentry->inGroup($groupHelperPeriodico)) {
-						return Redirect::route('/')
-						->with(['mensaje', 'bienvenido colaborador de periodico', 'class' => 'info']);
-					} else if($sentry->inGroup($groupUser)) {
-						return Redirect::route('/')
-						->with(['mensaje' => 'bienvenido usuario', 'class' => 'info']);
+					if($sentry->hasAnyAccess(['admin'])) {
+						return Redirect::route('/');
+					} else if($sentry->hasAnyAccess(['user'])) {
+						return Redirect::route('/');
 					}
 				} else {
 					return Redirect::route('/')->withInput();

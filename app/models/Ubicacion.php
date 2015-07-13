@@ -26,7 +26,7 @@ class Ubicacion extends Eloquent {
 	public static function createUbicacion($input)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['ubicacion.create'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -53,7 +53,7 @@ class Ubicacion extends Eloquent {
 	public static function updateUbicacion($input, $id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['ubicacion.update'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {

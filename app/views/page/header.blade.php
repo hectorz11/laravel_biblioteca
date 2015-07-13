@@ -36,7 +36,7 @@
 			        <ul class="dropdown-menu" role="menu">
 			            <li><a href="{{ URL::route('libro_search') }}"><i class="glyphicon glyphicon-question-sign"></i> Buscar Libro</a></li>
 				@if(Sentry::check())
-			        @if($user->inGroup($groupAdmin) || $user->inGroup($groupHelper) || $user->inGroup($groupHelperLibro))
+			        @if($user->hasAnyAccess(['admin','libro']))
 			           	<li class="divider"></li>
 			            <li class="dropdown-header">Archivo Regional Tacna</li>
 			            <li><a href="{{ URL::route('libro_create') }}"><i class="glyphicon glyphicon-plus-sign"></i> Ingresar Libro</a></li>
@@ -54,7 +54,7 @@
 			        <ul class="dropdown-menu" role="menu">
 			            <li><a href="{{ URL::route('periodico_search') }}"><i class="glyphicon glyphicon-question-sign"></i> Buscar Periodico</a></li>
 				@if(Sentry::check())
-					@if($user->inGroup($groupAdmin) || $user->inGroup($groupHelper) || $user->inGroup($groupHelperPeriodico))
+					@if($user->hasAnyAccess(['admin','periodico']))
 			           	<li class="divider"></li>
 			            <li class="dropdown-header">Archivo Regional Tacna</li>
 			            <li><a href="{{ URL::route('periodico_create') }}"><i class="glyphicon glyphicon-plus-sign"></i> Ingresar Periodico</a></li>
@@ -66,7 +66,7 @@
 			        </ul>
 		        </li>
 		    @if(Sentry::check())
-			    @if($user->inGroup($groupAdmin) || $user->inGroup($groupHelper) || $user->inGroup($groupHelperLibro) || $user->inGroup($groupHelperPeriodico))
+			    @if($user->hasAnyAccess(['admin']))
 		        <li class="dropdown">
 			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 			        	<i class="glyphicon glyphicon-th-large"></i> Panel <span class="caret"></span>
@@ -88,7 +88,7 @@
 		    	@endif
 			@endif
 		    @if(Sentry::check())
-		    	@if($user->inGroup($groupAdmin) || $user->inGroup($groupHelper))
+		    	@if($user->hasAnyAccess(['admin']))
 		    	<li class="dropdown">
 			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 			        	<i class="glyphicon glyphicon-th"></i> Administrador <span class="caret"></span>
@@ -103,14 +103,14 @@
 			        @endif
 			           	<li class="divider"></li>
 			            <li class="dropdown-header">Grupos</li>
-			            <li><a href="#"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
+			            <li><a href="{{ URL::route('admin_groups') }}"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
 			            <li class="divider"></li>
 			            <li class="dropdown-header">Comentarios</li>
 			            <li><a href="{{ URL::route('admin_comentarios') }}"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
 			        </ul>
 		        </li>
 		    	@endif
-		        @if($user->inGroup($groupUser))
+		        @if($user->hasAnyAccess(['user']))
 		        <li><a href="{{ URL::route('comentarios') }}"><i class="glyphicon glyphicon-comment"></i> Comentarios</a></li>
 		        @endif
 		        <li><a href="{{ URL::route('logout') }}"><i class="glyphicon glyphicon-log-out"></i> Salir</a></li>

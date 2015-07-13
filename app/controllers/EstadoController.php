@@ -4,12 +4,17 @@ class EstadoController extends BaseController
 {
 	public function getEstados()
 	{
-		$estados_1 = Estado::whereStatus(1)->get();
-		$estados_0 = Estado::whereStatus(0)->get();
+		if (Sentry::getUser()->hasAnyAccess(['estado'])) {
+			$estados_1 = Estado::whereStatus(1)->get();
+			$estados_0 = Estado::whereStatus(0)->get();
 
-		return View::make('admin.estado.estados')
-		->with('estados_1', $estados_1)
-		->with('estados_0', $estados_0);
+			return View::make('admin.estado.estados')
+			->with('estados_1', $estados_1)
+			->with('estados_0', $estados_0);
+		} else {
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
+		}
 	}
 
 	public function getEstadoCreate()

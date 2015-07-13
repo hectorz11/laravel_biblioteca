@@ -10,7 +10,7 @@ class PeriodicoTableSeeder extends Seeder {
 		DB::table('periodicos')->delete();
 		$faker = Faker::create('en_US');
 
-		for($i = 0; $i<50; $i++) {
+		for($i = 0; $i<10; $i++) {
 
 			$periodico = new Periodico;
 			$periodico->volumen = $faker->randomNumber($nbDigits = 4);

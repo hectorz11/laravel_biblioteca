@@ -2,28 +2,31 @@
 
 @section('contenido')
 <br>
-<link href="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
 <div class="col-md-12">
-    <table class="table table-striped table-bordered table-hover" id="tablaColoborador">
+    <table class="table table-striped table-bordered table-hover" id="tablaUsuarios">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Correo Electrónico</th>
-                <th>Fecha de Creación</th>
-                <th>Operaciones</th>
+                <th>Permisos</th>
+                <th>Created</th>
+                <td>Updated</td>
             </tr>
         </thead>
         <tbody>
+        @foreach ($groups as $group)
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ $group->id }}</td>
+                <td>{{ $group->name }}</td>
+                <td>
+                    @foreach ($group->getPermissions() as list($a, $b))
+                    <ul>{{ $a }} {{ $b }}</ul>
+                    @endforeach
+                </td>
+                <td>{{ $group->created_at }}</td>
+                <td>{{ $group->updated_at }}</td>
             </tr>
+        @endforeach
         </tbody>
     </table>
     <div class="form-actions" align="center">
@@ -97,19 +100,12 @@
 <script src="{{ URL::asset('/assets/plugins/dataTables/jquery.dataTables.js') }}"></script>
 <script src="{{ URL::asset('/assets/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
 
-   <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
     $(document).ready(function() {
         event.preventDefault()
-        $('#tablaColoborador').dataTable({
-            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [ 4 ]},{ "bVisible": false, "aTargets": [0] }],
-            "displayLength":10,
-            "bProcessing": true,
-            "bServerSide": true,
-            "sAjaxSource": '/admin/datatable/helpers/libro',
-        });
 
-        $("#tablaColoborador").on("click", ".edit", function(e){
+        $("#tablaUsuarios").on("click", ".edit", function(e){
             $('[name=user]').val($(this).attr ('id'));
             var faction = "<?php echo URL::to('/admin/data/user'); ?>";
             var fdata = $('#val').serialize();

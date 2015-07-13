@@ -32,7 +32,7 @@
                     <input type="hidden" name="idUser">
                     <input id="val" type="hidden" name="user" class="input-block-level" value="">
                     <div class="">
-                        <a href="" class="btn btn-default" data-dismiss="modal">
+                        <a href="{{ URL::route('/') }}" class="btn btn-default" data-dismiss="modal">
                             <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
                         <button type="submit" class="btn btn-primary">
                             <i class="glyphicon glyphicon-check"></i> Aceptar</button>

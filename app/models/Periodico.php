@@ -30,7 +30,7 @@ class Periodico extends Eloquent {
 	public static function agregarPeriodico($input)
 	{
 		$respuesta 	= array();
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['periodico.create'])) {
 			$reglas = array(
 				'nombre' => 'required',
 				'estado_id' => 'required',
@@ -74,7 +74,7 @@ class Periodico extends Eloquent {
 	public static function editarPeriodico($input, $id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['periodico.update'])) {
 			$periodico = Periodico::find($id);
 			$reglas = array(
 				'nombre' => 'required',
@@ -117,7 +117,7 @@ class Periodico extends Eloquent {
 	public static function eliminarPeriodico($id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['periodico.delete'])) {
 			$periodico = Periodico::find($id);
 			$periodico->status = 0;
 			$periodico->save();

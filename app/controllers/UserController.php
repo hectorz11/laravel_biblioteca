@@ -3,14 +3,17 @@
 class UserController extends BaseController {
 
 	/* 
+	|-----------------------------------------------------------------------------------------------------------
 	| Lista de Usuario 
+	|-----------------------------------------------------------------------------------------------------------
 	*/
 	public function getUsers()
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin', 'helper'])) {
+		if (Sentry::getUser()->hasAnyAccess(['usuario'])) {
 			return View::make('admin.user.users');
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -59,14 +62,17 @@ class UserController extends BaseController {
 		}
 	}
 	/* 
+	|-----------------------------------------------------------------------------------------------------------
 	| Lista de Colaboradores a cargo de los Periodicos
+	|-----------------------------------------------------------------------------------------------------------
 	*/
 	public function getHelpersPeriodico()
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin', 'helper'])) {
+		if (Sentry::getUser()->hasAnyAccess(['usuario'])) {
 			return View::make('admin.user.helpers_periodico');
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -90,22 +96,26 @@ class UserController extends BaseController {
 		->showColumns('id','first_name','last_name','email','fecha_inicio')
 		->addColumn('Operaciones', function($model)
 		{
-			return "<a href='#' id=$model->id data-toggle='modal'>
+			return "<a class='edit' href='#Edit' id=$model->id data-toggle='modal'>
 						<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
 					</a>
-					<a class='edit' href='#' id=$model->id data-toggle='modal'>
-						<span class='label label-danger'><i class='glyphicon glyphicon-remove-circle'></i> Eliminar</span>
+					<a href='".URL::route('admin_user_asignar_group', $model->id)."' id=$model->id data-toggle='modal'>
+						<span class='label label-success'><i class='glyphicon glyphicon-edit'></i> Colaborador</span>
 					</a>";
 		})->make();
 	}
 	/* 
-	| Lista de Colaboradores a cargo de los Libros */
+	|-----------------------------------------------------------------------------------------------------------
+	| Lista de Colaboradores a cargo de los Libros 
+	|-----------------------------------------------------------------------------------------------------------
+	*/
 	public function getHelpersLibro()
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin', 'helper'])) {
+		if (Sentry::getUser()->hasAnyAccess(['usuario'])) {
 			return View::make('admin.user.helpers_libro');
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -129,23 +139,26 @@ class UserController extends BaseController {
 		->showColumns('id','first_name','last_name','email','fecha_inicio')
 		->addColumn('Operaciones', function($model)
 		{
-			return "<a href='#' id=$model->id data-toggle='modal'>
+			return "<a class='edit' href='#Edit' id=$model->id data-toggle='modal'>
 						<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
 					</a>
-					<a class='edit' href='#' id=$model->id data-toggle='modal'>
-						<span class='label label-danger'><i class='glyphicon glyphicon-remove-circle'></i> Eliminar</span>
+					<a href='".URL::route('admin_user_asignar_group', $model->id)."' id=$model->id data-toggle='modal'>
+						<span class='label label-success'><i class='glyphicon glyphicon-edit'></i> Colaborador</span>
 					</a>";
 		})->make();
 	}
 	/* 
+	|-----------------------------------------------------------------------------------------------------------
 	| Lista de Colaboradores Generales 
+	|-----------------------------------------------------------------------------------------------------------
 	*/
 	public function getHelpers()
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin'])) {
+		if (Sentry::getUser()->hasAnyAccess(['usuario'])) {
 			return View::make('admin.user.helpers');
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -169,16 +182,18 @@ class UserController extends BaseController {
 		->showColumns('id','first_name','last_name','email','fecha_inicio')
 		->addColumn('Operaciones', function($model)
 		{
-			return "<a href='#' id=$model->id data-toggle='modal'>
+			return "<a class='edit' href='#Edit' id=$model->id data-toggle='modal'>
 						<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
 					</a>
-					<a class='edit' href='#' id=$model->id data-toggle='modal'>
-						<span class='label label-danger'><i class='glyphicon glyphicon-remove-circle'></i> Eliminar</span>
+					<a href='".URL::route('admin_user_asignar_group', $model->id)."' id=$model->id data-toggle='modal'>
+						<span class='label label-success'><i class='glyphicon glyphicon-edit'></i> Colaborador</span>
 					</a>";
 		})->make();
 	}
 	/*
-	| Asignar roles a los usuario
+	|-----------------------------------------------------------------------------------------------------------
+	| Para asignar uno o varios grupos a un usuario en especifico
+	|-----------------------------------------------------------------------------------------------------------
 	*/
 	public function postAdminUserUpdate()
 	{
@@ -210,7 +225,7 @@ class UserController extends BaseController {
 	public function getAdminUserAsignarGroup($id)
 	{
 		$sentry = Sentry::getUser();
-		if ($sentry->hasAnyAccess(['admin','helper'])) {
+		if ($sentry->hasAnyAccess(['usuario.update'])) {
 			$user = User::find($id);
 			$groups = Sentry::findAllGroups();
 
@@ -235,8 +250,29 @@ class UserController extends BaseController {
 				$sentry->groups()->attach($group);
 			}
 		}
-
 		return Redirect::route('admin_users')
 		->with(['mensaje' => 'Fue un exito la operación!', 'class' => 'success']);
+	}
+	/*
+	|-----------------------------------------------------------------------------------------------------------
+	| Grupos
+	|-----------------------------------------------------------------------------------------------------------
+	*/
+	public function getAdminGroups()
+	{
+		$sentry = Sentry::getUser();
+		if ($sentry->hasAnyAccess(['grupo'])) {
+			$groups = Sentry::findAllGroups();
+			return View::make('admin.grupo.groups')
+			->with('groups', $groups);
+		} else {
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
+		}
+		/*$groups = Sentry::findAllGroups();
+		foreach ($groups as $group) {
+			$permissions[$group->id] = $group->getPermissions();
+		}
+		return $permissions;*/
 	}
 }

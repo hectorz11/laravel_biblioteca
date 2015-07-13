@@ -4,12 +4,17 @@ class UbicacionController extends BaseController {
 
 	public function getUbicaciones()
 	{
-		$ubicaciones_1 = Ubicacion::whereStatus(1)->get();
-		$ubicaciones_0 = Ubicacion::whereStatus(0)->get();
+		if (Sentry::getUser()->hasAnyAccess(['ubicacion'])) {
+			$ubicaciones_1 = Ubicacion::whereStatus(1)->get();
+			$ubicaciones_0 = Ubicacion::whereStatus(0)->get();
 
-		return View::make('admin.ubicacion.ubicaciones')
-		->with('ubicaciones_1', $ubicaciones_1)
-		->with('ubicaciones_0', $ubicaciones_0);
+			return View::make('admin.ubicacion.ubicaciones')
+			->with('ubicaciones_1', $ubicaciones_1)
+			->with('ubicaciones_0', $ubicaciones_0);
+		} else {
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
+		}
 	}
 
 	public function getUbicacionCreate()

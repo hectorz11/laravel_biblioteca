@@ -35,6 +35,7 @@
         </a>
     </div>
 </div>
+
 <!-- model de Editar datos del Usuario -->
 <div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -42,7 +43,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">
-                <i class="glyphicon glyphicon-share"></i> Editar Usuarios<br>
+                <i class="glyphicon glyphicon-share"></i> Editar Usuario<br>
                 <span id="load"><center><img src="{{ asset('img/loading1.gif')}}"> Cargando...</center></span></h4>
             </div>
             <div class="modal-body">

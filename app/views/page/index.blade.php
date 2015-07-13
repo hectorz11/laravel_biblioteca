@@ -9,12 +9,6 @@
 	    	<h1>Archivo Regional Tacna, Catálogo de Material Bibliográfico </h1>  
 		</div>
 		<div class="col-md-4">
-        @if(Session::has('mensaje'))
-          <div class="alert alert-{{ Session::get('class') }}">
-            <strong>{{ Session::get('mensaje') }}</strong>
-            <button type="button" class="close" data-dismiss="alert">×</button>
-          </div>
-        @endif  
 			{{ Form::open(array('route' => 'register_post')) }}
         <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -72,6 +66,12 @@
   <div class="container">
     <div class="col-md-8">
         <h1>Archivo Regional Tacna, Catálogo de Material Bibliográfico </h1>
+      @if(Session::has('mensaje'))
+        <div class="alert alert-{{ Session::get('class') }}">
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">{{ Session::get('mensaje') }}</button>
+          <button type="button" class="close" data-dismiss="alert">×</button>
+        </div>
+      @endif
     </div>
     <div class="col-md-4">
       {{ Form::open(array('route' => array('usuario_update_post', $user->id))) }}
@@ -115,6 +115,30 @@
   </div>
 </div>
 @endif
+
+<!-- Modal Eliminar-->
+<div class="modal fade bs-example-modal-lg"tabindex="-1" role="dialog" Saria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-exclamation-triangle"></i> No cuenta con acceso</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <span>No cuenta con acceso a este módulo de la aplicación, para mas información comuniquese
+              con el administrador para asignarle estos permisos</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end mi modal eliminar-->
 
 <div class="container marketing">
     <!-- Three columns of text below the carousel -->

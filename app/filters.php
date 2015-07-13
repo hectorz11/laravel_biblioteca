@@ -94,7 +94,33 @@ Route::filter('csrf', function()
 | Filtros: Administrador Usuario
 |--------------------------------------------------------------------------
 */
+Route::filter('admin', function($route, $request, $value)
+{
+	try {
+		$user = Sentry::getUser();
+ 
+		if( ! $user->hasAnyAccess([$value])) {
+			return Redirect::route('/');
+		}
+	} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+		return Redirect::route('/');
+	}
+});
 
+Route::filter('user', function($route, $request, $value)
+{
+	try {
+		$user = Sentry::getUser();
+ 
+		if( ! $user->hasAnyAccess([$value])) {
+			return Redirect::route('/');
+		}
+	} catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
+		return Redirect::route('/');
+	}
+});
+
+/*
 Route::filter('admin', function($route,$request)
 {
 	if (Sentry::check()) {
@@ -112,8 +138,8 @@ Route::filter('admin', function($route,$request)
 		return Redirect::route('/');
 	}
 });
-
-Route::filter('user', function($route,$request)
+*/
+/*Route::filter('user', function($route, $request)
 {
 	if (Sentry::check()) {
 		$sentry = Sentry::getUser();
@@ -126,3 +152,4 @@ Route::filter('user', function($route,$request)
 		return Redirect::route('/');
 	}
 });
+*/

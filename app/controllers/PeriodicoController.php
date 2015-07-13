@@ -4,19 +4,21 @@ class PeriodicoController extends BaseController {
 
 	public function getHemeroteca()
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['periodico'])) {
 			return View::make('hemeroteca.hemeroteca');
 		}else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
 	public function getHemerotecaNo()
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['periodico'])) {
 			return View::make('hemeroteca.hemeroteca_no');
 		}else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -110,7 +112,7 @@ class PeriodicoController extends BaseController {
 	public function getPeriodicoCreate()
 	{
 		$user = Sentry::getUser();
-		if ($user->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if ($user->hasAnyAccess(['periodico.create'])) {
 			$clasificacion 	= Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
 			$ubicacion = Ubicacion::whereStatus(1)->get();
@@ -123,7 +125,8 @@ class PeriodicoController extends BaseController {
 			->with('ubicacion', $ubicacion)
 			->with('tipo', $tipo);
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -142,7 +145,7 @@ class PeriodicoController extends BaseController {
 	public function getPeriodicoUpdate($id)
 	{
 		$user = Sentry::getUser();
-		if ($user->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if ($user->hasAnyAccess(['periodico.update'])) {
 			$clasificacion = Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
 			$ubicacion = Ubicacion::whereStatus(1)->get();
@@ -157,7 +160,8 @@ class PeriodicoController extends BaseController {
 			->with('ubicacion', $ubicacion)
 			->with('tipo', $tipo);
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -176,12 +180,13 @@ class PeriodicoController extends BaseController {
 
 	public function getPeriodicoDelete($id)
 	{
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['periodico.delete'])) {
 			$periodico = Periodico::find($id);
 			return View::make('hemeroteca.periodico_delete')
 			->with('periodico', $periodico);
 		} else {
-			return Redirect::route('/');
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
@@ -207,6 +212,5 @@ class PeriodicoController extends BaseController {
 		$periodico->save();
 		return Redirect::route('hemeroteca_no');
 	}
-		}
 
 }

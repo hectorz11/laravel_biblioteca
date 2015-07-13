@@ -4,12 +4,17 @@ class TipoController extends BaseController {
 
 	public function getTipos()
 	{
-		$tipos_1 = Tipo::whereStatus(1)->get();
-		$tipos_0 = Tipo::whereStatus(0)->get();
+		if (Sentry::getUser()->hasAnyAccess(['tipo'])) {
+			$tipos_1 = Tipo::whereStatus(1)->get();
+			$tipos_0 = Tipo::whereStatus(0)->get();
 
-		return View::make('admin.tipo.tipos')
-		->with('tipos_1', $tipos_1)
-		->with('tipos_0', $tipos_0);
+			return View::make('admin.tipo.tipos')
+			->with('tipos_1', $tipos_1)
+			->with('tipos_0', $tipos_0);
+		} else {
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
+		}
 	}
 
 	public function getTipoCreate()

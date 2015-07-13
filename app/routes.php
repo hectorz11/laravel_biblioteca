@@ -58,9 +58,9 @@ Route::get('/logout', array(
 /*
 | Administrador
 */
-Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
+Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() {
 	/*
-	| LIBRO (GET)
+	| BIBLIOTECA (GET)
 	*/
 	/* Libros activados */
 	Route::get('/biblioteca', array(
@@ -84,7 +84,7 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 	Route::get('/datatable/libros/no', array(
 		'as' => 'admin-datatable-libros-no', 'uses' => 'LibroController@getDatatableAdminNo'));
 	/*
-	| PERIODICO (GET) 
+	| HEMEROTECA (GET) 
 	*/
 	/* Periodicos activados */
 	Route::get('/hemeroteca', array(
@@ -107,7 +107,9 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 	/* Periodico: busqueda de periodicos no activados */
 	Route::get('/datatable/periodicos/no', array(
 		'as' => 'admin-datatable-periodicos-no', 'uses' => 'PeriodicoController@getDatatableAdminNo'));
-
+	/*
+	! PANEL (GET)
+	*/
 	/* Clasificacion CRUD (GET) */
 	Route::get('/clasificaciones', array(
 		'as' => 'admin_clasificaciones', 'uses' => 'ClasificacionController@getClasificaciones'));
@@ -136,6 +138,9 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 		'as' => 'admin_ubicacion_create', 'uses' => 'UbicacionController@getUbicacionCreate'));
 	Route::get('/ubicacion/update/{id}', array(
 		'as' => 'admin_ubicacion_update', 'uses' => 'UbicacionController@getUbicacionUpdate'));
+	/*
+	| ADMINISTRADOR (GET)
+	*/
 	/* Comentario CRUD (GET) */
 	Route::get('/comentarios', array(
 		'as' => 'admin_comentarios', 'uses' => 'ComentarioController@getComentariosAdmin'));
@@ -152,7 +157,7 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 		'as' => 'admin_helpers_libro', 'uses' => 'UserController@getHelpersLibro'));
 	Route::get('/helpers', array(
 		'as' => 'admin_helpers', 'uses' => 'UserController@getHelpers'));
-
+	/* Datatable (GET) */
 	Route::get('/datatable/users', array(
 		'as' => 'admin-datatable-users', 'uses' => 'UserController@getDatatableUsers'));
 	Route::get('/datatable/helpers/periodico', array(
@@ -161,25 +166,19 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 		'as' => 'admin-datatable-helpers-libro', 'uses' => 'UserController@getDatatableHelpersLibro'));
 	Route::get('/datatable/helpers', array(
 		'as' => 'admin-datatable-helpers', 'uses' => 'UserController@getDatatableHelpers'));
-
+	/* Asignar roles a usuarios */
 	Route::get('/data/user', array(
 		'as' => 'data-user', 'uses' => 'UserController@getAdminDataUser'));
-	Route::get('/data/helper/periodico', array(
-		'as' => 'data-helper-periodico', 'uses' => 'UserController@getAdminDataHelperPeriodico'));
-	Route::get('/data/helper/libro', array(
-		'as' => 'data-helper-libro', 'uses' => 'UserController@getAdminDataHelperLibro'));
-	Route::get('/data/helper', array(
-		'as' => 'data-helper', 'uses' => 'UserController@getAdminDataHelper'));
-
 	Route::get('/user/asignar/group/{id}', array(
 		'as' => 'admin_user_asignar_group', 'uses' => 'UserController@getAdminUserAsignarGroup'));
+	/* Grupos */
+	Route::get('/grupos', array(
+		'as' => 'admin_groups', 'uses' => 'UserController@getAdminGroups'));
 	/*
 	| Grupo CSRF
 	*/
 	Route::group(array('before' => 'csrf'), function() {
-		/*
-		| Libro: CRUD (POST)
-		*/
+		/* Libro: CRUD (POST) */
 		Route::post('/libro/create', array(
 			'as' => 'libro_create_post', 'uses' => 'LibroController@postLibroCreate'));
 		Route::post('/libro/update/{id}', array(
@@ -188,9 +187,7 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 			'as' => 'libro_delete_post', 'uses' => 'LibroController@postLibroDelete'));
 		Route::post('/libro/recuperar', array(
 			'as' => 'libro_recuperar_post', 'uses' => 'LibroController@postLibroRecuperar'));
-		/*
-		| Periodico: CRUD (POST)
-		*/
+		/* Periodico: CRUD (POST) */
 		Route::post('/periodico/create', array(
 			'as' => 'periodico_create_post', 'uses' => 'PeriodicoController@postPeriodicoCreate'));
 		Route::post('/periodico/update/{id}', array(
@@ -199,7 +196,6 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 			'as' => 'periodico_delete_post', 'uses' => 'PeriodicoController@postPeriodicoDelete'));
 		Route::post('/periodico/recuperar', array(
 			'as' => 'periodico_recuperar_post', 'uses' => 'PeriodicoController@postPeriodicoRecuperar'));
-
 		/* Clasificacion CRUD (POST) */
 		Route::post('/clasificacion/create', array(
 			'as' => 'admin_clasificacion_create_post', 'uses' => 'ClasificacionController@postClasificacionCreate'));
@@ -220,10 +216,10 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 			'as' => 'admin_ubicacion_create_post', 'uses' => 'UbicacionController@postUbicacionCreate'));
 		Route::post('/ubicacion/update/{id}', array(
 			'as' => 'admin_ubicacion_update_post', 'uses' => 'UbicacionController@postUbicacionUpdate'));
-
+		/* Comentario CRUD (POST) */
 		Route::post('/comentario/answer', array(
 			'as' => 'admin_comentario_answer_post', 'uses' => 'ComentarioController@postComentarioAnswer'));
-
+		/* Asignar roles al usuario (POST) */
 		Route::post('/user/update/', array(
 			'as' => 'admin_user_update_post', 'uses' => 'UserController@postAdminUserUpdate'));
 		Route::post('/user/asignar/group/{id}', array(
@@ -234,7 +230,7 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin'), function() {
 /*
 | Usuario
 */
-Route::group(array('prefix' => '/user', 'before' => 'user'), function() {
+Route::group(array('prefix' => '/user', 'before' => 'user:user'), function() {
 	Route::get('/libro/view', array(
 		'as' => 'libro_view', 'uses' => 'LibroController@getLibroView'));
 	Route::get('/periodico/views', array(

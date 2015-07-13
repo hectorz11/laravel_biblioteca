@@ -26,7 +26,7 @@ class Clasificacion extends Eloquent {
 	public static function createClasificacion($input)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['clasificacion.create'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -54,7 +54,7 @@ class Clasificacion extends Eloquent {
 	public static function updateClasificacion($input, $id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_libro','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['clasificacion.update'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {

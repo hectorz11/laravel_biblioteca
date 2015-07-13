@@ -21,7 +21,7 @@ class Tipo extends Eloquent {
 	public static function createTipo($input)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['tipo.create'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -49,7 +49,7 @@ class Tipo extends Eloquent {
 	public static function updateTipo($input, $id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['admin','helper','helper_periodico'])) {
+		if (Sentry::getUser()->hasAnyAccess(['tipo.update'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {

@@ -15,7 +15,7 @@ class Comentario extends Eloquent {
 	{
 		$respuesta = array();
 		$sentry = Sentry::getUser();
-		if ($sentry->hasAnyAccess(['user'])) {
+		if ($sentry->hasAnyAccess(['comentario.create'])) {
 			$user = User::find($sentry->id);
 			$reglas = array(
 				'descripcion' => 'required'
