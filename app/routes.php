@@ -174,6 +174,8 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 	/* Grupos */
 	Route::get('/grupos', array(
 		'as' => 'admin_groups', 'uses' => 'UserController@getAdminGroups'));
+	Route::get('/grupo/{id}', array(
+		'as' => 'admin_group_update', 'uses' => 'UserController@getAdminGroupUpdate'));
 	/*
 	| Grupo CSRF
 	*/
@@ -224,6 +226,9 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 			'as' => 'admin_user_update_post', 'uses' => 'UserController@postAdminUserUpdate'));
 		Route::post('/user/asignar/group/{id}', array(
 			'as' => 'admin_user_asignar_group_post', 'uses' => 'UserController@postAdminUserAsignarGroup'));
+		/* Grupo CRUD (POST) */
+		Route::post('/grupo/update/{id}', array(
+			'as' => 'admin_group_update_post', 'uses' => 'UserController@postAdminGroupUpdate'));
 	});
 });
 /*------------------------------------------------------------------------------------------------*/

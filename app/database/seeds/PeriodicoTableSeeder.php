@@ -21,8 +21,8 @@ class PeriodicoTableSeeder extends Seeder {
 			$periodico->clasificacion_id = $faker->randomElement($array = array('1','2'));
 			$periodico->tipo_id = $faker->randomElement($array = array('1','2','3','4','5'));
 			$periodico->ubicacion_id = 1;
-			$periodico->descripcion = implode($faker->paragraphs(3));
-			$periodico->observaciones = implode($faker->paragraphs(2));
+			$periodico->descripcion = $faker->text($maxNbChars = 250);
+			$periodico->observaciones = $faker->text($maxNbChars = 250);
 			$periodico->status = 1;
 			$periodico->save();
 		}

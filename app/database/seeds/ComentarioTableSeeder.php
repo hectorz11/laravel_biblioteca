@@ -13,7 +13,7 @@ class ComentarioTableSeeder extends Seeder {
 		for($i = 0; $i<10; $i++) {
 
 			$comentario = new Comentario;
-			$comentario->descripcion = implode($faker->paragraphs(7));
+			$comentario->descripcion = $faker->text($maxNbChars = 250);
 			$comentario->user_id = $faker->randomElement($array = array('5','6'));
 			$comentario->status = 1;
 			$comentario->save();

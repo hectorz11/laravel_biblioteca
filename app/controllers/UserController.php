@@ -275,4 +275,26 @@ class UserController extends BaseController {
 		}
 		return $permissions;*/
 	}
+
+	public function getAdminGroupUpdate($id)
+	{
+		if (Sentry::getUser()->hasAnyAccess(['grupo.update'])) {
+			$group = Sentry::findGroupById($id);
+			return View::make('admin.grupo.group_update')
+			->with('group', $group);
+		} else {
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
+		}
+	}
+
+	public function postAdminGroupUpdate($id)
+	{
+		$group = Sentry::findGroupById($id);
+		$group->name = Input::get('name');
+		$group->permissions = Input::get('permissions');
+		$group->save();
+
+		return $group;
+	}
 }

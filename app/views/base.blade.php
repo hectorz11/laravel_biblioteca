@@ -20,9 +20,9 @@
 	<header class="site-header">
 		@include('page.header')
 	</header>
-	<div>
+	<nav>
 		@yield('contenido')
-	</div>
+	</nav>
 	<footer align="center">
 		<p><br>Archivo Regional de Tacna - Calle Zela Nro 716 Tacna - Peru. Todos los derechos reservados.<br></p>
 		<section id="footer-top">

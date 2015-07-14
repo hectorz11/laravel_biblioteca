@@ -23,8 +23,8 @@ class LibroTableSeeder extends Seeder {
 			$libro->ubicacion_id = 2;
 			$libro->estado_id = $faker->randomElement($array = array('1','2','3','4','5','6','7'));
 			$libro->clasificacion_id = $faker->randomElement($array = array('1','2'));
-			$libro->descripcion = implode($faker->paragraphs(3));
-			$libro->observaciones = implode($faker->paragraphs(2));
+			$libro->descripcion = $faker->text($maxNbChars = 250);
+			$libro->observaciones = $faker->text($maxNbChars = 250);
 			$libro->status = 1;
 			$libro->save();
 		}
