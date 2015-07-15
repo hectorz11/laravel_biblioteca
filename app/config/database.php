@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'biblioteca-hemeroteca',
+			'database'  => 'laravel_biblioteca_hemeroteca',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',
@@ -66,9 +66,9 @@ return array(
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',
-			'database' => 'biblioteca_hemeroteca',
-			'username' => 'postgres',
-			'password' => '123456',
+			'database' => 'laravel_biblioteca_hemeroteca',
+			'username' => 'ArchivoRegionalTacna',
+			'password' => 'archivoregionaltacna',
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',
