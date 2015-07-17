@@ -24,7 +24,7 @@
       @endif<br>
     	<div class="row">
     		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Autores:</label></div>
-    		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('autores', $libro->autores, ['class' => 'form-control']) }}</div>
+    		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::textArea('autores', $libro->autores, ['class' => 'form-control', 'rows' => 2]) }}</div>
     	</div>
       @if( $errors->has('autores') )
         <div class="alert alert-danger">
@@ -47,7 +47,7 @@
       </div><br>
       <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Contenido:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('contenido', $libro->contenido, ['class' => 'form-control']) }}</div>
+        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::textArea('contenido', $libro->contenido, ['class' => 'form-control', 'rows' => 2]) }}</div>
       </div><br>
     	<div class="row">
     		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Foto:</label></div>
@@ -118,11 +118,11 @@
       @endif<br>
       <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Descripcion:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('descripcion', $libro->descripcion, ['class' => 'form-control']) }}</div>
+        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::textArea('descripcion', $libro->descripcion, ['class' => 'form-control', 'rows' => 3]) }}</div>
       </div><br>
       <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Observaciones:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('observaciones', $libro->observaciones, ['class' => 'form-control']) }}</div>
+        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::textArea('observaciones', $libro->observaciones, ['class' => 'form-control', 'rows' => 3]) }}</div>
       </div><br>
       <div class="form-actions" align="center">
         <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>

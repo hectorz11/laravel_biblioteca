@@ -120,11 +120,11 @@
       @endif<br>
       <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Descripcion:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('descripcion', $periodico->descripcion, ['class' => 'form-control']) }}</div>
+        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::textArea('descripcion', $periodico->descripcion, ['class' => 'form-control', 'rows' => 3]) }}</div>
       </div><br>
       <div class="row">
         <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Observaciones:</label></div>
-        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('observaciones', $periodico->observaciones, ['class' => 'form-control']) }}</div>
+        <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::textArea('observaciones', $periodico->observaciones, ['class' => 'form-control', 'rows' => 3]) }}</div>
       </div><br>
       <div class="form-actions" align="center">
         <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>

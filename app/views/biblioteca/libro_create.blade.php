@@ -17,7 +17,7 @@
       </div><br>
       <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-          {{ Form::text('autores', Input::old('autores'), ['class' => 'form-control', 'placeholder' => 'Autores']) }}
+          {{ Form::textArea('autores', Input::old('autores'), ['class' => 'form-control', 'placeholder' => 'Autores', 'rows' => 2]) }}
       </div>
       @if( $errors->has('autores') )
         <div class="alert alert-danger">
@@ -47,7 +47,7 @@
       </div><br>
       <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-comment"></i></span>
-          {{ Form::text('contenido', Input::old('contenido'), ['class' => 'form-control', 'placeholder' => 'Contenido']) }}
+          {{ Form::textArea('contenido', Input::old('contenido'), ['class' => 'form-control', 'placeholder' => 'Contenido', 'rows' => 2]) }}
       </div><br>
       <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
@@ -109,11 +109,11 @@
       @endif<br>
       <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></span>
-          {{ Form::text('descripcion', Input::old('descripcion'), ['class' => 'form-control', 'placeholder' => 'Descripcion']) }}
+          {{ Form::textArea('descripcion', Input::old('descripcion'), ['class' => 'form-control', 'placeholder' => 'Descripcion', 'rows' => 3]) }}
       </div><br>
       <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
-          {{ Form::text('observaciones', Input::old('observaciones'), ['class' => 'form-control', 'placeholder' => 'Observaciones']) }}
+          {{ Form::textArea('observaciones', Input::old('observaciones'), ['class' => 'form-control', 'placeholder' => 'Observaciones', 'rows' => 3]) }}
       </div>
       <br>
       <div class="form-actions" align="center">

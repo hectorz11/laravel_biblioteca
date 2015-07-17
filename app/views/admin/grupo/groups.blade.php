@@ -23,7 +23,7 @@
                     <td>{{ $group->name }}</td>
                     <td>
                     @foreach ($group->getPermissions() as $name => $activated)
-                        <ul>{{ $name }} = {{ $activated }}</ul>
+                        {{ $name }} = {{ $activated }},
                     @endforeach
                     </td>
                     <td>{{ $group->created_at }}</td>
@@ -35,7 +35,7 @@
             </tbody>
         </table>
         <div class="form-actions" align="center">
-            <a href="{{ URL::route('libro_create') }}" class="btn btn-lg btn-primary" name="ingresar">
+            <a href="{{ URL::route('admin_group_create') }}" class="btn btn-lg btn-primary" name="ingresar">
                 <i class="glyphicon glyphicon-plus-sign"></i> Ingresar Nuevo Registro
             </a> 
             <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger">

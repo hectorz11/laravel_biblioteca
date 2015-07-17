@@ -5,24 +5,28 @@
 <div class="container">
     <div class="col-md-12">
         {{ Form::open(['route' => ['admin_group_update_post', $group->id]]) }}
-            <div class="col-md-3">
-                <label>Nombre del Grupo</label>
-            </div>
-            <div class="col-md-9">
-                {{ Form::text('name', $group->name, ['class' => 'form-control']) }}
-            </div>
-            <div class="col-md-12">
-            </div>
-            <div class="col-md-12">
-                @foreach($group->getPermissions() as $name => $activated)
-                <ul><input type="text" name="permissions[]" value="{{ $name }} = {{ $activated }}"></ul>
-                @endforeach
-            </div>
-            <div class="col-md-12">
-                <a href="{{ URL::route('/') }}" class="btn btn-default" data-dismiss="modal">
-                    <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
-                <button type="submit" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-check"></i> Aceptar</button>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Nombre del Grupo</label>
+                </div>
+                <div class="col-md-9">
+                    {{ Form::text('name', $group->name, ['class' => 'form-control']) }}
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach($group->getPermissions() as $name => $activated)
+                    <ul><input type="text" name="permissions[]" value="{{ $name }} = {{ $activated }}"></ul>
+                    @endforeach
+                </div>
+            </div><br>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ URL::route('/') }}" class="btn btn-default" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-check"></i> Aceptar</button>
+                </div>
             </div>
         {{ Form::close() }}
         <div class="form-actions" align="center">

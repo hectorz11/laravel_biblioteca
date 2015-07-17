@@ -276,6 +276,73 @@ class UserController extends BaseController {
 		return $permissions;*/
 	}
 
+	public function getAdminGroupCreate()
+	{
+		if (Sentry::getUser()->hasAnyAccess(['grupo.create'])) {
+			return View::make('admin.grupo.group_create');
+		} else {
+			return Redirect::route('/')
+			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
+		}
+	}
+
+	public function postAdminGroupCreate()
+	{
+		try {
+			$group = Sentry::createGroup(array(
+				'name' => Input::get('name'),
+				'permissions' => array(
+					'admin' => Input::get('admin'),
+					'grupo' => Input::get('grupo'),
+					'grupo.create' => Input::get('grupo.create'),
+					'grupo.update' => Input::get('grupo.update'),
+					'grupo.delete' => Input::get('grupo.delete'),
+					'usuario' => Input::get('usuario'),
+					'usuario.create' => Input::get('usuario.create'),
+					'usuario.update' => Input::get('usuario.update'),
+					'usuario.delete' => Input::get('usuario.delete'),
+					'libro' => Input::get('libro'),
+					'libro.create' => Input::get('libro.create'),
+					'libro.update' => Input::get('libro.update'),
+					'libro.delete' => Input::get('libro.delete'),
+					'periodico' => Input::get('periodico'),
+					'periodico.create' => Input::get('periodico.create'),
+					'periodico.update' => Input::get('periodico.update'),
+					'periodico.delete' => Input::get('periodico.delete'),
+					'clasificacion' => Input::get('clasificacion'),
+					'clasificacion.create' => Input::get('clasificacion.create'),
+					'clasificacion.update' => Input::get('clasificacion.update'),
+					'clasificacion.delete' => Input::get('clasificacion.delete'),
+					'estado' => Input::get('estado'),
+					'estado.create' => Input::get('estado.create'),
+					'estado.update' => Input::get('estado.update'),
+					'estado.delete' => Input::get('estado.delete'),
+					'tipo' => Input::get('tipo'),
+					'tipo.create' => Input::get('tipo.create'),
+					'tipo.update' => Input::get('tipo.update'),
+					'tipo.delete' => Input::get('tipo.delete'),
+					'ubicacion' => Input::get('ubicacion'),
+					'ubicacion.create' => Input::get('ubicacion.create'),
+					'ubicacion.update' => Input::get('ubicacion.update'),
+					'ubicacion.delete' => Input::get('ubicacion.delete'),
+					'comentario' => Input::get('comentario'),
+					'comentario.create' => Input::get('comentario.create'),
+					'comentario.update' => Input::get('comentario.update'),
+					'comentario.delete' => Input::get('comentario.delete'),
+				),
+			));
+
+			return Redirect::route('admin_group_create')
+			->with(['mensaje' => 'Grupo creado con exito', 'class' => 'success']);
+		} catch (Cartalyst\Sentry\Groups\NameRequiredException $e) {
+			return Redirect::route('admin_group_create')
+			->with(['mensaje' => 'Error, Revidar nombre', 'class' => 'danger']);
+		} catch (Cartalyst\Sentry\Groups\GroupExistsException $e) {
+			return Redirect::route('admin_group_create')
+			->with(['mensaje' => 'Error, El grupo ya existe', 'class' => 'danger']);
+		}
+    }
+
 	public function getAdminGroupUpdate($id)
 	{
 		if (Sentry::getUser()->hasAnyAccess(['grupo.update'])) {
