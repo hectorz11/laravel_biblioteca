@@ -26,7 +26,7 @@ class Ubicacion extends Eloquent {
 	public static function createUbicacion($input)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['ubicacion.create'])) {
+		if (Sentry::getUser()->hasAnyAccess(['ubicacion_create'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -53,7 +53,7 @@ class Ubicacion extends Eloquent {
 	public static function updateUbicacion($input, $id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['ubicacion.update'])) {
+		if (Sentry::getUser()->hasAnyAccess(['ubicacion_update'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -62,7 +62,9 @@ class Ubicacion extends Eloquent {
 			} else {
 				$ubicacion = Ubicacion::find($id);
 				$ubicacion->nombre = Input::get('nombre');
-				$ubicacion->status = Input::get('status');
+				if (Input::has('status')) $ubicacion->status = 1;
+				else $ubicacion->status = 0;
+				
 				if ($ubicacion->save()) {
 					$respuesta['mensaje'] = 'Editado con exito!';
 					$respuesta['error'] = false;

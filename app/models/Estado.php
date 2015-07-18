@@ -26,7 +26,7 @@ class Estado extends Eloquent {
 	public static function createEstado($input)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['estado.create'])) {
+		if (Sentry::getUser()->hasAnyAccess(['estado_create'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -54,7 +54,7 @@ class Estado extends Eloquent {
 	public static function updateEstado($input, $id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['estado.update'])) {
+		if (Sentry::getUser()->hasAnyAccess(['estado_update'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -63,7 +63,9 @@ class Estado extends Eloquent {
 			} else {
 				$estado = Estado::find($id);
 				$estado->nombre = Input::get('nombre');
-				$estado->status = Input::get('status');
+				if (Input::has('status')) $estado->status = 1;
+				else $estado->status = 0;
+				
 				if ($estado->save()) {
 					$respuesta['mensaje'] = 'Editado con exito!';
 					$respuesta['error'] = false;

@@ -225,7 +225,7 @@ class UserController extends BaseController {
 	public function getAdminUserAsignarGroup($id)
 	{
 		$sentry = Sentry::getUser();
-		if ($sentry->hasAnyAccess(['usuario.update'])) {
+		if ($sentry->hasAnyAccess(['usuario_update'])) {
 			$user = User::find($id);
 			$groups = Sentry::findAllGroups();
 
@@ -278,7 +278,7 @@ class UserController extends BaseController {
 
 	public function getAdminGroupCreate()
 	{
-		if (Sentry::getUser()->hasAnyAccess(['grupo.create'])) {
+		if (Sentry::getUser()->hasAnyAccess(['grupo_create'])) {
 			return View::make('admin.grupo.group_create');
 		} else {
 			return Redirect::route('/')
@@ -294,41 +294,41 @@ class UserController extends BaseController {
 				'permissions' => array(
 					'admin' => Input::get('admin'),
 					'grupo' => Input::get('grupo'),
-					'grupo.create' => Input::get('grupo_create'),
-					'grupo.update' => Input::get('grupo_update'),
-					'grupo.delete' => Input::get('grupo_delete'),
+					'grupo_create' => Input::get('grupo_create'),
+					'grupo_update' => Input::get('grupo_update'),
+					'grupo_delete' => Input::get('grupo_delete'),
 					'usuario' => Input::get('usuario'),
-					'usuario.create' => Input::get('usuario_create'),
-					'usuario.update' => Input::get('usuario_update'),
-					'usuario.delete' => Input::get('usuario_delete'),
+					'usuario_create' => Input::get('usuario_create'),
+					'usuario_update' => Input::get('usuario_update'),
+					'usuario_delete' => Input::get('usuario_delete'),
 					'libro' => Input::get('libro'),
-					'libro.create' => Input::get('libro_create'),
-					'libro.update' => Input::get('libro_update'),
-					'libro.delete' => Input::get('libro_delete'),
+					'libro_create' => Input::get('libro_create'),
+					'libro_update' => Input::get('libro_update'),
+					'libro_delete' => Input::get('libro_delete'),
 					'periodico' => Input::get('periodico'),
-					'periodico.create' => Input::get('periodico_create'),
-					'periodico.update' => Input::get('periodico_update'),
-					'periodico.delete' => Input::get('periodico_delete'),
+					'periodico_create' => Input::get('periodico_create'),
+					'periodico_update' => Input::get('periodico_update'),
+					'periodico_delete' => Input::get('periodico_delete'),
 					'clasificacion' => Input::get('clasificacion'),
-					'clasificacion.create' => Input::get('clasificacion_create'),
-					'clasificacion.update' => Input::get('clasificacion_update'),
-					'clasificacion.delete' => Input::get('clasificacion_delete'),
+					'clasificacion_create' => Input::get('clasificacion_create'),
+					'clasificacion_update' => Input::get('clasificacion_update'),
+					'clasificacion_delete' => Input::get('clasificacion_delete'),
 					'estado' => Input::get('estado'),
-					'estado.create' => Input::get('estado_create'),
-					'estado.update' => Input::get('estado_update'),
-					'estado.delete' => Input::get('estado_delete'),
+					'estado_create' => Input::get('estado_create'),
+					'estado_update' => Input::get('estado_update'),
+					'estado_delete' => Input::get('estado_delete'),
 					'tipo' => Input::get('tipo'),
-					'tipo.create' => Input::get('tipo_create'),
-					'tipo.update' => Input::get('tipo_update'),
-					'tipo.delete' => Input::get('tipo_delete'),
+					'tipo_create' => Input::get('tipo_create'),
+					'tipo_update' => Input::get('tipo_update'),
+					'tipo_delete' => Input::get('tipo_delete'),
 					'ubicacion' => Input::get('ubicacion'),
-					'ubicacion.create' => Input::get('ubicacion_create'),
-					'ubicacion.update' => Input::get('ubicacion_update'),
-					'ubicacion.delete' => Input::get('ubicacion_delete'),
+					'ubicacion_create' => Input::get('ubicacion_create'),
+					'ubicacion_update' => Input::get('ubicacion_update'),
+					'ubicacion_delete' => Input::get('ubicacion_delete'),
 					'comentario' => Input::get('comentario'),
-					'comentario.create' => Input::get('comentario_create'),
-					'comentario.update' => Input::get('comentario_update'),
-					'comentario.delete' => Input::get('comentario_delete'),
+					'comentario_create' => Input::get('comentario_create'),
+					'comentario_update' => Input::get('comentario_update'),
+					'comentario_delete' => Input::get('comentario_delete'),
 				),
 			));
 
@@ -345,7 +345,7 @@ class UserController extends BaseController {
 
 	public function getAdminGroupUpdate($id)
 	{
-		if (Sentry::getUser()->hasAnyAccess(['grupo.update'])) {
+		if (Sentry::getUser()->hasAnyAccess(['grupo_update'])) {
 			$group = Sentry::findGroupById($id);
 			return View::make('admin.grupo.group_update')
 			->with('group', $group);
@@ -359,7 +359,46 @@ class UserController extends BaseController {
 	{
 		$group = Sentry::findGroupById($id);
 		$group->name = Input::get('name');
-		$group->permissions = Input::get('permissions');
+		if (Input::has('admin')) $group->permissions = array('admin' => 1);
+		else $group->permissions = array('admin' => 0);
+		$group->permissions = array(
+			'grupo' => Input::get('grupo'),
+			'grupo_create' => Input::get('grupo_create'),
+			'grupo_update' => Input::get('grupo_update'),
+			'grupo_delete' => Input::get('grupo_delete'),
+			'usuario' => Input::get('usuario'),
+			'usuario_create' => Input::get('usuario_create'),
+			'usuario_update' => Input::get('usuario_update'),
+			'usuario_delete' => Input::get('usuario_delete'),
+			'libro' => Input::get('libro'),
+			'libro_create' => Input::get('libro_create'),
+			'libro_update' => Input::get('libro_update'),
+			'libro_delete' => Input::get('libro_delete'),
+			'periodico' => Input::get('periodico'),
+			'periodico_create' => Input::get('periodico_create'),
+			'periodico_update' => Input::get('periodico_update'),
+			'periodico_delete' => Input::get('periodico_delete'),
+			'clasificacion' => Input::get('clasificacion'),
+			'clasificacion_create' => Input::get('clasificacion_create'),
+			'clasificacion_update' => Input::get('clasificacion_update'),
+			'clasificacion_delete' => Input::get('clasificacion_delete'),
+			'estado' => Input::get('estado'),
+			'estado_create' => Input::get('estado_create'),
+			'estado_update' => Input::get('estado_update'),
+			'estado_delete' => Input::get('estado_delete'),
+			'tipo' => Input::get('tipo'),
+			'tipo_create' => Input::get('tipo_create'),
+			'tipo_update' => Input::get('tipo_update'),
+			'tipo_delete' => Input::get('tipo_delete'),
+			'ubicacion' => Input::get('ubicacion'),
+			'ubicacion_create' => Input::get('ubicacion_create'),
+			'ubicacion_update' => Input::get('ubicacion_update'),
+			'ubicacion_delete' => Input::get('ubicacion_delete'),
+			'comentario' => Input::get('comentario'),
+			'comentario_create' => Input::get('comentario_create'),
+			'comentario_update' => Input::get('comentario_update'),
+			'comentario_delete' => Input::get('comentario_delete'),
+		);
 		$group->save();
 
 		return $group;

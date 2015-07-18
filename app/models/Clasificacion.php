@@ -26,7 +26,7 @@ class Clasificacion extends Eloquent {
 	public static function createClasificacion($input)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['clasificacion.create'])) {
+		if (Sentry::getUser()->hasAnyAccess(['clasificacion_create'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -54,7 +54,7 @@ class Clasificacion extends Eloquent {
 	public static function updateClasificacion($input, $id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['clasificacion.update'])) {
+		if (Sentry::getUser()->hasAnyAccess(['clasificacion_update'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -63,7 +63,9 @@ class Clasificacion extends Eloquent {
 			} else {
 				$clasificacion = Clasificacion::find($id);
 				$clasificacion->nombre = Input::get('nombre');
-				$clasificacion->status = Input::get('status');
+				if (Input::has('status')) $clasificacion->status = 1;
+				else $clasificacion->status = 0;
+				
 				if ($clasificacion->save()) {
 					$respuesta['mensaje'] = 'Editado con exito!';
 					$respuesta['error'] = false;

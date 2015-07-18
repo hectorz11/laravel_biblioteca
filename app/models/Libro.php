@@ -25,7 +25,7 @@ class Libro extends Eloquent {
 	public static function agregarLibro($input)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['libro.create'])) {
+		if (Sentry::getUser()->hasAnyAccess(['libro_create'])) {
 			$reglas = array(
 				'autores' => 'required',
 				'titulo' => 'required',
@@ -81,7 +81,7 @@ class Libro extends Eloquent {
 	public static function editarLibro($input, $id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['libro.update'])) {
+		if (Sentry::getUser()->hasAnyAccess(['libro_update'])) {
 			$libro = Libro::find($id);
 			$reglas = array(
 				'autores' => 'required',
@@ -137,7 +137,7 @@ class Libro extends Eloquent {
 	public static function eliminarLibro($id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['libro.delete'])) {
+		if (Sentry::getUser()->hasAnyAccess(['libro_delete'])) {
 			$libro = Libro::find($id);
 			$libro->status = 0;
 			$libro->save();

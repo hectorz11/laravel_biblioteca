@@ -113,7 +113,7 @@ class LibroController extends BaseController {
 	public function getLibroCreate()
 	{
 		$user = Sentry::getUser();
-		if ($user->hasAnyAccess(['libro.create'])) {
+		if ($user->hasAnyAccess(['libro_create'])) {
 			$clasificacion 	= Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
 			$ubicacion = Ubicacion::whereStatus(1)->get();
@@ -145,7 +145,7 @@ class LibroController extends BaseController {
 	public function getLibroUpdate($id)
 	{
 		$user = Sentry::getUser();
-		if ($user->hasAnyAccess(['libro.update'])) {
+		if ($user->hasAnyAccess(['libro_update'])) {
 			$clasificacion 	= Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
 			$ubicacion = Ubicacion::whereStatus(1)->get();
@@ -178,7 +178,7 @@ class LibroController extends BaseController {
 
 	public function getLibroDelete($id)
 	{
-		if (Sentry::getUser()->hasAnyAccess(['libro.delete'])) {
+		if (Sentry::getUser()->hasAnyAccess(['libro_delete'])) {
 			$libro = Libro::find($id);
 			return View::make('biblioteca.libro_delete')
 			->with('libro', $libro);

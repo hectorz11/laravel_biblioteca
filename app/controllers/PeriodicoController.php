@@ -112,7 +112,7 @@ class PeriodicoController extends BaseController {
 	public function getPeriodicoCreate()
 	{
 		$user = Sentry::getUser();
-		if ($user->hasAnyAccess(['periodico.create'])) {
+		if ($user->hasAnyAccess(['periodico_create'])) {
 			$clasificacion 	= Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
 			$ubicacion = Ubicacion::whereStatus(1)->get();
@@ -145,7 +145,7 @@ class PeriodicoController extends BaseController {
 	public function getPeriodicoUpdate($id)
 	{
 		$user = Sentry::getUser();
-		if ($user->hasAnyAccess(['periodico.update'])) {
+		if ($user->hasAnyAccess(['periodico_update'])) {
 			$clasificacion = Clasificacion::whereStatus(1)->get();
 			$estado = Estado::whereStatus(1)->get();
 			$ubicacion = Ubicacion::whereStatus(1)->get();
@@ -180,7 +180,7 @@ class PeriodicoController extends BaseController {
 
 	public function getPeriodicoDelete($id)
 	{
-		if (Sentry::getUser()->hasAnyAccess(['periodico.delete'])) {
+		if (Sentry::getUser()->hasAnyAccess(['periodico_delete'])) {
 			$periodico = Periodico::find($id);
 			return View::make('hemeroteca.periodico_delete')
 			->with('periodico', $periodico);

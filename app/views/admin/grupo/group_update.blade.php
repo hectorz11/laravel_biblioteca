@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-md-12">
                     @foreach($group->getPermissions() as $name => $activated)
-                    <ul><input type="text" name="permissions[]" value="{{ $name }} = {{ $activated }}"></ul>
+                    <ul>{{ $name }} = {{ Form::text($name, $activated) }}</ul>
                     @endforeach
                 </div>
             </div><br>

@@ -21,7 +21,7 @@ class Tipo extends Eloquent {
 	public static function createTipo($input)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['tipo.create'])) {
+		if (Sentry::getUser()->hasAnyAccess(['tipo_create'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -49,7 +49,7 @@ class Tipo extends Eloquent {
 	public static function updateTipo($input, $id)
 	{
 		$respuesta = array();
-		if (Sentry::getUser()->hasAnyAccess(['tipo.update'])) {
+		if (Sentry::getUser()->hasAnyAccess(['tipo_update'])) {
 			$reglas = array('nombre' => 'required');
 			$validacion = Validator::make($input, $reglas);
 			if ($validacion->fails()) {
@@ -58,7 +58,9 @@ class Tipo extends Eloquent {
 			} else {
 				$tipo = Tipo::find($id);
 				$tipo->nombre = Input::get('nombre');
-				$tipo->status = Input::get('status');
+				if (Input::has('status')) $tipo->status = 1;
+				else $tipo->status = 0;
+				
 				if ($tipo->save()) {
 					$respuesta['mensaje'] = 'Editado con exito!';
 					$respuesta['error'] = false;
