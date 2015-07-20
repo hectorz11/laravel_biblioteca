@@ -173,11 +173,11 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 		'as' => 'admin_user_asignar_group', 'uses' => 'UserController@getAdminUserAsignarGroup'));
 	/* Grupos */
 	Route::get('/grupos', array(
-		'as' => 'admin_groups', 'uses' => 'UserController@getAdminGroups'));
+		'as' => 'admin_groups', 'uses' => 'GroupController@getAdminGroups'));
 	Route::get('/grupo/create', array(
-		'as' => 'admin_group_create', 'uses' => 'UserController@getAdminGroupCreate'));
+		'as' => 'admin_group_create', 'uses' => 'GroupController@getAdminGroupCreate'));
 	Route::get('/grupo/update/{id}', array(
-		'as' => 'admin_group_update', 'uses' => 'UserController@getAdminGroupUpdate'));
+		'as' => 'admin_group_update', 'uses' => 'GroupController@getAdminGroupUpdate'));
 	/*
 	| Grupo CSRF
 	*/
@@ -230,9 +230,9 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 			'as' => 'admin_user_asignar_group_post', 'uses' => 'UserController@postAdminUserAsignarGroup'));
 		/* Grupo CRUD (POST) */
 		Route::post('/grupo/create', array(
-			'as' => 'admin_group_create_post', 'uses' => 'UserController@postAdminGroupCreate'));
+			'as' => 'admin_group_create_post', 'uses' => 'GroupController@postAdminGroupCreate'));
 		Route::post('/grupo/update/{id}', array(
-			'as' => 'admin_group_update_post', 'uses' => 'UserController@postAdminGroupUpdate'));
+			'as' => 'admin_group_update_post', 'uses' => 'GroupController@postAdminGroupUpdate'));
 	});
 });
 /*------------------------------------------------------------------------------------------------*/
