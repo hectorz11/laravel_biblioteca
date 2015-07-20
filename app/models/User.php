@@ -20,6 +20,14 @@ class User extends Cartalyst\Sentry\Users\Eloquent\User
 		}
 	}
 
+	public static function permisos($id, $name_permissions)
+	{
+		$group = Sentry::findGroupById($id);
+		foreach ($group->getPermissions() as $name => $activated) {
+			if ($name_permissions == $name && $activated == 1) return True;
+		}
+	}
+
 	public static function registers($input)
 	{
 		$respuesta = array();

@@ -8,12 +8,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombres</th>
-                    <th>Permisos</th>
-                    <th>Created</th>
-                    <th>Updated</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
+                    <th>Nombre del Grupo</th>
+                    <th>Fecha de Creación</th>
+                    <th>Fecha de Actualización</th>
+                    <th>Operaciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,15 +19,14 @@
                 <tr>
                     <td>{{ $group->id }}</td>
                     <td>{{ $group->name }}</td>
-                    <td>
-                    @foreach ($group->getPermissions() as $name => $activated)
-                        {{ $name }} = {{ $activated }},
-                    @endforeach
-                    </td>
                     <td>{{ $group->created_at }}</td>
                     <td>{{ $group->updated_at }}</td>
-                    <td><a href="{{ URL::route('admin_group_update', $group->id) }}">Editar</a></td>
-                    <td><a href="{{ URL::route('/') }}">Eliminar</a></td>
+                    <td>
+                        <a href="{{ URL::route('admin_group_update', $group->id) }}" class="btn btn-sm btn-info">
+                            <i class='glyphicon glyphicon-edit'></i> Editar</a>
+                        <a href="{{ URL::route('/') }}" class="btn btn-sm btn-danger">
+                            <i class='glyphicon glyphicon-remove-circle'></i> Eliminar</a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

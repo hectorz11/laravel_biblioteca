@@ -9,7 +9,7 @@
             <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
         @endif
-        <h3>Ingrese el Grupo</h3><br>
+        <h3>Ingresar nuevo Grupo</h3><br>
         {{ Form::open(array('route' => 'admin_group_create_post')) }}
             <div class="row">
                 <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label"> Nombre:</label></div>

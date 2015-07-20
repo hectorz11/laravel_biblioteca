@@ -2,7 +2,7 @@
 
 class ComentarioController extends BaseController {
 
-	public function getComentarios()
+	public function getUserComentarios()
 	{
 		$sentry = Sentry::getUser();
 		if ($sentry->hasAnyAccess(['comentario'])) {
@@ -13,12 +13,12 @@ class ComentarioController extends BaseController {
 		}
 	}
 
-	public function getComentarioCreate()
+	public function getUserComentarioCreate()
 	{
 		return View::make('user.comentario_create');
 	}
 
-	public function postComentarioCreate()
+	public function postUserComentarioCreate()
 	{
 		$respuesta = Comentario::createComentario(Input::all());
 		if ($respuesta['error'] == true) {
@@ -31,12 +31,12 @@ class ComentarioController extends BaseController {
 		}
 	}
 
-	public function getComentariosAdmin()
+	public function getAdminComentarios()
 	{
 		return View::make('admin.comentario.comentarios');
 	}
 
-	public function getDatatableAdmin()
+	public function getAdminDatatableComentarios()
 	{
 		$result = DB::table('comentarios')
 		->select(array(
@@ -60,26 +60,40 @@ class ComentarioController extends BaseController {
 		})->make();
 	}
 
-	public function getDataComentario()
+	public function getAdminDataComentario()
 	{
 		if (Input::has('comentario'))
 		{
 			$comentario_id = Input::get('comentario');
-	       	$comentario = Comentario::find($comentario_id);
-	       	$user = $comentario->users;
-	        $data = array(
-	            'success' => true,// indica que se llevo la peticion acabo
-	            'idComentario' => $comentario->id,
-	            'email' => $user->email,
-	            'first_name' => $user->first_name,
-	            'last_name' => $user->last_name,
-	            'comentario' => $comentario->descripcion,
-	        );
-	        return Response::json($data);
+			$comentario = Comentario::find($comentario_id);
+			$data = array(
+				'success' => true,// indica que se llevo la peticion acabo
+				'idComentario' => $comentario->id,
+				'email' => $comentario->users->email,
+				'first_name' => $comentario->users->first_name,
+				'last_name' => $comentario->users->last_name,
+				'comentario' => $comentario->descripcion,
+			);
+			return Response::json($data);
 		}
 	}
 
-	public function postComentarioAnswer()
+	public function getUserDataComentario()
+	{
+		if (Input::has('comentario'))
+		{
+			$comentario_id = Input::get('comentario');
+			$comentario = Comentario::find($comentario_id);
+			$data = array(
+				'success' => true,// indica que se llevo la peticion acabo
+				'idComentario' => $comentario->id,
+				'comentario' => $comentario->descripcion,
+			);
+			return Response::json($data);
+		}
+	}
+
+	public function postAdminComentarioAnswer()
 	{
 		$data['email'] = Input::get('email');
 		$data['comentario'] = Input::get('comentario');

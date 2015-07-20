@@ -68,7 +68,7 @@
         <h1>Archivo Regional Tacna, Catálogo de Material Bibliográfico </h1>
       @if(Session::has('mensaje'))
         <div class="alert alert-{{ Session::get('class') }}">
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg">{{ Session::get('mensaje') }}</button>
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bs-example-modal-lg">{{ Session::get('mensaje') }}</button>
           <button type="button" class="close" data-dismiss="alert">×</button>
         </div>
       @endif

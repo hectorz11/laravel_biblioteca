@@ -143,11 +143,11 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 	*/
 	/* Comentario CRUD (GET) */
 	Route::get('/comentarios', array(
-		'as' => 'admin_comentarios', 'uses' => 'ComentarioController@getComentariosAdmin'));
+		'as' => 'admin_comentarios', 'uses' => 'ComentarioController@getAdminComentarios'));
 	Route::get('/datatable/comentarios', array(
-		'as' => 'admin-datatable-comentarios', 'uses' => 'ComentarioController@getDatatableAdmin'));
+		'as' => 'admin_datatable_comentarios', 'uses' => 'ComentarioController@getAdminDatatableComentarios'));
 	Route::get('/data/comentario', array(
-		'as' => 'data-comentario', 'uses' => 'ComentarioController@getDataComentario'));
+		'as' => 'admin_data_comentario', 'uses' => 'ComentarioController@getAdminDataComentario'));
 	/* User (GET) */
 	Route::get('/users', array(
 		'as' => 'admin_users', 'uses' => 'UserController@getUsers'));
@@ -168,7 +168,7 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 		'as' => 'admin-datatable-helpers', 'uses' => 'UserController@getDatatableHelpers'));
 	/* Asignar roles a usuarios */
 	Route::get('/data/user', array(
-		'as' => 'data-user', 'uses' => 'UserController@getAdminDataUser'));
+		'as' => 'admin_data_user', 'uses' => 'UserController@getAdminDataUser'));
 	Route::get('/user/asignar/group/{id}', array(
 		'as' => 'admin_user_asignar_group', 'uses' => 'UserController@getAdminUserAsignarGroup'));
 	/* Grupos */
@@ -222,7 +222,7 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 			'as' => 'admin_ubicacion_update_post', 'uses' => 'UbicacionController@postUbicacionUpdate'));
 		/* Comentario CRUD (POST) */
 		Route::post('/comentario/answer', array(
-			'as' => 'admin_comentario_answer_post', 'uses' => 'ComentarioController@postComentarioAnswer'));
+			'as' => 'admin_comentario_answer_post', 'uses' => 'ComentarioController@postAdminComentarioAnswer'));
 		/* Asignar roles al usuario (POST) */
 		Route::post('/user/update/', array(
 			'as' => 'admin_user_update_post', 'uses' => 'UserController@postAdminUserUpdate'));
@@ -245,15 +245,21 @@ Route::group(array('prefix' => '/user', 'before' => 'user:user'), function() {
 	Route::get('/periodico/views', array(
 		'as' => 'periodico_view', 'uses' => 'PeriodicoController@getPeriodicoView'));
 	Route::get('/comentarios', array(
-		'as' => 'comentarios', 'uses' => 'ComentarioController@getComentarios'));
+		'as' => 'comentarios', 'uses' => 'ComentarioController@getUserComentarios'));
 	Route::get('/comentario/create', array(
-		'as' => 'comentario_create', 'uses' => 'ComentarioController@getComentarioCreate'));
+		'as' => 'comentario_create', 'uses' => 'ComentarioController@getUserComentarioCreate'));
+	Route::get('/data/comentario', array(
+		'as' => 'user_data_comentario', 'uses' => 'ComentarioController@getUserDataComentario'));
 	/*
 	| Grupo CSRF
 	*/
 	Route::group(array('before' => 'csrf'), function() {
 		Route::post('/comentario/create', array(
-			'as' => 'comentario_create_post', 'uses' => 'ComentarioController@postComentarioCreate'));
+			'as' => 'comentario_create_post', 'uses' => 'ComentarioController@postUserComentarioCreate'));
+		Route::post('/comentario/update', array(
+			'as' => 'comentario_update_post', 'uses' => 'ComentarioController@postUserComentarioUpdate'));
+		Route::post('/comentario/delete', array(
+			'as' => 'comentario_delete_post', 'uses' => 'ComentarioController@postUserComentarioDelete'));
 		Route::post('/user/subscribirse', array(
 			'as' => 'subscribirse_post', 'uses' => 'PageController@postSubscribirse'));
 	});
