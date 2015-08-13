@@ -2,7 +2,7 @@
 
 class UbicacionController extends BaseController {
 
-	public function getUbicaciones()
+	public function getAdminUbicaciones()
 	{
 		if (Sentry::getUser()->hasAnyAccess(['ubicacion'])) {
 			$ubicaciones_1 = Ubicacion::whereStatus(1)->get();
@@ -17,12 +17,12 @@ class UbicacionController extends BaseController {
 		}
 	}
 
-	public function getUbicacionCreate()
+	public function getAdminUbicacionCreate()
 	{
 		return View::make('admin.ubicacion.ubicacion_create');
 	}
 
-	public function postUbicacionCreate()
+	public function postAdminUbicacionCreate()
 	{
 		$respuesta = Ubicacion::createUbicacion(Input::all());
 		if($respuesta['error'] == true) {
@@ -35,14 +35,14 @@ class UbicacionController extends BaseController {
 		}
 	}
 
-	public function getUbicacionUpdate($id)
+	public function getAdminUbicacionUpdate($id)
 	{
 		$ubicacion = Ubicacion::find($id);
 		return View::make('admin.ubicacion.ubicacion_update')
 		->with('ubicacion', $ubicacion);
 	}
 
-	public function postUbicacionUpdate($id)
+	public function postAdminUbicacionUpdate($id)
 	{
 		$respuesta = Ubicacion::updateUbicacion(Input::all(), $id);
 		if($respuesta['error'] == true) {

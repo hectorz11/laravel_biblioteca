@@ -28,13 +28,15 @@
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="{{ URL::route('libro_search') }}"><i class="glyphicon glyphicon-question-sign"></i> Buscar Libro</a></li>
 				@if (Sentry::check())
-					@if (Sentry::getUser()->hasAccess(['admin','libro']))
 						<li class="divider"></li>
 						<li class="dropdown-header">Archivo Regional Tacna</li>
-						<li><a href="{{ URL::route('libro_create') }}"><i class="glyphicon glyphicon-plus-sign"></i> Ingresar Libro</a></li>
-						<li><a href="{{ URL::route('biblioteca') }}"><i class="glyphicon glyphicon-ok-sign"></i> Consultar Libro</a></li>
-						<li><a href="{{ URL::route('biblioteca_no') }}"><i class="glyphicon glyphicon-remove-sign"></i> Recuperar Libro</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-info-sign"></i> Reporte Completo de Libros</a></li> 
+					@if (Sentry::getUser()->hasAccess(['admin','libro']))
+						<li><a href="{{ URL::route('admin_libro_create') }}"><i class="glyphicon glyphicon-plus-sign"></i> Ingresar Libro</a></li>
+						<li><a href="{{ URL::route('admin_biblioteca') }}"><i class="glyphicon glyphicon-ok-sign"></i> Consultar Libro</a></li>
+						<li><a href="{{ URL::route('admin_biblioteca_no') }}"><i class="glyphicon glyphicon-remove-sign"></i> Recuperar Libro</a></li>
+						<li><a href="#"><i class="glyphicon glyphicon-info-sign"></i> Reporte Completo de Libros</a></li>
+					@else
+						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> No tiene Acceso</a></li></li>
 					@endif
 				@endif
 					</ul>
@@ -46,13 +48,15 @@
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="{{ URL::route('periodico_search') }}"><i class="glyphicon glyphicon-question-sign"></i> Buscar Periodico</a></li>
 				@if (Sentry::check())
-					@if (Sentry::getUser()->hasAccess(['admin','periodico']))
 						<li class="divider"></li>
 						<li class="dropdown-header">Archivo Regional Tacna</li>
-						<li><a href="{{ URL::route('periodico_create') }}"><i class="glyphicon glyphicon-plus-sign"></i> Ingresar Periodico</a></li>
-						<li><a href="{{ URL::route('hemeroteca') }}"><i class="glyphicon glyphicon-ok-sign"></i> Consultar Periodico</a></li>
-						<li><a href="{{ URL::route('hemeroteca_no') }}"><i class="glyphicon glyphicon-remove-sign"></i> Recuperar Periodico</a></li>
+					@if (Sentry::getUser()->hasAccess(['admin','periodico']))
+						<li><a href="{{ URL::route('admin_periodico_create') }}"><i class="glyphicon glyphicon-plus-sign"></i> Ingresar Periodico</a></li>
+						<li><a href="{{ URL::route('admin_hemeroteca') }}"><i class="glyphicon glyphicon-ok-sign"></i> Consultar Periodico</a></li>
+						<li><a href="{{ URL::route('admin_hemeroteca_no') }}"><i class="glyphicon glyphicon-remove-sign"></i> Recuperar Periodico</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-info-sign"></i> Reporte Completo de Periodicos</a></li>
+					@else
+						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> No tiene Acceso</a></li></li>
 			    	@endif
 				@endif
 					</ul>
@@ -64,38 +68,31 @@
 						<i class="glyphicon glyphicon-th-large"></i> Panel <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu">
-					@if (Sentry::getUser()->hasAccess(['clasificacion']))
 						<li class="dropdown-header">Clasificaciones</li>
+					@if (Sentry::getUser()->hasAccess(['clasificacion']))
 						<li><a href="{{ URL::route('admin_clasificaciones') }}"><i class="glyphicon glyphicon-question-sign"></i> Consultar</a></li>
 					@else
-						<li class="dropdown-header">Clasificaciones</li>
 						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> No tiene Acceso</a></li></li>
 					@endif
-					@if (Sentry::getUser()->hasAccess(['estado']))
 						<li class="divider"></li>
 						<li class="dropdown-header">Estados</li>
+					@if (Sentry::getUser()->hasAccess(['estado']))
 						<li><a href="{{ URL::route('admin_estados') }}"><i class="glyphicon glyphicon-question-sign"></i> Consultar</a></li>
 					@else
-						<li class="divider"></li>
-						<li class="dropdown-header">Estados</li>
 						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> No tiene Acceso</a></li></li>
 					@endif
-					@if (Sentry::getUser()->hasAccess(['tipo']))
 						<li class="divider"></li>
 						<li class="dropdown-header">Tipos</li>
+					@if (Sentry::getUser()->hasAccess(['tipo']))
 						<li><a href="{{ URL::route('admin_tipos') }}"><i class="glyphicon glyphicon-question-sign"></i> Consultar</a></li>
 					@else
-						<li class="divider"></li>
-						<li class="dropdown-header">Tipos</li>
 						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> No tiene Acceso</a></li></li>
 					@endif
-					@if (Sentry::getUser()->hasAccess(['ubicacion']))
 						<li class="divider"></li>
 						<li class="dropdown-header">Ubicaciones</li>
+					@if (Sentry::getUser()->hasAccess(['ubicacion']))
 						<li><a href="{{ URL::route('admin_ubicaciones') }}"><i class="glyphicon glyphicon-question-sign"></i> Consultar</a></li>
 					@else
-						<li class="divider"></li>
-						<li class="dropdown-header">Ubicaciones</li>
 						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> No tiene Acceso</a></li></li>
 					@endif
 					</ul>
@@ -109,32 +106,27 @@
 						<i class="glyphicon glyphicon-th"></i> Administrador <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu">
-					@if (Sentry::getUser()->hasAccess(['usuario']))
 						<li class="dropdown-header">Usuarios</li>
+					@if (Sentry::getUser()->hasAccess(['usuario']))
 						<li><a href="{{ URL::route('admin_users') }}"><i class="glyphicon glyphicon-user"></i> Usuarios</a></li>
 						<li><a href="{{ URL::route('admin_helpers_periodico') }}"><i class="glyphicon glyphicon-user"></i> Colaborador Periodico</a></li>
 						<li><a href="{{ URL::route('admin_helpers_libro') }}"><i class="glyphicon glyphicon-user"></i> Coloborador Libro</a></li>
 						<li><a href="{{ URL::route('admin_helpers') }}"><i class="glyphicon glyphicon-user"></i> Secretaria</a></li>
 					@else
-						<li class="dropdown-header">Usuarios</li>
 						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> No tiene Acceso</a></li></li>
 					@endif
-					@if (Sentry::getUser()->hasAccess(['grupo']))
 						<li class="divider"></li>
 						<li class="dropdown-header">Grupos</li>
+					@if (Sentry::getUser()->hasAccess(['grupo']))
 						<li><a href="{{ URL::route('admin_groups') }}"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
 					@else
-						<li class="divider"></li>
-						<li class="dropdown-header">Grupos</li>
 						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> No tiene Acceso</a></li></li>
 					@endif
-					@if (Sentry::getUser()->hasAccess(['comentario']))
 						<li class="divider"></li>
 						<li class="dropdown-header">Comentarios</li>
+					@if (Sentry::getUser()->hasAccess(['comentario']))
 						<li><a href="{{ URL::route('admin_comentarios') }}"><i class="glyphicon glyphicon-modal-window"></i> Consultar</a></li>
 					@else
-						<li class="divider"></li>
-						<li class="dropdown-header">Comentarios</li>
 						<li><a href="#"><i class="glyphicon glyphicon-minus-sign"></i> No tiene Acceso</a></li></li>
 					@endif
 					</ul>

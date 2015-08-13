@@ -64,80 +64,80 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 	*/
 	/* Libros activados */
 	Route::get('/biblioteca', array(
-		'as' => 'biblioteca', 'uses' => 'LibroController@getBiblioteca'));
+		'as' => 'admin_biblioteca', 'uses' => 'LibroController@getAdminBiblioteca'));
 	/* Libros no activados */
 	Route::get('/biblioteca/no', array(
-		'as' => 'biblioteca_no', 'uses' => 'LibroController@getBibliotecaNo'));
+		'as' => 'admin_biblioteca_no', 'uses' => 'LibroController@getAdminBibliotecaNo'));
 	/* Libro: datos en json */
 	Route::get('/data/libro', array(
-		'as' => 'data-libro', 'uses' => 'LibroController@getDataLibro'));
+		'as' => 'admin_data_libro', 'uses' => 'LibroController@getAdminDataLibro'));
 	/* Libro: crear */
 	Route::get('/libro/create', array(
-		'as' => 'libro_create', 'uses' => 'LibroController@getLibroCreate'));
+		'as' => 'admin_libro_create', 'uses' => 'LibroController@getAdminLibroCreate'));
 	/* Libro: editar */
 	Route::get('/libro/update/{id}', array(
-		'as' => 'libro_update', 'uses' => 'LibroController@getLibroUpdate'));
+		'as' => 'admin_libro_update', 'uses' => 'LibroController@getAdminLibroUpdate'));
 	/* Libro: busqueda de libros activados */
 	Route::get('/datatable/libros', array(
-		'as' => 'admin-datatable-libros', 'uses' => 'LibroController@getDatatableAdmin'));
+		'as' => 'admin_datatable_libros', 'uses' => 'LibroController@getAdminDatatableLibro'));
 	/* Libro: busqueda de libros no activados */
 	Route::get('/datatable/libros/no', array(
-		'as' => 'admin-datatable-libros-no', 'uses' => 'LibroController@getDatatableAdminNo'));
+		'as' => 'admin_datatable_libros_no', 'uses' => 'LibroController@getAdminDatatableLibroNo'));
 	/*
 	| HEMEROTECA (GET) 
 	*/
 	/* Periodicos activados */
 	Route::get('/hemeroteca', array(
-		'as' => 'hemeroteca', 'uses' => 'PeriodicoController@getHemeroteca'));
+		'as' => 'admin_hemeroteca', 'uses' => 'PeriodicoController@getAdminHemeroteca'));
 	/* Periodicos no activados */
 	Route::get('/hemeroteca/no', array(
-		'as' => 'hemeroteca_no', 'uses' => 'PeriodicoController@getHemerotecaNo'));
+		'as' => 'admin_hemeroteca_no', 'uses' => 'PeriodicoController@getAdminHemerotecaNo'));
 	/* Periodico: datos en json */
 	Route::get('/data/periodico', array(
-		'as' => 'data-periodico', 'uses' => 'PeriodicoController@getDataPeriodico'));
+		'as' => 'admin_data_periodico', 'uses' => 'PeriodicoController@getAdminDataPeriodico'));
 	/* Periodico: crear */
 	Route::get('/periodico/create', array(
-		'as' => 'periodico_create', 'uses' => 'PeriodicoController@getPeriodicoCreate'));
+		'as' => 'admin_periodico_create', 'uses' => 'PeriodicoController@getAdminPeriodicoCreate'));
 	/* Periodicos: editar */
 	Route::get('/periodico/update/{id}', array(
-		'as' => 'periodico_update', 'uses' => 'PeriodicoController@getPeriodicoUpdate'));
+		'as' => 'admin_periodico_update', 'uses' => 'PeriodicoController@getAdminPeriodicoUpdate'));
 	/* Periodico: busqueda de periodicos activados */
 	Route::get('/datatable/periodicos', array(
-		'as' => 'admin-datatable-periodicos', 'uses' => 'PeriodicoController@getDatatableAdmin'));
+		'as' => 'admin_datatable_periodicos', 'uses' => 'PeriodicoController@getAdminDatatablePeriodico'));
 	/* Periodico: busqueda de periodicos no activados */
 	Route::get('/datatable/periodicos/no', array(
-		'as' => 'admin-datatable-periodicos-no', 'uses' => 'PeriodicoController@getDatatableAdminNo'));
+		'as' => 'admin_datatable_periodicos_no', 'uses' => 'PeriodicoController@getAdminDatatablePeriodicoNo'));
 	/*
 	! PANEL (GET)
 	*/
 	/* Clasificacion CRUD (GET) */
 	Route::get('/clasificaciones', array(
-		'as' => 'admin_clasificaciones', 'uses' => 'ClasificacionController@getClasificaciones'));
+		'as' => 'admin_clasificaciones', 'uses' => 'ClasificacionController@getAdminClasificaciones'));
 	Route::get('/clasificacion/create', array(
-		'as' => 'admin_clasificacion_create', 'uses' => 'ClasificacionController@getClasificacionCreate'));
+		'as' => 'admin_clasificacion_create', 'uses' => 'ClasificacionController@getAdminClasificacionCreate'));
 	Route::get('/clasificacion/update/{id}', array(
-		'as' => 'admin_clasificacion_update', 'uses' => 'ClasificacionController@getClasificacionUpdate'));
+		'as' => 'admin_clasificacion_update', 'uses' => 'ClasificacionController@getAdminClasificacionUpdate'));
 	/* Estado CRUD (GET) */
 	Route::get('/estados', array(
-		'as' => 'admin_estados', 'uses' => 'EstadoController@getEstados'));
+		'as' => 'admin_estados', 'uses' => 'EstadoController@getAdminEstados'));
 	Route::get('/estado/create', array(
-		'as' => 'admin_estado_create', 'uses' => 'EstadoController@getEstadoCreate'));
+		'as' => 'admin_estado_create', 'uses' => 'EstadoController@getAdminEstadoCreate'));
 	Route::get('/estado/update/{id}', array(
-		'as' => 'admin_estado_update', 'uses' => 'EstadoController@getEstadoUpdate'));
+		'as' => 'admin_estado_update', 'uses' => 'EstadoController@getAdminEstadoUpdate'));
 	/* Tipo CRUD (GET) */
 	Route::get('/tipos', array(
-		'as' => 'admin_tipos', 'uses' => 'TipoController@getTipos'));
+		'as' => 'admin_tipos', 'uses' => 'TipoController@getAdminTipos'));
 	Route::get('/tipo/create', array(
-		'as' => 'admin_tipo_create', 'uses' => 'TipoController@getTipoCreate'));
+		'as' => 'admin_tipo_create', 'uses' => 'TipoController@getAdminTipoCreate'));
 	Route::get('/tipo/update/{id}', array(
-		'as' => 'admin_tipo_update', 'uses' => 'TipoController@getTipoUpdate'));
+		'as' => 'admin_tipo_update', 'uses' => 'TipoController@getAdminTipoUpdate'));
 	/* Ubicacion CRUD (GET) */
 	Route::get('/ubicaciones', array(
-		'as' => 'admin_ubicaciones', 'uses' => 'UbicacionController@getUbicaciones'));
+		'as' => 'admin_ubicaciones', 'uses' => 'UbicacionController@getAdminUbicaciones'));
 	Route::get('/ubicacion/create', array(
-		'as' => 'admin_ubicacion_create', 'uses' => 'UbicacionController@getUbicacionCreate'));
+		'as' => 'admin_ubicacion_create', 'uses' => 'UbicacionController@getAdminUbicacionCreate'));
 	Route::get('/ubicacion/update/{id}', array(
-		'as' => 'admin_ubicacion_update', 'uses' => 'UbicacionController@getUbicacionUpdate'));
+		'as' => 'admin_ubicacion_update', 'uses' => 'UbicacionController@getAdminUbicacionUpdate'));
 	/*
 	| ADMINISTRADOR (GET)
 	*/
@@ -159,13 +159,13 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 		'as' => 'admin_helpers', 'uses' => 'UserController@getHelpers'));
 	/* Datatable (GET) */
 	Route::get('/datatable/users', array(
-		'as' => 'admin-datatable-users', 'uses' => 'UserController@getDatatableUsers'));
+		'as' => 'admin_datatable_users', 'uses' => 'UserController@getDatatableUsers'));
 	Route::get('/datatable/helpers/periodico', array(
-		'as' => 'admin-datatable-helpers-periodico', 'uses' => 'UserController@getDatatableHelpersPeriodico'));
+		'as' => 'admin_datatable_helpers_periodico', 'uses' => 'UserController@getDatatableHelpersPeriodico'));
 	Route::get('/datatable/helpers/libro', array(
-		'as' => 'admin-datatable-helpers-libro', 'uses' => 'UserController@getDatatableHelpersLibro'));
+		'as' => 'admin_datatable_helpers_libro', 'uses' => 'UserController@getDatatableHelpersLibro'));
 	Route::get('/datatable/helpers', array(
-		'as' => 'admin-datatable-helpers', 'uses' => 'UserController@getDatatableHelpers'));
+		'as' => 'admin_datatable_helpers', 'uses' => 'UserController@getDatatableHelpers'));
 	/* Asignar roles a usuarios */
 	Route::get('/data/user', array(
 		'as' => 'admin_data_user', 'uses' => 'UserController@getAdminDataUser'));
@@ -184,42 +184,42 @@ Route::group(array('prefix' => '/admin', 'before' => 'admin:admin'), function() 
 	Route::group(array('before' => 'csrf'), function() {
 		/* Libro: CRUD (POST) */
 		Route::post('/libro/create', array(
-			'as' => 'libro_create_post', 'uses' => 'LibroController@postLibroCreate'));
+			'as' => 'admin_libro_create_post', 'uses' => 'LibroController@postAdminLibroCreate'));
 		Route::post('/libro/update/{id}', array(
-			'as' => 'libro_update_post', 'uses' => 'LibroController@postLibroUpdate'));
+			'as' => 'admin_libro_update_post', 'uses' => 'LibroController@postAdminLibroUpdate'));
 		Route::post('/libro/delete', array(
-			'as' => 'libro_delete_post', 'uses' => 'LibroController@postLibroDelete'));
+			'as' => 'admin_libro_delete_post', 'uses' => 'LibroController@postAdminLibroDelete'));
 		Route::post('/libro/recuperar', array(
-			'as' => 'libro_recuperar_post', 'uses' => 'LibroController@postLibroRecuperar'));
+			'as' => 'admin_libro_recuperar_post', 'uses' => 'LibroController@postAdminLibroRecuperar'));
 		/* Periodico: CRUD (POST) */
 		Route::post('/periodico/create', array(
-			'as' => 'periodico_create_post', 'uses' => 'PeriodicoController@postPeriodicoCreate'));
+			'as' => 'admin_periodico_create_post', 'uses' => 'PeriodicoController@postAdminPeriodicoCreate'));
 		Route::post('/periodico/update/{id}', array(
-			'as' => 'periodico_update_post', 'uses' => 'PeriodicoController@postPeriodicoUpdate'));
+			'as' => 'admin_periodico_update_post', 'uses' => 'PeriodicoController@postAdminPeriodicoUpdate'));
 		Route::post('/periodico/delete', array(
-			'as' => 'periodico_delete_post', 'uses' => 'PeriodicoController@postPeriodicoDelete'));
+			'as' => 'admin_periodico_delete_post', 'uses' => 'PeriodicoController@postAdminPeriodicoDelete'));
 		Route::post('/periodico/recuperar', array(
-			'as' => 'periodico_recuperar_post', 'uses' => 'PeriodicoController@postPeriodicoRecuperar'));
+			'as' => 'admin_periodico_recuperar_post', 'uses' => 'PeriodicoController@postAdminPeriodicoRecuperar'));
 		/* Clasificacion CRUD (POST) */
 		Route::post('/clasificacion/create', array(
-			'as' => 'admin_clasificacion_create_post', 'uses' => 'ClasificacionController@postClasificacionCreate'));
+			'as' => 'admin_clasificacion_create_post', 'uses' => 'ClasificacionController@postAdminClasificacionCreate'));
 		Route::post('/clasificacion/update/{id}', array(
-			'as' => 'admin_clasificacion_update_post', 'uses' => 'ClasificacionController@postClasificacionUpdate'));
+			'as' => 'admin_clasificacion_update_post', 'uses' => 'ClasificacionController@postAdminClasificacionUpdate'));
 		/* Estado CRUD (POST) */
 		Route::post('/estado/create', array(
-			'as' => 'admin_estado_create_post', 'uses' => 'EstadoController@postEstadoCreate'));
+			'as' => 'admin_estado_create_post', 'uses' => 'EstadoController@postAdminEstadoCreate'));
 		Route::post('/estado/update/{id}', array(
-			'as' => 'admin_estado_update_post', 'uses' => 'EstadoController@postEstadoUpdate'));
+			'as' => 'admin_estado_update_post', 'uses' => 'EstadoController@postAdminEstadoUpdate'));
 		/* Tipo CRUD (POST) */
 		Route::post('/tipo/create', array(
-			'as' => 'admin_tipo_create_post', 'uses' => 'TipoController@postTipoCreate'));
+			'as' => 'admin_tipo_create_post', 'uses' => 'TipoController@postAdminTipoCreate'));
 		Route::post('/tipo/update/{id}', array(
-			'as' => 'admin_tipo_update_post', 'uses' => 'TipoController@postTipoUpdate'));
+			'as' => 'admin_tipo_update_post', 'uses' => 'TipoController@postAdminTipoUpdate'));
 		/* Ubicacion CRUD (POST) */
 		Route::post('/ubicacion/create', array(
-			'as' => 'admin_ubicacion_create_post', 'uses' => 'UbicacionController@postUbicacionCreate'));
+			'as' => 'admin_ubicacion_create_post', 'uses' => 'UbicacionController@postAdminUbicacionCreate'));
 		Route::post('/ubicacion/update/{id}', array(
-			'as' => 'admin_ubicacion_update_post', 'uses' => 'UbicacionController@postUbicacionUpdate'));
+			'as' => 'admin_ubicacion_update_post', 'uses' => 'UbicacionController@postAdminUbicacionUpdate'));
 		/* Comentario CRUD (POST) */
 		Route::post('/comentario/answer', array(
 			'as' => 'admin_comentario_answer_post', 'uses' => 'ComentarioController@postAdminComentarioAnswer'));

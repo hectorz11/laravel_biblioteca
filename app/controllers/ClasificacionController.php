@@ -2,7 +2,7 @@
 
 class ClasificacionController extends BaseController {
 
-	public function getClasificaciones()
+	public function getAdminClasificaciones()
 	{
 		if (Sentry::getUser()->hasAnyAccess(['clasificacion'])) {
 			$clasificaciones_1 = Clasificacion::whereStatus(1)->get();
@@ -17,12 +17,12 @@ class ClasificacionController extends BaseController {
 		}
 	}
 
-	public function getClasificacionCreate()
+	public function getAdminClasificacionCreate()
 	{
 		return View::make('admin.clasificacion.clasificacion_create');
 	}
 
-	public function postClasificacionCreate()
+	public function postAdminClasificacionCreate()
 	{
 		$respuesta = Clasificacion::createClasificacion(Input::all());
 		if($respuesta['error'] == true) {
@@ -35,14 +35,14 @@ class ClasificacionController extends BaseController {
 		}
 	}
 
-	public function getClasificacionUpdate($id)
+	public function getAdminClasificacionUpdate($id)
 	{
 		$clasificacion = Clasificacion::find($id);
 		return View::make('admin.clasificacion.clasificacion_update')
 		->with('clasificacion', $clasificacion);
 	}
 
-	public function postClasificacionUpdate($id)
+	public function postAdminClasificacionUpdate($id)
 	{
 		$respuesta = Clasificacion::updateClasificacion(Input::all(), $id);
 		if($respuesta['error'] == true) {

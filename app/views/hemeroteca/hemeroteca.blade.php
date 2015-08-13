@@ -27,7 +27,7 @@
         </tbody>
     </table>
     <div class="form-actions" align="center">
-        <a href="{{ URL::route('periodico_create') }}" class="btn btn-lg btn-primary" name="ingresar">
+        <a href="{{ URL::route('admin_periodico_create') }}" class="btn btn-lg btn-primary" name="ingresar">
             <i class="glyphicon glyphicon-plus-sign"></i> Ingresar Nuevo Registro
         </a> 
         <a href="{{ URL::route('/') }}" class="btn btn-lg tn btn-danger">
@@ -45,17 +45,16 @@
                 <span id="load"><center><img src="{{ asset('img/loading1.gif')}}"> Cargando...</center></span></h4>
             </div>
             <div class="modal-body">
-                <!-- Formulario -->
-                <form role="form" action="{{ URL::route('periodico_delete_post')}}" method="post" id="formEdit">
-                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <!-- Start Form -->
+                {{ Form::open(['route' => 'admin_periodico_delete_post', 'id' => 'formEdit']) }}
                     <div class="row">
                         <div class="col-md-12">
                             <label>Titulo del Periodico a eliminar</label>
                             {{ Form::text('nombre', Input::old('nombre'), ['class' => 'form-control']) }}
                         </div>
                     </div><br>
-                    <input type="hidden" name="idPeriodico">
-                    <input id="val" type="hidden" name="periodico" class="input-block-level" value="">
+                    {{ Form::hidden('idPeriodico') }}
+                    {{ Form::hidden('periodico', '', ['id' => 'val']) }}
                     <div class="">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>
@@ -63,8 +62,9 @@
                             <i class="glyphicon glyphicon-check"></i> Eliminar</button>
                     </div>
                 </form>
+                {{ Form::close() }}
+                <!-- End Form -->
             </div>
-            <!--  -->
         </div>
     </div>
 </div>

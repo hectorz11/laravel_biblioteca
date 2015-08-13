@@ -26,7 +26,6 @@
         </tbody>
     </table>
     <div class="form-actions" align="center">
-        <a href="{{ URL::route('periodico_create') }}" class="btn btn-lg btn-primary" name="ingresar"></i> Ingresar Nuevo Registro</a> 
         <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-home"></i> Regresar al Menu Principal</a>
     </div>
 </div>

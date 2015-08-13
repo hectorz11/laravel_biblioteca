@@ -27,7 +27,7 @@
         </tbody>
     </table>
     <div class="form-actions" align="center">
-        <a href="{{ URL::route('libro_create') }}" class="btn btn-lg btn-primary" name="ingresar">
+        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-primary" name="ingresar">
             <i class="glyphicon glyphicon-plus-sign"></i> Ingresar Nuevo Registro
         </a> 
         <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger">
@@ -48,8 +48,7 @@
             </div>
             <div class="modal-body">
                 <!-- Formulario -->
-                <form role="form" action="{{ URL::route('admin_user_update_post') }}" method="post" id="formEdit">
-                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                {{ Form::open(['route' => 'admin_user_update_post', 'id' => 'formEdit']) }}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-6">
@@ -77,8 +76,8 @@
                             </div>
                         </div>
                     </div><br>
-                    <input type="hidden" name="idUser">
-                    <input id="val" type="hidden" name="user" class="input-block-level" value="">
+                    {{ Form::hidden('idUser') }}
+                    {{ Form::hidden('user', '', ['id' => 'val']) }}
                     <div class="">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>

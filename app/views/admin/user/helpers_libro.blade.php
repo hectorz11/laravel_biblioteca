@@ -27,7 +27,7 @@
         </tbody>
     </table>
     <div class="form-actions" align="center">
-        <a href="{{ URL::route('libro_create') }}" class="btn btn-lg btn-primary" name="ingresar">
+        <a href="{{ URL::route('/') }}" class="btn btn-lg btn-primary" name="ingresar">
             <i class="glyphicon glyphicon-plus-sign"></i> Ingresar Nuevo Registro
         </a> 
         <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger">
@@ -78,7 +78,7 @@
                         </div>
                     </div><br>
                     <input type="hidden" name="idUser">
-                    <input id="val" type="hidden" name="user" class="input-block-level" value="">
+                    <input id="val" type="hidden" name="user">
                     <div class="">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>

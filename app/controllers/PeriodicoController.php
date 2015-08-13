@@ -2,27 +2,27 @@
 
 class PeriodicoController extends BaseController {
 
-	public function getHemeroteca()
+	public function getAdminHemeroteca()
 	{
 		if (Sentry::getUser()->hasAnyAccess(['periodico'])) {
 			return View::make('hemeroteca.hemeroteca');
-		}else {
+		} else {
 			return Redirect::route('/')
 			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
-	public function getHemerotecaNo()
+	public function getAdminHemerotecaNo()
 	{
 		if (Sentry::getUser()->hasAnyAccess(['periodico'])) {
 			return View::make('hemeroteca.hemeroteca_no');
-		}else {
+		} else {
 			return Redirect::route('/')
 			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
 		}
 	}
 
-	public function getDatatableAdmin()
+	public function getAdminDatatablePeriodico()
 	{
 		$result = DB::table('periodicos')
 		->select(array(
@@ -41,7 +41,7 @@ class PeriodicoController extends BaseController {
 		->showColumns('id','volumen','nombre','fecha_inicio','fecha_final','estado')
 		->addColumn('Operaciones', function($model)
 		{
-			return "<a href='".URL::route('periodico_update', $model->id)."' id=$model->id data-toggle='modal'>
+			return "<a href='".URL::route('admin_periodico_update', $model->id)."' id=$model->id data-toggle='modal'>
 						<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
 					</a>
 					<a class='edit' href='".URL::to('#Eliminar')."'' id=$model->id data-toggle='modal'>
@@ -50,7 +50,7 @@ class PeriodicoController extends BaseController {
 		})->make();
 	}
 
-	public function getDatatableAdminNo()
+	public function getAdminDatatablePeriodicoNo()
 	{
 		$result = DB::table('periodicos')
 		->select(array(
@@ -95,7 +95,7 @@ class PeriodicoController extends BaseController {
 		->make();
 	}
 
-	public function getDataPeriodico()
+	public function getAdminDataPeriodico()
 	{
 		if (Input::has('periodico')) {
 			$periodico_id = Input::get('periodico');
@@ -109,7 +109,7 @@ class PeriodicoController extends BaseController {
 		}
 	}
 
-	public function getPeriodicoCreate()
+	public function getAdminPeriodicoCreate()
 	{
 		$user = Sentry::getUser();
 		if ($user->hasAnyAccess(['periodico_create'])) {
@@ -130,19 +130,19 @@ class PeriodicoController extends BaseController {
 		}
 	}
 
-	public function postPeriodicoCreate()
+	public function postAdminPeriodicoCreate()
 	{
 		$respuesta = Periodico::agregarPeriodico(Input::all());
 		if ($respuesta['error'] == true)	{
-			return Redirect::route('periodico_create')
+			return Redirect::route('admin_periodico_create')
 			->withErrors($respuesta['mensaje'])->withInput();
 		} else {
-			return Redirect::route('periodico_create')
+			return Redirect::route('admin_periodico_create')
 			->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
 		}
 	}
 
-	public function getPeriodicoUpdate($id)
+	public function getAdminPeriodicoUpdate($id)
 	{
 		$user = Sentry::getUser();
 		if ($user->hasAnyAccess(['periodico_update'])) {
@@ -165,38 +165,26 @@ class PeriodicoController extends BaseController {
 		}
 	}
 
-	public function postPeriodicoUpdate($id)
+	public function postAdminPeriodicoUpdate($id)
 	{
 		$respuesta = Periodico::editarPeriodico(Input::all(), $id);
 		if ($respuesta['error'] == true) {
-			return Redirect::route('periodico_update', $periodico->id)
+			return Redirect::route('admin_periodico_update', $id)
 			->withErrors($respuesta['mensaje'])
 			->withInput();
 		} else {
-			return Redirect::route('periodico_update', $periodico->id)
+			return Redirect::route('admin_periodico_update', $id)
 			->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
 		}
 	}
 
-	public function getPeriodicoDelete($id)
-	{
-		if (Sentry::getUser()->hasAnyAccess(['periodico_delete'])) {
-			$periodico = Periodico::find($id);
-			return View::make('hemeroteca.periodico_delete')
-			->with('periodico', $periodico);
-		} else {
-			return Redirect::route('/')
-			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
-		}
-	}
-
-	public function postPeriodicoDelete()
+	public function postAdminPeriodicoDelete()
 	{
 		$periodico_id = Input::get('idPeriodico');
 		$periodico = Periodico::find($periodico_id);
 		$periodico->status = 0;
 		$periodico->save();
-		return Redirect::route('hemeroteca');
+		return Redirect::route('admin_hemeroteca');
 	}
 
 	public function getPeriodicoSearch()
@@ -204,13 +192,13 @@ class PeriodicoController extends BaseController {
 		return View::make('hemeroteca.periodico_search');
 	}
 
-	public function postPeriodicoRecuperar()
+	public function postAdminPeriodicoRecuperar()
 	{
 		$periodico_id = Input::get('idPeriodico');
 		$periodico = Periodico::find($periodico_id);
 		$periodico->status = 1;
 		$periodico->save();
-		return Redirect::route('hemeroteca_no');
+		return Redirect::route('admin_hemeroteca_no');
 	}
 
 }

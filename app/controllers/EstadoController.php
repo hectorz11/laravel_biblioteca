@@ -2,7 +2,7 @@
 
 class EstadoController extends BaseController
 {
-	public function getEstados()
+	public function getAdminEstados()
 	{
 		if (Sentry::getUser()->hasAnyAccess(['estado'])) {
 			$estados_1 = Estado::whereStatus(1)->get();
@@ -17,12 +17,12 @@ class EstadoController extends BaseController
 		}
 	}
 
-	public function getEstadoCreate()
+	public function getAdminEstadoCreate()
 	{
 		return View::make('admin.estado.estado_create');
 	}
 
-	public function postEstadoCreate()
+	public function postAdminEstadoCreate()
 	{
 		$respuesta = Estado::createEstado(Input::all());
 		if($respuesta['error'] == true) {
@@ -35,14 +35,14 @@ class EstadoController extends BaseController
 		}
 	}
 
-	public function getEstadoUpdate($id)
+	public function getAdminEstadoUpdate($id)
 	{
 		$estado = Estado::find($id);
 		return View::make('admin.estado.estado_update')
 		->with('estado', $estado);
 	}
 
-	public function postEstadoUpdate($id)
+	public function postAdminEstadoUpdate($id)
 	{
 		$respuesta = Estado::updateEstado(Input::all(), $id);
 		if($respuesta['error'] == true) {

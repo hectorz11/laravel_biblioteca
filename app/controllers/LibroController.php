@@ -2,7 +2,7 @@
 
 class LibroController extends BaseController {
 
-	public function getBiblioteca()
+	public function getAdminBiblioteca()
 	{
 		if (Sentry::getUser()->hasAnyAccess(['libro'])) {
 			return View::make('biblioteca.biblioteca');
@@ -12,7 +12,7 @@ class LibroController extends BaseController {
 		}
 	}
 
-	public function getBibliotecaNo()
+	public function getAdminBibliotecaNo()
 	{
 		if (Sentry::getUser()->hasAnyAccess(['libro'])) {
 			return View::make('biblioteca.biblioteca_no');
@@ -22,7 +22,7 @@ class LibroController extends BaseController {
 		}
 	}
 
-	public function getDatatableAdmin()
+	public function getAdminDatatableLibro()
 	{
 		$result = DB::table('libros')
 		->select(array(
@@ -41,7 +41,7 @@ class LibroController extends BaseController {
 		->showColumns('id','codigo','autores','titulo','edicion','estado')
 		->addColumn('Operaciones', function($model)
 		{
-			return "<a href='".URL::route('libro_update', $model->id)."' id=$model->id data-toggle='modal'>
+			return "<a href='".URL::route('admin_libro_update', $model->id)."' id=$model->id data-toggle='modal'>
 						<span class='label label-info'><i class='glyphicon glyphicon-edit'></i> Editar</span>
 					</a>
 					<a class='edit' href='".URL::to('#Eliminar')."' id=$model->id data-toggle='modal'>
@@ -50,7 +50,7 @@ class LibroController extends BaseController {
 		})->make();
 	}
 
-	public function getDatatableAdminNo()
+	public function getAdminDatatableLibroNo()
 	{
 		$result = DB::table('libros')
 		->select(array(
@@ -95,7 +95,7 @@ class LibroController extends BaseController {
 		->make();
 	}
 
-	public function getDataLibro()
+	public function getAdminDataLibro()
 	{
 		if (Input::has('libro'))
 		{
@@ -110,7 +110,7 @@ class LibroController extends BaseController {
 		}
 	}
 
-	public function getLibroCreate()
+	public function getAdminLibroCreate()
 	{
 		$user = Sentry::getUser();
 		if ($user->hasAnyAccess(['libro_create'])) {
@@ -129,20 +129,20 @@ class LibroController extends BaseController {
 		}
 	}
 
-	public function postLibroCreate()
+	public function postAdminLibroCreate()
 	{
 		$respuesta = Libro::agregarLibro(Input::all());
 		if ($respuesta['error'] == true)	{
-			return Redirect::route('libro_create')
+			return Redirect::route('admin_libro_create')
 			->withErrors($respuesta['mensaje'])
 			->withInput();
 		} else {
-			return Redirect::route('libro_create')
+			return Redirect::route('admin_libro_create')
 			->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
 		}
 	}
 
-	public function getLibroUpdate($id)
+	public function getAdminLibroUpdate($id)
 	{
 		$user = Sentry::getUser();
 		if ($user->hasAnyAccess(['libro_update'])) {
@@ -163,38 +163,26 @@ class LibroController extends BaseController {
 		}
 	}
 
-	public function postLibroUpdate($id)
+	public function postAdminLibroUpdate($id)
 	{
 		$respuesta = Libro::editarLibro(Input::all(), $id);
 		if ($respuesta['error'] == true) {
-			return Redirect::route('libro_update', $libro->id)
+			return Redirect::route('admin_libro_update', $id)
 			->withErrors($respuesta['mensaje'])
 			->withInput();
 		} else {
-			return Redirect::route('libro_update', $libro->id)
+			return Redirect::route('admin_libro_update', $id)
 			->with(array('mensaje' => $respuesta['mensaje'], 'class' => 'success'));
 		}
 	}
 
-	public function getLibroDelete($id)
-	{
-		if (Sentry::getUser()->hasAnyAccess(['libro_delete'])) {
-			$libro = Libro::find($id);
-			return View::make('biblioteca.libro_delete')
-			->with('libro', $libro);
-		} else {
-			return Redirect::route('/')
-			->with(['mensaje' => 'No tiene acceso', 'class' => 'warning']);
-		}
-	}
-
-	public function postLibroDelete()
+	public function postAdminLibroDelete()
 	{
 		$libro_id = Input::get('idLibro');
 		$libro = Libro::find($libro_id);
 		$libro->status = 0;
 		$libro->save();
-		return Redirect::route('biblioteca');
+		return Redirect::route('admin_biblioteca');
 	}
 
 	public function getLibroSearch()
@@ -202,13 +190,13 @@ class LibroController extends BaseController {
 		return View::make('biblioteca.libro_search');
 	}
 
-	public function postLibroRecuperar()
+	public function postAdminLibroRecuperar()
 	{
 		$libro_id = Input::get('idLibro');
 		$libro = Libro::find($libro_id);
 		$libro->status = 1;
 		$libro->save();
-		return Redirect::route('biblioteca_no');
+		return Redirect::route('admin_biblioteca_no');
 	}
 	
 }

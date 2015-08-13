@@ -2,7 +2,7 @@
 
 class TipoController extends BaseController {
 
-	public function getTipos()
+	public function getAdminTipos()
 	{
 		if (Sentry::getUser()->hasAnyAccess(['tipo'])) {
 			$tipos_1 = Tipo::whereStatus(1)->get();
@@ -17,12 +17,12 @@ class TipoController extends BaseController {
 		}
 	}
 
-	public function getTipoCreate()
+	public function getAdminTipoCreate()
 	{
 		return View::make('admin.tipo.tipo_create');
 	}
 
-	public function postTipoCreate()
+	public function postAdminTipoCreate()
 	{
 		$respuesta = Tipo::createTipo(Input::all());
 		if($respuesta['error'] == true) {
@@ -35,13 +35,13 @@ class TipoController extends BaseController {
 		}
 	}
 
-	public function getTipoUpdate($id)
+	public function getAdminTipoUpdate($id)
 	{
 		$tipo = Tipo::find($id);
 		return View::make('admin.tipo.tipo_update')->with('tipo', $tipo);
 	}
 
-	public function postTipoUpdate($id)
+	public function postAdminTipoUpdate($id)
 	{
 		$respuesta = Tipo::updateTipo(Input::all(), $id);
 		if($respuesta['error'] == true) {

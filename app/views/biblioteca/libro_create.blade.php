@@ -10,7 +10,7 @@
       </div>
     @endif
       <h3>Ingrese el Libro</h3>
-    {{ Form::open(array('route' => 'libro_create_post', 'files' => true)) }}
+    {{ Form::open(['route' => 'admin_libro_create_post', 'files' => true]) }}
       <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i></span>
           {{ Form::text('codigo', Input::old('codigo'), ['class' => 'form-control', 'placeholder' => 'Codigo']) }}
@@ -118,7 +118,7 @@
       <br>
       <div class="form-actions" align="center">
         <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>
-        <a href="{{ URL::route('biblioteca') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
+        <a href="{{ URL::route('admin_biblioteca') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
       </div>
     {{ Form::close() }}
   </div>
@@ -139,7 +139,7 @@
         @foreach($libros as $libro)
         <tr>
           <td><span class="badge">{{ $libro->created_at }}</span></td>
-          <td><a href="{{ URL::route('libro_update', $libro->id) }}">{{ $libro->titulo }}</a></td>
+          <td><a href="{{ URL::route('admin_libro_update', $libro->id) }}">{{ $libro->titulo }}</a></td>
         </tr>
         @endforeach
         </tbody>

@@ -10,7 +10,7 @@
       </div>
     @endif
       <h3>Ingrese el Periodico</h3>
-  	{{ Form::open(array('route' => 'periodico_create_post', 'files' => true)) }}
+  	{{ Form::open(['route' => 'admin_periodico_create_post', 'files' => true]) }}
     	<div class="input-group">
       		<span class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i> </span>
       		{{ Form::text('volumen', Input::old('volumen'), ['class' => 'form-control', 'placeholder' => 'Volumen']) }}
@@ -116,7 +116,7 @@
       </div><br>
       <div class="form-actions" align="center">
         <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>
-        <a href="{{ URL::route('hemeroteca') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
+        <a href="{{ URL::route('admin_hemeroteca') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
       </div>
       {{ Form::close() }}
   </div>
@@ -137,7 +137,7 @@
         @foreach($periodicos as $periodico)
         <tr>
           <td><span class="badge">{{ $periodico->created_at }}</span></td>
-          <td><a href="{{ URL::route('periodico_update', $periodico->id) }}">{{ $periodico->nombre }}</a></td>
+          <td><a href="{{ URL::route('admin_periodico_update', $periodico->id) }}">{{ $periodico->nombre }}</a></td>
         </tr>
         @endforeach
         </tbody>

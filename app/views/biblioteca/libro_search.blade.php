@@ -9,10 +9,10 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Codigo</th>
+                <th>Código</th>
                 <th>Autor(es)</th>
-                <th>Titulo del Libro</th>
-                <th>Edicion</th>
+                <th>Título del Libro</th>
+                <th>Edición</th>
                 <th>Estado</th>
             </tr>
         </thead>

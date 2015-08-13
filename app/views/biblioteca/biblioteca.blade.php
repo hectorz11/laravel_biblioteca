@@ -8,10 +8,10 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Codigo</th>
+                <th>Código</th>
                 <th>Autor(es)</th>
-                <th>Titulo del Libro</th>
-                <th>Edicion</th>
+                <th>Título del Libro</th>
+                <th>Edición</th>
                 <th>Estado</th>
                 <th>Operaciones</th>
             </tr>
@@ -29,7 +29,7 @@
         </tbody>
     </table>
     <div class="form-actions" align="center">
-        <a href="{{ URL::route('libro_create') }}" class="btn btn-lg btn-primary" name="ingresar">
+        <a href="{{ URL::route('admin_libro_create') }}" class="btn btn-lg btn-primary" name="ingresar">
             <i class="glyphicon glyphicon-plus-sign"></i> Ingresar Nuevo Registro
         </a> 
         <a href="{{ URL::route('/') }}" class="btn btn-lg btn-danger">
@@ -47,26 +47,25 @@
                 <span id="load"><center><img src="{{ asset('img/loading1.gif')}}"> Cargando...</center></span></h4>
             </div>
             <div class="modal-body">
-                <!-- Formulario -->
-                <form role="form" action="{{ URL::route('libro_delete_post')}}" method="post" id="formEdit">
-                    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <!-- Start Form -->
+                {{ Form::open(['route' => 'admin_libro_delete_post', 'id' => 'formEdit']) }}
                     <div class="row">
                         <div class="col-md-12">
-                            <label>Titulo del Libro a eliminar</label>
+                            <label>Título del Libro a eliminar</label>
                             {{ Form::text('titulo', Input::old('titulo'), ['class' => 'form-control']) }}
                         </div>
                     </div><br>
-                    <input type="hidden" name="idLibro">
-                    <input id="val" type="hidden" name="libro" class="input-block-level" value="">
+                    {{ Form::hidden('idLibro') }}
+                    {{ Form::hidden('libro', '', ['id' => 'val']) }}
                     <div class="">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             <i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</button>
                         <button type="submit" class="btn btn-primary">
                             <i class="glyphicon glyphicon-check"></i> Eliminar</button>
                     </div>
-                </form>
+                {{ Form::close() }}
+                <!-- End Form -->
             </div>
-            <!--  -->
         </div>
     </div>
 </div>

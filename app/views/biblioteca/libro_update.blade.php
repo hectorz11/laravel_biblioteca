@@ -10,9 +10,9 @@
       </div>
     @endif
       <h3>Modifique el Libro</h3>
-    {{ Form::open(array('route' => array('libro_update_post', $libro->id), 'files' => true)) }}
+    {{ Form::open(array('route' => ['admin_libro_update_post', $libro->id], 'files' => true]) }}
     	<div class="row">
-    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Codigo:</label></div>
+    		<div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Código:</label></div>
     		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('codigo', $libro->codigo, ['class' => 'form-control']) }}</div>
     	</div>
       @if( $errors->has('codigo') )
@@ -34,15 +34,15 @@
         </div>
       @endif<br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Titulo:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Título:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('titulo', $libro->titulo, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Edicion:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Edición:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('edicion', $libro->edicion, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Anio:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Año:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::text('anio', $libro->anio, ['class' => 'form-control']) }}</div>
       </div><br>
       <div class="row">
@@ -54,7 +54,7 @@
     		<div class="col-md-10 col-xs-15 col-sm-10">{{ Form::file('foto') }}</div>
     	</div><br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Casificacion:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Clasificación:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">
           <select name="clasificacion_id" class="form-control">
             <option value="{{ $libro->clasificaciones->id }}">{{ $libro->clasificaciones->nombre }}</option>
@@ -96,7 +96,7 @@
         </div>
       @endif<br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Ubicacion:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Ubicación:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">
           <select name="ubicacion_id" class="form-control">
             <option value="{{ $libro->ubicaciones->id }}">{{ $libro->ubicaciones->nombre }}</option>
@@ -117,7 +117,7 @@
         </div>
       @endif<br>
       <div class="row">
-        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Descripcion:</label></div>
+        <div class="col-md-2 col-xs-3 col-sm-2"><label class="control-label">Descripción:</label></div>
         <div class="col-md-10 col-xs-15 col-sm-10">{{ Form::textArea('descripcion', $libro->descripcion, ['class' => 'form-control', 'rows' => 3]) }}</div>
       </div><br>
       <div class="row">
@@ -126,7 +126,7 @@
       </div><br>
       <div class="form-actions" align="center">
         <button type="submit" class="btn btn-lg btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> Confirmar</button>
-        <a href="{{ URL::route('biblioteca') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
+        <a href="{{ URL::route('admin_biblioteca') }}" class="btn btn-lg btn-danger"><i class="glyphicon glyphicon-floppy-remove"></i> Cancelar</a>
       </div>
     {{ Form::close() }}
   </div>
@@ -147,7 +147,7 @@
         @foreach($libros as $libro2)
         <tr>
           <td><span class="badge">{{ $libro2->created_at }}</span></td>
-          <td><a href="{{ URL::route('libro_update', $libro2->id) }}">{{ $libro2->titulo }}</a></td>
+          <td><a href="{{ URL::route('admin_libro_update', $libro2->id) }}">{{ $libro2->titulo }}</a></td>
         </tr>
         @endforeach
         </tbody>
